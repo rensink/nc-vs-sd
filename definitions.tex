@@ -1,0 +1,60 @@
+\section{Definitions}
+\label{sec:definitions}
+
+\begin{itemize}
+\item An \emph{interface type} is a number $n\in\natN$. For any $n\in \natN$ we use $I_n$ as a canonical discrete graph with $n$ nodes.
+
+\item An \emph{interface} $I$ is a discrete graph; we say that $I$ has type $\tau I=|V_I|$. The only canonical interface of type $n$ is $I_n$.
+
+\item An \emph{open graph} is an arrow $g\of I\to G$ where $I$ is a discrete graph; we say that $g$ has \emph{type} $\tau g=\tau I$, \emph{interface} $I_g$ and \emph{core} $G_g=G$. $g$ is called \emph{canonical} if $I_g$ is canonical.
+
+\item We will only work with canonical interfaces and open graphs.\todo{Is this acceptable?} 
+
+\item An \emph{interface morphism} $f$ from $I$ to $J$ is a graph morphism $f:I\to J$.
+
+\item An open graph $g$ \emph{shifted back} over an interface morphism $f:J\to I_g$ is the open graph $f;g$ with type $\tau J$.
+
+\item An \emph{open graph morphism} from $g$ to $h$ with $\tau g=\tau h$ is a graph morphism $a:G_g\to G_h$ such that $h=g;a$.
+
+\item An open graph $g$ \emph{shifted forward} over a graph morphsm $a\of G_g\to H$ is the open graph $g;a$ with type $\tau\cG$ and core $H$.
+\end{itemize}
+%
+A \emph{condition tree} is a tuple $(V,E,P,\setof{g_v}_{v\in V},\setof{u_e}_{e\in E})$ such that
+
+\begin{itemize}
+\item $V$ is a set of nodes;
+
+\item $E\subseteq V\times V$ is a set of edges, such that one $v\in P$ (the \emph{root}) has no incoming edge and all other elements of $V$ have exactly one incoming edge (from its \emph{parent});
+
+\item for all $v\in V$, $g_v$ is an open graph;
+
+\item for all $e=(v,w)\in E$, $u_e$ is an open graph (thought of as an upward-pointing arrow, hence $u$) such that $G_{u_e}=G_{g_v}$ and $\tau u_e=\tau g_w$. In words, $d_e$ connects the interface of $g_w$ to the core of $g_v$.
+\end{itemize}
+%
+For convenience we also denote $I_v=I_{g_v}$ and $G_v=G_{g_v}$. The root of a tree $\cT$ is denoted $\rt\cT$.
+
+\medskip\noindent Satisfaction is defined for open graphs, on a node-by-node basis. (Actually, here the node is regarded as the root of its subtree.) $g\sat v$ if there is an open graph morphism $a:g_v\to g$ such that for all edges $e=(v,w)\in E$, $u_e;a\nsat w$.
+
+\medskip\noindent
+%
+Given two condition trees $\cT,\cU$, a \emph{condition tree morphism} is a pair $(R,\setof{a_p}_{p\in R})$ such that (assuming $V_\cT$ and $V_\cU$ to be disjoint, and using $E=E_\cT\cup E_\cU$):
+
+\begin{itemize}
+\item $R\subseteq V_\cT\times V_\cU\cup V_\cU\times V_\cT$ is a relation between $\cT$-nodes and $\cU$-nodes and vice versa, such that $(\rt\cT,\rt\cU)\in R$.
+
+\item For all $p=(v,v')\in R$, $a_p:G_v\to G_{v'}$ is a graph morphism.
+
+\item For all $(v,v')\in R$ and all $(v,w)\in E$, one of the following holds:
+\begin{itemize}
+\item There is a $(v',w')\in E$ such that
+\begin{inumerate}
+\item $(w',w)\in R$, and
+\item there is a $k:I_{w'}\to I_w$ such that $u_{(v',w')}=k;u_{(v,w)};a_{(v,v')}$ and $k;g_w=g_{w'};a_{(w',w)}$.
+\end{inumerate}
+\item there is a $(w,x)\in E$ such that
+\begin{inumerate}
+\item $(x,v')\in R$, and
+\item $u_{v,w}=\id_{G_v}$, $u_{w,x}=\id_{G_w}$ and $g_w$ is epi, with $a_{(v,v')}=g_w;a_{(x,v')}$.
+\end{inumerate}
+\end{itemize}
+\end{itemize}

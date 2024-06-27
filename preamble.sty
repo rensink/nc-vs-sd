@@ -1,0 +1,38 @@
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[inline]{enumitem}
+\usepackage{todonotes}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\renewcommand{\to}{\rightarrow}
+\newcommand{\ot}{\leftarrow}
+\newcommand{\of}{{:}\,}
+
+
+% Root of a tree
+\newcommand{\rt}[1]{\top_{#1}}
+\newcommand{\setof}[1]{\{{#1}\}}
+\newcommand{\id}{{\mathit{id}}}
+
+\newcommand{\sat}{\models}
+\newcommand{\nsat}{\not\sat}
+
+
+\newcommand{\cC}{{\mathcal{C}}}
+\newcommand{\cG}{{\mathcal{G}}}
+\newcommand{\cH}{{\mathcal{H}}}
+\newcommand{\cI}{{\mathcal{I}}}
+\newcommand{\cJ}{{\mathcal{J}}}
+\newcommand{\cN}{{\mathcal{N}}}
+\newcommand{\cT}{{\mathcal{T}}}
+\newcommand{\cU}{{\mathcal{U}}}
+
+\newcommand{\natN}{\mathbb{N}}
+
+\newenvironment{inumerate}{%
+  \begin{enumerate*}[label=\emph{(\roman*)}]
+}{%
+  \end{enumerate*}
+}
