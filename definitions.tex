@@ -2,15 +2,15 @@
 \label{sec:definitions}
 
 \begin{itemize}
-\item An \emph{interface type} is a number $n\in\natN$. For any $n\in \natN$ we use $I_n$ as a canonical discrete graph with $n$ nodes.
+\item An \emph{interface type} is a number $n\in\natN$. For any $n\in \natN$ we use $I_n$ as a canonical discrete graph with $n$ nodes. \todo{AC: what about defining concretely $I_n = \{1,2,\ldots,n\}$? And handling it (ambiguously) as a set?}
 
 \item An \emph{interface} $I$ is a discrete graph; we say that $I$ has type $\tau I=|V_I|$. The only canonical interface of type $n$ is $I_n$.
 
-\item An \emph{open graph} is an arrow $g\of I\to G$ where $I$ is a discrete graph; we say that $g$ has \emph{type} $\tau g=\tau I$, \emph{interface} $I_g$ and \emph{core} $G_g=G$. $g$ is called \emph{canonical} if $I_g$ is canonical.
+\item An \emph{open graph} is an arrow $g\of I\to G$ where $I$ is a discrete graph; we say that $g$ has \emph{type} $\tau g=\tau I$, \emph{interface} $I_g$ and \emph{core}\todo{AC: I don't like \emph{core}. Body? } $G_g=G$. $g$ is called \emph{canonical} if $I_g$ is canonical.
 
 \item We will only work with canonical interfaces and open graphs.\todo{Is this acceptable?} 
 
-\item An \emph{interface morphism} $f$ from $I$ to $J$ is a graph morphism $f:I\to J$.
+\item An \emph{interface morphism} $f$ from $I$ to $J$ is a\todo{AC: function?} graph morphism $f:I\to J$.
 
 \item An open graph $g$ \emph{shifted back} over an interface morphism $f:J\to I_g$ is the open graph $f;g$ with type $\tau J$.
 
@@ -24,11 +24,11 @@ A \emph{condition tree} is a tuple $(V,E,P,\setof{g_v}_{v\in V},\setof{u_e}_{e\i
 \begin{itemize}
 \item $V$ is a set of nodes;
 
-\item $E\subseteq V\times V$ is a set of edges, such that one $v\in P$ (the \emph{root}) has no incoming edge and all other elements of $V$ have exactly one incoming edge (from its \emph{parent});
+\item $E\subseteq V\times V$ is a set of edges, such that one $v\in P$\todo{AC: $P$ is also two lines above, but not defined. Here should it be $V$?} (the \emph{root}) has no incoming edge and all other elements of $V$ have exactly one incoming edge (from its \emph{parent});
 
 \item for all $v\in V$, $g_v$ is an open graph;
 
-\item for all $e=(v,w)\in E$, $u_e$ is an open graph (thought of as an upward-pointing arrow, hence $u$) such that $G_{u_e}=G_{g_v}$ and $\tau u_e=\tau g_w$. In words, $d_e$ connects the interface of $g_w$ to the core of $g_v$.
+\item for all $e=(v,w)\in E$, $u_e$ is an open graph (thought of as an upward-pointing arrow, hence $u$) such that $G_{u_e}=G_{g_v}$ and $\tau u_e=\tau g_w$. In words, $d_e$ connects the interface of $g_w$ to the core of $g_v$. \todo{What is $d_e$? I think that it is lighter to define an edge $u_e$ as a graph morphism $u_e: I_{g_w}  \to G_{g_v}$}
 \end{itemize}
 %
 For convenience we also denote $I_v=I_{g_v}$ and $G_v=G_{g_v}$. The root of a tree $\cT$ is denoted $\rt\cT$.
@@ -44,7 +44,7 @@ Given two condition trees $\cT,\cU$, a \emph{condition tree morphism} is a pair 
 
 \item For all $p=(v,v')\in R$, $a_p:G_v\to G_{v'}$ is a graph morphism.
 
-\item For all $(v,v')\in R$ and all $(v,w)\in E$, one of the following holds:
+\item For all $(v,v')\in R$ and all $(v,w)\in E$, one of the following holds:\todo{AC: too complex to spell out...}
 \begin{itemize}
 \item There is a $(v',w')\in E$ such that
 \begin{inumerate}
