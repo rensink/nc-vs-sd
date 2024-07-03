@@ -5,6 +5,7 @@
 \usepackage{todonotes}
 \usepackage{hyperref}
 \usepackage{cleveref}
+\usepackage{subcaption}
 
 \renewcommand{\to}{\rightarrow}
 \newcommand{\ot}{\leftarrow}
@@ -19,6 +20,7 @@
 \newcommand{\sat}{\models}
 \newcommand{\nsat}{\not\sat}
 
+\newcommand{\PreMorph}{\cP}
 
 \newcommand{\cC}{{\mathcal{C}}}
 \newcommand{\cG}{{\mathcal{G}}}
@@ -26,6 +28,7 @@
 \newcommand{\cI}{{\mathcal{I}}}
 \newcommand{\cJ}{{\mathcal{J}}}
 \newcommand{\cN}{{\mathcal{N}}}
+\newcommand{\cP}{{\mathcal{P}}}
 \newcommand{\cT}{{\mathcal{T}}}
 \newcommand{\cU}{{\mathcal{U}}}
 
@@ -36,3 +39,64 @@
 }{%
   \end{enumerate*}
 }
+
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+
+\tikzset{>=latex}
+\tikzset{triangle/.style=
+  {isosceles triangle,
+   draw,
+   shape border rotate=90,
+   isosceles triangle stretches=true,
+   anchor=top corner,
+   minimum width=15mm,
+   minimum height=15mm}}
+\tikzset{graph/.style={
+   inner sep=1pt,
+   line width=3pt,
+   draw=white,
+   double=black}}
+\tikzset{
+  morphism/.style={
+    color=#1,
+    draw=#1,
+  },
+  morphism/.default={
+    blue!90!white
+  }
+}
+\tikzset{medge/.style={
+   line width=.8pt,
+   double distance=0.4pt,
+   double=blue,
+   draw=white,
+   >/.tip={Latex[color=blue,scale=.5]}
+}}
+\tikzset{over/.style={
+   line width=.8pt,
+   double distance=0.4pt,
+   double=black,
+   draw=white,
+   arrows={|-|},
+   >/.tip={Latex[color=black,scale=.5]}
+}}
+\tikzset{allcolor/.style= {
+   draw={#1},
+   text={#1},
+   >/.tip={latex[color={#1}]}
+}}
+
+\tikzset{|/.tip={Bar[black,width=.4pt,line width=2pt]}}
+\tikzset{cross/.style={
+   preaction={draw=white,line width=2pt}
+}}
+\tikzset{opengraph/.style={
+   ellipse,
+   inner xsep=8,
+   inner ysep=15,
+   fill=white!95!blue,
+   behind path
+}}

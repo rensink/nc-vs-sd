@@ -2,59 +2,51 @@
 \label{sec:definitions}
 
 \begin{itemize}
-\item An \emph{interface type} is a number $n\in\natN$. For any $n\in \natN$ we use $I_n$ as a canonical discrete graph with $n$ nodes.
+\item An \emph{interface} $I$ is a discrete graph.
 
-\item An \emph{interface} $I$ is a discrete graph; we say that $I$ has type $\tau I=|V_I|$. The only canonical interface of type $n$ is $I_n$.
+\item An \emph{open graph} is an arrow $g\of I\to G$ where $I$ is an interface; we say that $g$ has \emph{interface} $I_g=I$ and \emph{pattern} $P_g=G$. Open graphs are used for different purposes: within a condition to associate (both upper and lower) interfaces with the patterns, and also as assignments --- that is, the objects on which satisfaction is defined.
 
-\item An \emph{open graph} is an arrow $g\of I\to G$ where $I$ is a discrete graph; we say that $g$ has \emph{type} $\tau g=\tau I$, \emph{interface} $I_g$ and \emph{core} $G_g=G$. $g$ is called \emph{canonical} if $I_g$ is canonical.
+\item An \emph{interface morphism} $f$ from $I$ to $J$ is a graph morphism $k:I\to J$.
 
-\item We will only work with canonical interfaces and open graphs.\todo{Is this acceptable?} 
-
-\item An \emph{interface morphism} $f$ from $I$ to $J$ is a graph morphism $f:I\to J$.
-
-\item An open graph $g$ \emph{shifted back} over an interface morphism $f:J\to I_g$ is the open graph $f;g$ with type $\tau J$.
-
-\item An \emph{open graph morphism} from $g$ to $h$ with $\tau g=\tau h$ is a graph morphism $a:G_g\to G_h$ such that $h=g;a$.
-
-\item An open graph $g$ \emph{shifted forward} over a graph morphsm $a\of G_g\to H$ is the open graph $g;a$ with type $\tau\cG$ and core $H$.
+\item An \emph{open graph morphism} $a\of g\to h$ a pair of graph morphisms $a^I:I_g\to I_h, a^P:P_g\to P_h$ such that $a^I;h=g;a^P$.
 \end{itemize}
 %
-A \emph{condition tree} is a tuple $(V,E,P,\setof{g_v}_{v\in V},\setof{u_e}_{e\in E})$ such that
+A \emph{condition tree} is a tuple $(V,E,\setof{d_v}_{v\in V},\setof{u_w}_{(v,w)\in C})$ such that
 
 \begin{itemize}
-\item $V$ is a set of nodes;
+\item $V$ is a set of vertices;
 
-\item $E\subseteq V\times V$ is a set of edges, such that one $v\in P$ (the \emph{root}) has no incoming edge and all other elements of $V$ have exactly one incoming edge (from its \emph{parent});
+\item $C\subseteq V\times V$ is a set of edges representing the parent-child relation, such that one $v\in P$ (the \emph{root}) has no outgoing edge, and all other elements of $V$ have exactly one outgoing edge (to their \emph{parent});
 
-\item for all $v\in V$, $g_v$ is an open graph;
+\item for all $v\in V$, $d_v$ is an open graph. We denote $I_v=I_{d_v}$ and $P_v=P_{d_v}$.
 
-\item for all $e=(v,w)\in E$, $u_e$ is an open graph (thought of as an upward-pointing arrow, hence $u$) such that $G_{u_e}=G_{g_v}$ and $\tau u_e=\tau g_w$. In words, $d_e$ connects the interface of $g_w$ to the core of $g_v$.
+\item for all $c=(v,w)\in C$, $u_w\of I_w\to P_v$ is an open graph.
 \end{itemize}
 %
-For convenience we also denote $I_v=I_{g_v}$ and $G_v=G_{g_v}$. The root of a tree $\cT$ is denoted $\rt\cT$.
+The root of a tree $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
 
-\medskip\noindent Satisfaction is defined for open graphs, on a node-by-node basis. (Actually, here the node is regarded as the root of its subtree.) $g\sat v$ if there is an open graph morphism $a:g_v\to g$ such that for all edges $e=(v,w)\in E$, $u_e;a\nsat w$.
+\medskip\noindent Satisfaction of is defined for subtrees $\hat v$ and assignments $g\of I^v\to G$, as follows. $g\sat \hat v$ if there is an open graph morphism $(\id,h)\of d_v\to g$ such that $u_w;a_P\nsat \hat w$ for all children $w$ of $v$. $h$ is then called a \emph{witness} of $g\sat \hat v$.
 
 \medskip\noindent
+Given two condition trees $\cT,\cU$ with $V_\cT\cap V_\cU=\emptyset$, let $V=V_\cT\cup V_\cU$ and $C=C_\cT\cup C_\cU$. The set of \emph{pre-morphisms over $\cT$ and $\cU$}, denoted $\PreMorph$, is the smallest set such that for all $v,x\in V$ and all $a\of d_v\to d_x$, $(v,a,x)\in \PreMorph$ if for every child $w$ of $v$ one of the following holds:
+
+\begin{enumerate}[label=\emph{(\roman*)}]
+\item There is a child $y$ of $x$ and a pre-morphism $(y,b,w)\in\PreMorph$ such that $b^I;u_w;a^P=u_v$.
+\item There is a child $y$ of $w$ and a pre-morphism $(y,b,x)\in\PreMorph$ such that, constructing the pullback $(u,d)$ of $(d_w,u_y)$, $d$ is epi and $u;u_w;a^P=d;d_y;b^P$.
+\item There is a sibling $y$ of $x$, a pre-morphism $(y,b,w)\in\PreMorph$ and an interface morphism $k\of I_y\to I_x$ such that $u_y=k;u_x$ and $b^I;u_w;a^P=k;d_x$.
+\end{enumerate}
 %
-Given two condition trees $\cT,\cU$, a \emph{condition tree morphism} is a pair $(R,\setof{a_p}_{p\in R})$ such that (assuming $V_\cT$ and $V_\cU$ to be disjoint, and using $E=E_\cT\cup E_\cU$):
+Vacuously, the above is fulfilled if $v$ does not have children, hence in that case $(v,x,a)\in \PreMorph$ for all $a\of d_v\to d_x$; this will form the base case of our induction proofs.
 
-\begin{itemize}
-\item $R\subseteq V_\cT\times V_\cU\cup V_\cU\times V_\cT$ is a relation between $\cT$-nodes and $\cU$-nodes and vice versa, such that $(\rt\cT,\rt\cU)\in R$.
+The three conditions are visualised in \cref{fig:satisfaction-conditions}.
 
-\item For all $p=(v,v')\in R$, $a_p:G_v\to G_{v'}$ is a graph morphism.
+\begin{figure}
+\input{figs/satisfaction-conditions}
+\caption{The three cases of pre-morphisms}
+\label{fig:satisfaction-conditions}
+\end{figure}
 
-\item For all $(v,v')\in R$ and all $(v,w)\in E$, one of the following holds:
-\begin{itemize}
-\item There is a $(v',w')\in E$ such that
-\begin{inumerate}
-\item $(w',w)\in R$, and
-\item there is a $k:I_{w'}\to I_w$ such that $u_{(v',w')}=k;u_{(v,w)};a_{(v,v')}$ and $k;g_w=g_{w'};a_{(w',w)}$.
-\end{inumerate}
-\item there is a $(w,x)\in E$ such that
-\begin{inumerate}
-\item $(x,v')\in R$, and
-\item $u_{v,w}=\id_{G_v}$, $u_{w,x}=\id_{G_w}$ and $g_w$ is epi, with $a_{(v,v')}=g_w;a_{(x,v')}$.
-\end{inumerate}
-\end{itemize}
-\end{itemize}
+\begin{proposition}
+For all $(v,w,a)\in \PreMorph$, if $g\sat w$ with witness $h$, then $a^I;g\sat v$ with witness $a^P;h$.
+\end{proposition}
+
