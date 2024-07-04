@@ -1,0 +1,124 @@
+\subcaptionbox{}[.25\textwidth]{\begin{tikzpicture}[on grid,baseline=(Iv)]
+\node (Iv) {};
+\node (Pv) [below=of Iv] {};
+\node (Iw) [below=of Pv] {};
+\node (Pw) [below=of Iw] {};
+
+\path
+  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
+  (Iw) edge[->] node[opengraph] {} node[left] {$d_w$} (Pw)
+  (Iw) edge[->] node[left] {$u_w$} (Pv);
+  
+\node (Ix) [right=1.5 of Iv] {};
+\node (Px) [below=of Ix] {};
+
+\path
+  (Ix) edge[->] node[opengraph] {} node[right] {$d_x$} (Px);
+
+\path[morphism]
+  (Iv) edge[->] node[above] {$a^I$} (Ix)
+  (Pv) edge[->] node[above] {$a^P$} (Px);
+
+\node (Iy) [below=of Px] {};
+\node (Py) [below=of Iy] {};
+
+\path[allcolor=gray]
+  (Iy) edge[->] node[opengraph] {} node[right] {$d_y$} (Py)
+  (Iy) edge[->] node[right] {$u_y$} (Px);
+
+\path[morphism=blue!40!white]
+  (Iy) edge[->] node[above] {$b^I$} (Iw)
+  (Py) edge[->] node[above] {$b^P$} (Pw);
+
+% Defs to make sure bottom is aligned
+\node (I) [below=1 of Pw] {};
+\node (P) [below=1 of I] {};
+\path[draw=none]
+  (I) to node[opengraph,fill=none] {} (P);
+\end{tikzpicture}}%
+%
+\subcaptionbox{}[.4\textwidth]{
+\begin{tikzpicture}[on grid,baseline=(Iv)]
+\node (Iv) {};
+\node (Pv) [below=of Iv] {};
+\node (Iw) [below=of Pv] {};
+\node (Pw) [below=of Iw] {};
+
+\path
+  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
+  (Iw) edge[->] node[opengraph] {} node[left] {$d_w$} (Pw)
+  (Iw) edge[->] node[left] {$u_w$} (Pv);
+  
+\node (Ix) [right=2.5 of Iv] {};
+\node (Px) [below=of Ix] {};
+
+\path
+  (Ix) edge[->] node[opengraph] {} node[right] {$d_x$} (Px);
+
+\path[morphism]
+  (Iv) edge[->] node[above] {$a^I$} (Ix)
+  (Pv) edge[->] node[above] {$a^P$} (Px);
+
+\node (Iy) [below=of Pw] {};
+\node (Py) [below=of Iy] {};
+
+\path[allcolor=black!50!white]
+  (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
+  (Iy) edge[->] node[left,pos=.6,inner sep=1] {$u_y$} (Pw);
+
+% The pullback
+\node (Iwy) [left=1.5 of Pw] {};
+\path[allcolor=black!50!white]
+  (Iwy) edge[->] node[above left] {$u$} (Iw.west)
+  (Iwy) edge[->>] node[below left] {$d$} (Iy.west)
+  (Iwy) edge[-{Straight Barb[black!50!white,length=5pt,width=10pt]},white] +(5mm,0mm);
+
+\path[morphism=blue!40!white]
+  (Iy.east) edge[->] node[left] {$b^I$} (Ix)
+  (Py.east) edge[->] node[right] {$b^P$} (Px);
+\end{tikzpicture}
+}%
+%
+\subcaptionbox{}[.35\textwidth]{
+\begin{tikzpicture}[on grid,baseline=(Iv)]
+\node (Iv) {};
+\node (Pv) [below=of Iv] {};
+\node (Iw) [below=of Pv] {};
+\node (Pw) [below=of Iw] {};
+
+\path
+  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
+  (Iw) edge[->] node[opengraph] {} node[left] {$d_w$} (Pw)
+  (Iw) edge[->] node[left] {$u_w$} (Pv);
+  
+\node (Ix) [right=1.5 of Iv] {};
+\node (Px) [below=of Ix] {};
+
+\path
+  (Ix) edge[->] node[opengraph] {} node[right] {$d_x$} (Px);
+
+\path[morphism]
+  (Iv) edge[->] node[above] {$a^I$} (Ix)
+  (Pv) edge[->] node[above] {$a^P$} (Px);
+
+\node (Iy) [right=1.5 of Ix] {};
+\node (Py) [below=of Iy] {};
+\node (Pz) [above right=.75 and .75 of Ix] {};
+
+\path[allcolor=gray]
+  (Iy) edge[->] node[opengraph] {} node[right] {$d_y$} (Py)
+  (Ix) edge[->] node[left] {$u_x$} (Pz)
+  (Iy) edge[->] node[right] {$u_y$} (Pz)
+  (Iy) edge[->] node[above] {$k$} (Ix);
+
+\path[morphism=blue!40!white]
+  (Iy.west) edge[->,bend left] node[below] {$b^I$} (Iw)
+  (Py.south) edge[->,bend left] node[below] {$b^P$} (Pw);
+
+% Defs to make sure bottom is aligned
+\node (I) [below=1 of Pw] {};
+\node (P) [below=1 of I] {};
+\path[draw=none]
+  (I) to node[opengraph,fill=none] {} (P);
+\end{tikzpicture}
+}%
