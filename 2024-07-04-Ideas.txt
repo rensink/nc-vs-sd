@@ -1,0 +1,31 @@
+
+
+Arend
+- festschrift
+- swap direcion of morphims - done
+
+Journal submission
+- completeness for arrow bsed conditions
+- logical operators: AND, OR, NEG, 
+- Existential quantification: relations with backward shift, properties? Adjointness? Not clear. Relation with shift????
+- logical characterization of provable entailment
+
+String diagrams
+- justifcation of using discrete interfaces
+- equivalence of conditions related through split-epi which are iso on nodes
+- sibling and double negation rules for morphisms
+- encoding of string diagrams vs conditions
+- what is the precise correspondence? 
+- are they equivalent?
+- we induce morphisms on string diagrams, which is sound and complete wrt entailment 
+
+Condition trees
+- objects: condition trees 
+- morphisms: arbitrary collections of (v,a,w) a:v->w open graph morphism (in any direction)
+- composition defined whenever it exists
+- conditions on morphisms
+  - reflect/preserve satisfaciton (smemantically)
+  - reflect satisfaciton structurally (standard/doble negation (convolution) rule/sibling rule)
+  - preserve satisfaciton structurally (child rule forall)
+- typing morphisms according to properties leading to several categories 
+
