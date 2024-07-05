@@ -25,12 +25,15 @@ A \emph{condition tree} is a tuple $(V,E,\setof{d_v}_{v\in V},\setof{u_w}_{(v,w)
 %
 The root of a tree $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
 
-\medskip\noindent Satisfaction of is defined for subtrees $\hat v$ and assignments $g\of I^v\to G$, as follows. $g\sat \hat v$ if there is an open graph morphism $(\id,h)\of d_v\to g$ such that $u_w;a_P\nsat \hat w$ for all children $w$ of $v$. $h$ is then called a \emph{witness} of $g\sat \hat v$.
+\paragraph{Satisfaction.}
 
-\medskip\noindent
+Satisfaction is defined for subtrees $\hat v$ and assignments $g\of I^v\to G$, as follows. $g\sat \hat v$ if there is an open graph morphism $(\id,h)\of d_v\to g$ such that $u_w;a_P\nsat \hat w$ for all children $w$ of $v$. $h$ is then called a \emph{witness} of $g\sat \hat v$.
+
+\paragraph{Pre-morphisms.}
+
 Given two condition trees $\cT,\cU$ with $V_\cT\cap V_\cU=\emptyset$, let $V=V_\cT\cup V_\cU$ and $C=C_\cT\cup C_\cU$. The set of \emph{pre-morphisms over $\cT$ and $\cU$}, denoted $\PreMorph$, is the smallest set such that for all $v,x\in V$ and all $a\of d_v\to d_x$, $(v,a,x)\in \PreMorph$ if for every child $w$ of $v$ one of the following holds:
 
-\begin{enumerate}[label=\emph{(\roman*)}]
+\begin{enumerate}[label=(\alph*)]
 \item There is a child $y$ of $x$ and a pre-morphism $(y,b,w)\in\PreMorph$ such that $b^I;u_w;a^P=u_v$.
 \item There is a child $y$ of $w$ and a pre-morphism $(y,b,x)\in\PreMorph$ such that, constructing the pullback $(u,d)$ of $(d_w,u_y)$, $d$ is epi and $u;u_w;a^P=d;d_y;b^P$.
 \item There is a sibling $y$ of $x$, a pre-morphism $(y,b,w)\in\PreMorph$ and an interface morphism $k\of I_y\to I_x$ such that $u_y=k;u_x$ and $b^I;u_w;a^P=k;d_x$.
@@ -42,11 +45,22 @@ The three conditions are visualised in \cref{fig:satisfaction-conditions}.
 
 \begin{figure}
 \input{figs/satisfaction-conditions}
-\caption{The three cases of pre-morphisms}
+\caption{The three options for pre-morphisms}
 \label{fig:satisfaction-conditions}
 \end{figure}
 
-\begin{proposition}
-For all $(v,w,a)\in \PreMorph$, if $g\sat w$ with witness $h$, then $a^I;g\sat v$ with witness $a^P;h$.
+\begin{proposition}[pre-morphism property]
+For all $(v,a,w)\in \PreMorph$, if $g\sat w$ with witness $h$, then $a^I;g\sat v$ with witness $a^P;h$.
+\end{proposition}
+
+\paragraph{Complete pre-morphisms.}
+
+We also define the notion of \emph{complete} pre-morphism, that does not only reflect but also preserves satisfaction.\todo{I wonder if we could completely decouple these kinds of morphisms, meaning that complete morphisms do not have to be (ordinary) morphisms. The two uses seem to be entirely separate.}
+
+\medskip\noindent
+The set of \emph{complete pre-morphisms over $\cT$ and $\cU$}, denoted $\CPreMorph$, is the smallest subset of $\PreMorph$ such that 
+
+\begin{proposition}[complete pre-morphism property]
+For all $(v,a,w)\in \CPreMorph$, if $a^;g\sat v$ with witness $h$, then $g\sat w$ with witness $h'$ such that $h=a^P;h'$.
 \end{proposition}
 

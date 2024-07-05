@@ -1,4 +1,7 @@
-\subcaptionbox{}[.25\textwidth]{\begin{tikzpicture}[on grid,baseline=(Iv)]
+\subcaptionbox{
+  Standard
+}[.25\textwidth]{
+\begin{tikzpicture}[on grid,baseline=(Iv)]
 \node (Iv) {};
 \node (Pv) [below=of Iv] {};
 \node (Iw) [below=of Pv] {};
@@ -37,7 +40,9 @@
   (I) to node[opengraph,fill=none] {} (P);
 \end{tikzpicture}}%
 %
-\subcaptionbox{}[.4\textwidth]{
+\subcaptionbox{
+  Child rule
+}[.4\textwidth]{
 \begin{tikzpicture}[on grid,baseline=(Iv)]
 \node (Iv) {};
 \node (Pv) [below=of Iv] {};
@@ -79,7 +84,9 @@
 \end{tikzpicture}
 }%
 %
-\subcaptionbox{}[.35\textwidth]{
+\subcaptionbox{
+  Sibling rule
+}[.35\textwidth]{
 \begin{tikzpicture}[on grid,baseline=(Iv)]
 \node (Iv) {};
 \node (Pv) [below=of Iv] {};
