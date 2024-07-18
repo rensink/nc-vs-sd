@@ -27,40 +27,62 @@ The root of a tree $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\c
 
 \paragraph{Satisfaction.}
 
-Satisfaction is defined for subtrees $\hat v$ and assignments $g\of I^v\to G$, as follows. $g\sat \hat v$ if there is an open graph morphism $(\id,h)\of d_v\to g$ such that $u_w;a_P\nsat \hat w$ for all children $w$ of $v$. $h$ is then called a \emph{witness} of $g\sat \hat v$.
+Let $\cT$ be a condition tree. Satisfaction is defined for nodes $v\in V_\cT$ and assignments $g\of I^v\to G$, as follows. $g$ \emph{satisfies $v$}, denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
+\begin{inumerate}
+\item $g=d_v;h$, and 
+\item $u_w;a_P\nsat w$ for all children $w$ of $v$.
+\end{inumerate}
+$h$ is then called a \emph{witness} of $g\sat v$.
+$g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
 
-\paragraph{Pre-morphisms.}
+\paragraph{Morphisms.}
 
-Given two condition trees $\cT,\cU$ with $V_\cT\cap V_\cU=\emptyset$, let $V=V_\cT\cup V_\cU$ and $C=C_\cT\cup C_\cU$. The set of \emph{pre-morphisms over $\cT$ and $\cU$}, denoted $\PreMorph$, is the smallest set such that for all $v,x\in V$ and all $a\of d_v\to d_x$, $(v,a,x)\in \PreMorph$ if for every child $w$ of $v$ one of the following holds:
+Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.
+
+Given a condition tree $\cT$, the identity morphism $\cI_\cT$ is defined as
+\[ \cI_\cT = \setof{(v,\id_{d_v},v)\mid v\in V_\cT} \enspace. \]
+Given two condition tree moprhisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition is defined as
+\[ \cM;\cN = \setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cM, (w,b,x)\in \cN} \enspace. \]
+
+\begin{proposition}
+Condition trees and their morphisms form a category.
+\end{proposition}
+
+\paragraph{Source saturation.}
+
+Given a morphism $\cM$, an element $(v,a,w)\in \cM$ is called \emph{source-saturated} if for every child $x$ of $v$, one of the following holds:
 
 \begin{enumerate}[label=(\alph*)]
-\item There is a child $y$ of $x$ and a pre-morphism $(y,b,w)\in\PreMorph$ such that $b^I;u_w;a^P=u_v$.
-\item There is a child $y$ of $w$ and a pre-morphism $(y,b,x)\in\PreMorph$ such that, constructing the pullback $(u,d)$ of $(d_w,u_y)$, $d$ is epi and $u;u_w;a^P=d;d_y;b^P$.
-\item There is a sibling $y$ of $x$, a pre-morphism $(y,b,w)\in\PreMorph$ and an interface morphism $k\of I_y\to I_x$ such that $u_y=k;u_x$ and $b^I;u_w;a^P=k;d_x$.
+\item There is a child $y$ of $w$ and a source-saturated $(y,b,x)\in\cM$ such that $b^I;u_x;a^P=u_y$.
+\item There is a child $y$ of $x$ and a source-saturated $(y,b,w)\in\cM$ such that, constructing the pullback $(u,d)$ of $(d_x,u_y)$, $d$ is epi and $u;u_x;a^P=d;d_y;b^P$.
+\item There is a sibling $y$ of $w$, a source-saturated $(y,b,x)\in\cM$ and an interface morphism $k\of I_y\to I_w$ such that $u_y=k;u_w$ and $b^I;u_x;a^P=k;d_w$.
 \end{enumerate}
 %
-Vacuously, the above is fulfilled if $v$ does not have children, hence in that case $(v,x,a)\in \PreMorph$ for all $a\of d_v\to d_x$; this will form the base case of our induction proofs.
+We call $\cM$ source-saturated if $\rt\cM$ is source-saturated.\todo{AR: alternatively, if all elements of $\cM$ are source-saturated}
 
-The three conditions are visualised in \cref{fig:satisfaction-conditions}.
+Vacuously, the condition of source saturation is fulfilled if $v$ does not have children, hence in that case all $(v,x,a)\in \cM$ are source-saturated; this will form the base case of our induction proofs.
+
+The three cases of source saturation are visualised in \cref{fig:source-saturation}.
 
 \begin{figure}
-\input{figs/satisfaction-conditions}
-\caption{The three options for pre-morphisms}
-\label{fig:satisfaction-conditions}
+\input{figs/source-saturation}
+\caption{The three options for source-saturation}
+\label{fig:source-saturation}
 \end{figure}
 
-\begin{proposition}[pre-morphism property]
-For all $(v,a,w)\in \PreMorph$, if $g\sat w$ with witness $h$, then $a^I;g\sat v$ with witness $a^P;h$.
-\end{proposition}
+\begin{lemma}[source saturation reflects satisfaction]\label{lem:source-saturation}
+Let $\cM\of\cT\to\cU$ be a condition tree morphism. For all source-saturated $(v,a,w)\in \cM$, if $g\sat w$ with witness $h$, then $a^I;g\sat v$ with witness $a^P;h$. It follows that, if $\cM$ is source-saturated, $g\sat\cU$ implies $g\sat\cT$.
+\end{lemma}
 
-\paragraph{Complete pre-morphisms.}
+\paragraph{Target saturation.}
 
-We also define the notion of \emph{complete} pre-morphism, that does not only reflect but also preserves satisfaction.\todo{I wonder if we could completely decouple these kinds of morphisms, meaning that complete morphisms do not have to be (ordinary) morphisms. The two uses seem to be entirely separate.}
+Given a morphism $\cM$, an element $(v,a,w)\in \cM$ is called \emph{target-saturated} if one of the following holds:
 
-\medskip\noindent
-The set of \emph{complete pre-morphisms over $\cT$ and $\cU$}, denoted $\CPreMorph$, is the smallest subset of $\PreMorph$ such that 
+\begin{enumerate}[label=(\alph*)]
+\item There is a child $x$ of $w$ with $d_x=u_x=d_v$, such that for all children $y$ of $x$ there is a target-saturated $(y,c,w)$
+\end{enumerate}
 
-\begin{proposition}[complete pre-morphism property]
-For all $(v,a,w)\in \CPreMorph$, if $a^;g\sat v$ with witness $h$, then $g\sat w$ with witness $h'$ such that $h=a^P;h'$.
-\end{proposition}
+\begin{lemma}[target saturation preserves satisfaction]
+Let $\cM\of\cT\to\cU$ be a condition tree morphism. For all target-saturated $(v,a,w)\in \cM$, if $a^;g\sat v$ with witness $h$, then $g\sat w$ with witness $h'$ such that $h=a^P;h'$. It follows that, if $\cM$ is target-saturated, $g\sat\cT$ implies $g\sat\cU$.
+\end{lemma}
 
