@@ -42,7 +42,17 @@ Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\
 Given a condition tree $\cT$, the identity morphism $\cI_\cT$ is defined as
 \[ \cI_\cT = \setof{(v,\id_{d_v},v)\mid v\in V_\cT} \enspace. \]
 Given two condition tree moprhisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition is defined as
-\[ \cM;\cN = \setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cM, (w,b,x)\in \cN} \enspace. \]
+\begin{align*}
+\cM;\cN = 
+  & \setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cM, (w,b,x)\in \cN} \\
+  & \cup \setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cN, (w,b,x)\in \cM} \enspace.
+\end{align*}
+\[ \cM;\cN =
+\begin{array}[t]{@{}l}
+	\setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cM, (w,b,x)\in \cN} \\
+	\setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cN, (w,b,x)\in \cM} \enspace.
+\end{array}
+\]
 
 \begin{proposition}
 Condition trees and their morphisms form a category.
@@ -53,14 +63,14 @@ Condition trees and their morphisms form a category.
 Given a morphism $\cM$, an element $(v,a,w)\in \cM$ is called \emph{source-saturated} if for every child $x$ of $v$, one of the following holds:
 
 \begin{enumerate}[label=(\alph*)]
-\item There is a child $y$ of $w$ and a source-saturated $(y,b,x)\in\cM$ such that $b^I;u_x;a^P=u_y$.
-\item There is a child $y$ of $x$ and a source-saturated $(y,b,w)\in\cM$ such that, constructing the pullback $(u,d)$ of $(d_x,u_y)$, $d$ is epi and $u;u_x;a^P=d;d_y;b^P$.
-\item There is a sibling $y$ of $w$, a source-saturated $(y,b,x)\in\cM$ and an interface morphism $k\of I_y\to I_w$ such that $u_y=k;u_w$ and $b^I;u_x;a^P=k;d_w$.
+\item[\emph{Direct.}] There is a child $y$ of $w$ and a source-saturated $(y,b,x)\in\cM$ such that $b^I;u_x;a^P=u_y$.
+\item[\emph{Child}] There is a child $y$ of $x$, a source-saturated $(y,b,w)\in\cM$ and an interface morphism $k\of I_y\to I_x$ such that $k;u_x;a^P=d_y;b^P$.
+\item[\emph{Sibling}] There is a sibling $y$ of $w$, a source-saturated $(y,b,x)\in\cM$ and an interface morphism $k\of I_y\to I_x$ such that $k;d_x=b^I;u_w;a^P$.
 \end{enumerate}
 %
 We call $\cM$ source-saturated if $\rt\cM$ is source-saturated.\todo{AR: alternatively, if all elements of $\cM$ are source-saturated}
 
-Vacuously, the condition of source saturation is fulfilled if $v$ does not have children, hence in that case all $(v,x,a)\in \cM$ are source-saturated; this will form the base case of our induction proofs.
+Vacuously, the condition of source saturation is fulfilled if $v$ does not have children, hence in that case all $(v,a,x)\in \cM$ are source-saturated; this will form the base case of our induction proofs.
 
 The three cases of source saturation are visualised in \cref{fig:source-saturation}.
 

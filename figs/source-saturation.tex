@@ -1,5 +1,5 @@
 \subcaptionbox{
-  Standard
+  Direct
 }[.25\textwidth]{
 \begin{tikzpicture}[on grid,baseline=(Iv)]
 \node (Iv) {};
@@ -71,12 +71,15 @@
   (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
   (Iy) edge[->] node[left,pos=.6,inner sep=1] {$u_y$} (Px);
 
-% The pullback
-\node (Ixy) [left=1.5 of Px] {};
+% The up-arrow
 \path[allcolor=black!50!white]
-  (Ixy) edge[->] node[above left] {$u$} (Ix.west)
-  (Ixy) edge[->>] node[below left] {$d$} (Iy.west)
-  (Ixy) edge[-{Straight Barb[black!50!white,length=5pt,width=10pt]},white] +(5mm,0mm);
+  (Iy) edge[bend right,->] node[right,near end] {$k$} (Ix);
+% The pullback
+%\node (Ixy) [left=1.5 of Px] {};
+%\path[allcolor=black!50!white]
+%  (Ixy) edge[->] node[above left] {$u$} (Ix.west)
+%  (Ixy) edge[->>] node[below left] {$d$} (Iy.west)
+%  (Ixy) edge[-{Straight Barb[black!50!white,length=5pt,width=10pt]},white] +(5mm,0mm);
 
 \path[morphism=blue!40!white]
   (Iy.east) edge[->] node[left] {$b^I$} (Iw)
@@ -94,11 +97,11 @@
 \node (Pw) [below=of Iw] {};
 
 \path
-  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
-  (Iw) edge[->] node[opengraph] {} node[left] {$d_w$} (Pw)
-  (Iw) edge[->] node[left] {$u_w$} (Pv);
+  (Iv) edge[->] node[opengraph] {} node[right,pos=.6] {$d_v$} (Pv)
+  (Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw)
+  (Iw) edge[->] node[right] {$u_w$} (Pv);
   
-\node (Ix) [right=1.5 of Iv] {};
+\node (Ix) [right=2 of Iv] {};
 \node (Px) [below=of Ix] {};
 
 \path
@@ -108,19 +111,19 @@
   (Iv) edge[->] node[above] {$a^I$} (Ix)
   (Pv) edge[->] node[above] {$a^P$} (Px);
 
-\node (Iy) [right=1.5 of Ix] {};
+\node (Iy) [left=1.5 of Iv] {};
 \node (Py) [below=of Iy] {};
-\node (Pz) [above right=.75 and .75 of Ix] {};
+\node (Pz) [above right=.75 and .75 of Iy] {};
 
 \path[allcolor=gray]
-  (Iy) edge[->] node[opengraph] {} node[right] {$d_y$} (Py)
-  (Ix) edge[->] node[left] {$u_x$} (Pz)
-  (Iy) edge[->] node[right] {$u_y$} (Pz)
-  (Iy) edge[->] node[above] {$k$} (Ix);
+  (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
+  (Iv) edge[->] node[right] {$u_x$} (Pz)
+  (Iy) edge[->] node[left] {$u_y$} (Pz)
+  (Iy) edge[->,bend right=15] node[above,near start] {$k$} (Ix.south west);
 
 \path[morphism=blue!40!white]
-  (Iy.west) edge[->,bend left] node[below] {$b^I$} (Iw)
-  (Py.south) edge[->,bend left] node[below] {$b^P$} (Pw);
+  (Iy) edge[->] node[left,pos=.6] {$b^I$} (Iw.north west)
+  (Py) edge[->] node[left,pos=.6] {$b^P$} (Pw.north west);
 
 % Defs to make sure bottom is aligned
 \node (I) [below=1 of Pw] {};
