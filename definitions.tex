@@ -39,15 +39,19 @@ $g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
 
 \paragraph{Morphisms.}
 
+\begin{definition}
 Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.
+\end{definition}
+%
+We often write $a\of v\to_\cM w$ rather than $(v,a,w)\in \cM$.
 
 Given a condition tree $\cT$, the identity morphism $\cI_\cT$ is defined as
 \[ \cI_\cT = \setof{(v,\id_{d_v},v)\mid v\in V_\cT} \enspace. \]
 Given two condition tree moprhisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition is defined as
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
-	\setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cM, (w,b,x)\in \cN} \\
-	\cup \setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cN, (w,b,x)\in \cM} \enspace.
+	\setof{(v,a;b,x) \mid \exists w\st a\of v\to_\cM w, b\of w\to_\cN x} \\
+	\cup \setof{(v,a;b,x) \mid \exists w\st a\of v\to_\cN w, b\of w\to_\cM x} \enspace.
 \end{array}
 \]
 
@@ -60,8 +64,8 @@ We are interested in nested condition morphisms that either preserve or reflect 
 \begin{definition}
 Let $\cM\of \cT\to\cU$ be a morphism and let $a\of v\to_\cM w$.
 \begin{itemize}[topsep=\smallskipamount]
-\item $(v,a,w)\in \cM$ \emph{preserves satisfaction} if $a^I;g\sat v$ with witness $h$, where either $w=\rt\cU$ or $g=u_w;g'$ for some $g'$, implies $g\sat w$ with witness $h'$ such that $h=a^P;h'$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
-\item $(v,a,w)\in \cM$ \emph{reflects satisfaction} if $g\sat w$ with witness $h$ implies $a^I;g\sat v$ with witness $a^P;h$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
+\item $a$ \emph{preserves satisfaction} if $a^I;g\sat v$ with witness $h$, where either $w=\rt\cU$ or $g=u_w;g'$ for some $g'$, implies $g\sat w$ with witness $h'$ such that $h=a^P;h'$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
+\item $a$ \emph{reflects satisfaction} if $g\sat w$ with witness $h$ implies $a^I;g\sat v$ with witness $a^P;h$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
 \end{itemize}
 \end{definition}
 
@@ -70,11 +74,11 @@ Let $\cM\of \cT\to\cU$ be a morphism and let $a\of v\to_\cM w$.
 To get the right interaction between morphisms and satisfaction, the morphisms have to be \emph{saturated} in a certain sense: a triple $(v,a,w)$ preserves or reflects satisfaction if the morphism contains \emph{supporting} mappings for all children of $w$, respectively all children of $v$. To set up a rich enough framework, we need diverse notions of support.
 
 \begin{definition}[source support]\label{def:support}
-Let $\cM\of \cT\to\cU$ be an NC-morphism. For a given $(v,a,w)\in \cM$ and child $x$ of $v$:
+Let $\cM\of \cT\to\cU$ be an NC-morphism. For a given $a\of v\to_\cM w$ and child $x$ of $v$:
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct source support.)} $\issdir b{x,a}$ if $(y,b,x)\in\cM$ for some child $y$ of $w$ such that $b^I;u_x;a^P=u_y$.
-\item \emph{(Child-based source support.)} $\isschd b{x,a}$ if $(y,b,w)\in\cM$ for some child $y$ of $x$ such that $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
-\item \emph{(Sibling-based source support.)} $\isssib b{x,a}$ if $(y,b,x)\in\cM$ for some sibling $y$ of $v$ such that $k;d_x=b^I;u_w;a^P$ for some $k\of I_y\to I_w$.
+\item \emph{(Direct source support.)} $\issdir b{x,a}$ if $b\of y\to_\cM x$ for some child $y$ of $w$ such that $b^I;u_x;a^P=u_y$.
+\item \emph{(Child-based source support.)} $\isschd b{x,a}$ if $b\of y\to_\cM w$ for some child $y$ of $x$ such that $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
+\item \emph{(Sibling-based source support.)} $\isssib b{x,a}$ if $b\of y\to_\cM x$ for some sibling $y$ of $v$ such that $k;d_x=b^I;u_w;a^P$ for some $k\of I_y\to I_w$.
 \end{itemize}
 \end{definition}
 %
@@ -89,7 +93,7 @@ For a visualisation see \cref{fig:source-saturation}.
 Based on these notions of support, we define corresponding notions of \emph{saturation}:
 
 \begin{definition}[syntactic reflection]\label{def:syntactic reflection}
-Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $(v,a,w)\in \cM$.
+Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $a\of v\to_\cM w$.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct reflection.)} $a:\rdir$ if for every child $x$ of $v$, there is some $b:\rdir$ such that $\issdir b{x,a}$.
 \item \emph{(Child-based reflection.)} $a:\rchd$ if for every child $x$ of $v$, there is some $b:\rchd$ such that $\issdir b{x,a}$ or $\isschd b{x,a}$.
@@ -97,7 +101,7 @@ Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $(v,a,w)\in \cM$.
 \end{itemize}
 \end{definition}
 
-Vacuously, each of the conditions of reflection is fulfilled if $v$ does not have children, hence in that case all $(v,a,x)\in \cM$ satisfy $\rdir$, $\rchd$ and $\rsib$; this will form the base case of our induction proofs.
+Vacuously, each of the conditions of reflection is fulfilled if $v$ does not have children, hence in that case all $a\of v\to_\cM x$ satisfy $\rdir$, $\rchd$ and $\rsib$; this will form the base case of our induction proofs.
 
 \begin{lemma}[source saturation reflects satisfaction]\label{lem:source-saturation}
 Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $a\of v\to_\cM w$.
@@ -132,14 +136,4 @@ Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $a\of v\to_\cM w$.
 \end{itemize}
 \end{itemize}
 \end{definition}
-
-Given a morphism $\cM$, an element $(v,a,w)\in \cM$ is called \emph{target-saturated} if one of the following holds:
-
-\begin{enumerate}[label=(\alph*)]
-\item There is a child $x$ of $w$ with $d_x=u_x=d_v$, such that for all children $y$ of $x$ there is a target-saturated $(y,c,w)$
-\end{enumerate}
-
-\begin{lemma}[target saturation preserves satisfaction]
-Let $\cM\of\cT\to\cU$ be a condition tree morphism. For all target-saturated $(v,a,w)\in \cM$, if $a^;g\sat v$ with witness $h$, then $g\sat w$ with witness $h'$ such that $h=a^P;h'$. It follows that, if $\cM$ is target-saturated, $g\sat\cT$ implies $g\sat\cU$.
-\end{lemma}
 
