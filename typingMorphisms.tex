@@ -1,0 +1,108 @@
+\section{Typing morphisms}
+\label{sec:typing morphisms}
+
+
+In the previous section after introducing the category $\NC$ of nested conditions we discussed several structural properties that morphisms of $\NC$ may satisfy. In this section we will consider several wide sub-categories of $\NC$, i.e.~categories having all the objects of $\NC$ but only some proper subsets of morphisms, and we will relate them by obvious functors. 
+
+The properties of morphisms we have considered are structural, thus in a sense syntactical. But the notion of satisfaction of conditions naturally induces a relation of \emph{entailment} among conditions having the same root, that gives rise to a ``semantic'' category, $\NC^{\models}$, which is actually a preoder. 
+
+\begin{definition}[semantic entailment and equivalence]
+Given two conditions $\cT$ and $\cU$ having the same root,  we define \emph{semantic entailment} $\cT \entails \cU$ and \emph{semantic equivalence} $\cT \equiv \cU$ as follows:
+\begin{align*}
+\cT \entails \cU & \text{ if for all arrows $g$: } g\sat \cT \text{ implies } g\sat \cU \\
+\cT \equiv \cU & \text{ if for all arrows $g$: } g\sat \cT \text{ if and only if } g\sat \cU \enspace. 
+\end{align*}
+
+Category $\NC^{\models}$ has the same objects of $\NC$, and for each pair of conditions $\cT,\cU$ one arrow from $\cT$ to $\cU$ iff $\cT \models \cU$. Since there is at most one arrow between two objects, $\NC^{\models}$ is a preorder.
+\end{definition}
+
+One main concern will be to relate the syntactic categories of conditions, based on structural morphisms, with the semantic category $\NC^{\models}$. 
+
+In order to deal with the several kinds of morphisms introduced before, we will consider a typing system over arrows of $\NC$. For a property \emph{prop} on such arrows, we will write $(\cM \of \cT \to \cV) \of \mathit{prop}$ to state that arrow $\cM$ satisfies it, or simply $\cM \of \mathit{prop}$ if the source and the target conditions of $\cM$ are understood. We will summarize various results relating properties of arrows through inference rules, with the usual meaning: if the typing judgements of the premises are true then also the typing judgement in the consequence is provably true. Therefore every inference rule represents a proof obligation.
+
+Let us start introducing the properties of interest.
+
+\begin{definition}[properties of arrows of $\NC$]
+\label{def:properties}
+\end{definition}
+Let $\cT$ and $\cU$ be conditions with the same root ($I_\cT=I_\cU$) and $\cM \of \cT \to \cU$ be an arrow of $\NC$. Then we will write:
+
+\begin{description}
+    \item[{[\rdir]}] $\cM \of \rdir$ if $\cM$ is source-saturated using only the  direct rule;
+    \item [{[\rchd]}] $\cM \of \rchd$ if $\cM$ is source-saturated using the  direct and the child rules (but not the sibling rule);
+    \item  [{[\rsib]}] $\cM \of \rsib$ if $\cM$ is source-saturated using the  direct and the sibling rules (but not the child rule);
+    \item [{[\pdir]}] $\cM \of \pdir$ if $\cM$ is target-saturated using only the  direct rule;
+    \item [{[\pchd]}] $\cM \of \pchd$ if $\cM$ is target-saturated using the  direct and the child rules;
+    \item [{[\rfl]}] $\cM \of \rfl$ if $\cM$ reflects satisfaction;
+    \item [{[\prs]}] $\cM \of \prs$ if $\cM$ preserves satisfactions;
+\end{description}
+
+Based on the results of the previous section, we can state the following facts.
+
+\begin{proposition}[relations among properties of $\NC$ arrows]
+The following implications, presented as inference rules, hold for all arrows $\cM \of\cT \to \cV$ and $\cN\of \cV \to \cU$: 
+
+$$\infer[{[1]}]{\cI_\cT \of \rdir}{} \quad \infer[{[2]}]{\cM\of \rchd}{\cM\of \rdir} \quad \infer[{[3]}]{\cM\of \rsib}{\cM\of \rdir} \quad \infer[{[4]}]{\cM;\cN\of \rchd}{\cM\of \rchd & \cN \of \rchd}  \quad \infer[{[5]}]{\cM;\cN\of \rsib}{\cM\of \rsib & \cN \of \rsib} $$
+
+$$\infer[{[6]}]{\cM\of \rfl}{\cM\of \rchd} \quad \infer[{[7]}]{\cM\of \rfl}{\cM\of \rsib} \quad \infer[{[8]}]{\cM;\cN\of \rfl}{\cM\of \rfl & \cN \of \rfl} $$ 
+
+$$\infer[{[9]}]{\cI_\cT \of \pdir}{} \quad \infer[{[10]}]{\cM\of \pchd}{\cM\of \pdir} \quad 
+% \infer[{[1]}]{\cM\of \rsib}{\cM\of \rdir} \quad 
+\infer[{[11]}]{\cM;\cN\of \pchd}{\cM\of \pchd & \cN \of \pchd}  $$
+
+$$\infer[{[12]}]{\cM\of \prs}{\cM\of \pchd} \quad
+% \infer{\cM\of \rfl}{\cM\of \rsib} \quad 
+\infer[{[13]}]{\cM;\cN\of \prs}{\cM\of \prs & \cN \of \prs} $$ 
+\end{proposition} 
+
+The properties just summarized allow us to define easily some wide subcategories of $\NC$.
+
+\begin{definition}[subcategories of $\NC$]
+    \begin{itemize}
+    \item $\NC_\rchd$ includes all arrows $\cM$ such that $\cM\of \rchd$; 
+    \item $\NC_\rsib$ includes all arrows $\cM$ such that $\cM\of \rsib$;
+    \item $\NC_\rfl$ includes all arrows $\cM$ such that $\cM\of \rfl$;
+    \item  $\NC_\pchd$ includes all arrows $\cM$ such that $\cM\of \pchd$;
+    \item $\NC_\prs$ includes all arrows $\cM$ such that $\cM\of \prs$.
+    \end{itemize}
+    
+    The above categories are well defined: in fact each class of arrows considered includes identities and is closed under composition. The unit and associativity laws are automatically satisfied because all arrows belong to category $\NC$.     
+\end{definition}
+
+\begin{proposition}[functors among categories of nested conditions]
+    There are obvious inclusion functors 
+    \begin{itemize}
+    \item $\NC_\rchd \hookrightarrow \NC_\rfl$
+    \item $\NC_\rsib \hookrightarrow \NC_\rfl$
+    \item $\NC_\pchd \hookrightarrow \NC_\prs$
+    \item $\NC_\rfl \hookrightarrow \NC$
+    \item $\NC_\prs \hookrightarrow \NC$
+    \end{itemize}
+    Furthermore, the following functors relate syntactic categories of structural morphisms among nested conditions with the preorder of entailment among conditions:
+    \begin{itemize}
+    \item $\NC_\rfl \to \NC^{\models}$
+    \item $\NC_\prs^{op} \to \NC^{\models}$
+    \end{itemize} 
+\end{proposition}
+
+The last two functors state a form of soundness: (1) if there is an $\rfl$-arrow from $\cT$ to $\cU$, then $\cT \entails \cU$, and (2)  if there is a $\prs$-arrow from $\cT$ to $\cU$, then $\cU \entails \cT$. 
+The main goal of the next section is enrich this ``soundness" result to achieve ``completeness''. That is, we introduce further syntactic categories of nested conditions such that there is an arrow betwee two conditions IF AND ONLY IF the first entails the second.
+
+\subsection{Path categories of nested conditions}
+
+\begin{definition}[path category of nested conditions]
+    Let $\NC^*$ be the category having all the objects of $\NC$, and undirected paths of arrows of $\NC$ as arrows, denoted $\cP\of \cT \leadsto \cU$. 
+
+    More explicitly, undirected paths between objects are defined by the following rules, where if $\cM\of \cT \to \cU$ is and arrow of $\NC$ by $\op{\cM}: \cU \leadsto \cT$ we denote the path of length one going the other way around.
+
+    $$ \infer{\cI_\cT\of \cT \leadsto \cT}{\cI_\cT\of \cT \to \cT} \qquad 
+    \infer{\cP \cdot \cM \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cU \to \cV} \qquad 
+    \infer{\cP \cdot \op{\cM} \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cV \to \cU}$$
+
+    The $\op{\_}$ operation extends to paths in the obvious way\todo{AC: there should be a general name for this kind of operation}, so that if $cP\of \cT \leadsto \cU$ then $\op{cP}\of \cU \leadsto \cT$:
+    
+   % $$ \op{\cI_\cT} = \cI_\cT \qquad \op{\cP\cdot \cM} = \op{cM}\cdot \op{\cP} \qquad \op{\cP}\cdot \op{\cM} = \cM\cdot \op{\cP} $$ 
+
+
+\end{definition}
+
