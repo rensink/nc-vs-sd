@@ -58,6 +58,26 @@
 
 \newcommand{\natN}{\mathbb{N}}
 
+\mathchardef\mhyphen="2D
+
+\newcommand{\sdir}[1]{\mathsf{s\mhyphen dir}(#1)}
+\newcommand{\schd}[1]{\mathsf{s\mhyphen chd}(#1)}
+\newcommand{\ssib}[1]{\mathsf{s\mhyphen sib}(#1)}
+
+\newcommand{\issdir}[2]{{#1}:\sdir{#2}}
+\newcommand{\isschd}[2]{{#1}:\schd{#2}}
+\newcommand{\isssib}[2]{{#1}:\ssib{#2}}
+
+
+\newcommand{\rdir}{{\mathsf{r\mhyphen dir}}}
+\newcommand{\rchd}{{\mathsf{r\mhyphen chd}}}
+\newcommand{\rsib}{{\mathsf{r\mhyphen sib}}}
+
+\newcommand{\tdir}{\mathsf{t\mhyphen dir}}
+
+\newcommand{\pdir}{{\mathsf{p\mhyphen dir}}}
+\newcommand{\pchd}{{\mathsf{p\mhyphen chd}}}
+
 \newenvironment{inumerate}{%
   \begin{enumerate*}[label=\emph{(\roman*)}]
 }{%

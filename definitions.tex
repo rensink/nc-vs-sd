@@ -11,9 +11,10 @@
 \item An \emph{open graph morphism} $a\of g\to h$ a pair of graph morphisms $a^I:I_g\to I_h, a^P:P_g\to P_h$ such that $a^I;h=g;a^P$.
 \end{itemize}
 %
-A \emph{condition tree} is a tuple $(V,E,\setof{d_v}_{v\in V},\setof{u_w}_{(v,w)\in C})$ such that
+\begin{definition}[nested condition]\label{def:nested condition}
+A \emph{nested condition} is a tuple $(V,E,\setof{d_v}_{v\in V},\setof{u_w}_{(v,w)\in C})$ such that
 
-\begin{itemize}
+\begin{itemize}[topsep=\smallskipamount]
 \item $V$ is a set of vertices;
 
 \item $C\subseteq V\times V$ is a set of edges representing the parent-child relation, such that one $v\in P$ (the \emph{root}) has no outgoing edge, and all other elements of $V$ have exactly one outgoing edge (to their \emph{parent});
@@ -22,35 +23,35 @@ A \emph{condition tree} is a tuple $(V,E,\setof{d_v}_{v\in V},\setof{u_w}_{(v,w)
 
 \item for all $c=(v,w)\in C$, $u_w\of I_w\to P_v$ is an open graph.
 \end{itemize}
+\end{definition}
 %
-The root of a tree $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
+The root of a nested condition $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$. We often identify the triple $(v,a,w)$ with the open graph morphism $a$, when $v$ and $w$ are clear from the context.
 
-\paragraph{Satisfaction.}
-
-Let $\cT$ be a condition tree. Satisfaction is defined for nodes $v\in V_\cT$ and assignments $g\of I^v\to G$, as follows. $g$ \emph{satisfies $v$}, denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
+\begin{definition}[satisfaction]\label{def:satisfaction}
+Let $\cT$ be a condition tree and $g\of I^v\to G$ an assignment. $g$ \emph{satisfies $v\in V_\cT$}, denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
 \begin{inumerate}
 \item $g=d_v;h$, and 
 \item $u_w;a_P\nsat w$ for all children $w$ of $v$.
 \end{inumerate}
 $h$ is then called a \emph{witness} of $g\sat v$.
 $g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
+\end{definition}
 
 \paragraph{Morphisms.}
 
+\begin{definition}
 Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.
+\end{definition}
+%
+We often write $a\of v\to_\cM w$ rather than $(v,a,w)\in \cM$.
 
 Given a condition tree $\cT$, the identity morphism $\cI_\cT$ is defined as
 \[ \cI_\cT = \setof{(v,\id_{d_v},v)\mid v\in V_\cT} \enspace. \]
 Given two condition tree moprhisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition is defined as
-\begin{align*}
-\cM;\cN = 
-  & \setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cM, (w,b,x)\in \cN} \\
-  & \cup \setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cN, (w,b,x)\in \cM} \enspace.
-\end{align*}
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
-	\setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cM, (w,b,x)\in \cN} \\
-	\setof{(v,a;b,x) \mid \exists w\st (v,a,w)\in \cN, (w,b,x)\in \cM} \enspace.
+	\setof{(v,a;b,x) \mid \exists w\st a\of v\to_\cM w, b\of w\to_\cN x} \\
+	\cup \setof{(v,a;b,x) \mid \exists w\st a\of v\to_\cN w, b\of w\to_\cM x} \enspace.
 \end{array}
 \]
 
@@ -58,41 +59,81 @@ Given two condition tree moprhisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their 
 Condition trees and their morphisms form a category, denoted {\NC}.
 \end{proposition}
 
-\paragraph{Source saturation.}
+We are interested in nested condition morphisms that either preserve or reflect satisfaction, in the following sense.
 
-Given a morphism $\cM$, an element $(v,a,w)\in \cM$ is called \emph{source-saturated} if for every child $x$ of $v$, one of the following holds:
+\begin{definition}
+Let $\cM\of \cT\to\cU$ be a morphism and let $a\of v\to_\cM w$.
+\begin{itemize}[topsep=\smallskipamount]
+\item $a$ \emph{preserves satisfaction} if $a^I;g\sat v$ with witness $h$, where either $w=\rt\cU$ or $g=u_w;g'$ for some $g'$, implies $g\sat w$ with witness $h'$ such that $h=a^P;h'$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
+\item $a$ \emph{reflects satisfaction} if $g\sat w$ with witness $h$ implies $a^I;g\sat v$ with witness $a^P;h$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
+\end{itemize}
+\end{definition}
 
-\begin{enumerate}[label=(\alph*)]
-\item[\emph{Direct.}] There is a child $y$ of $w$ and a source-saturated $(y,b,x)\in\cM$ such that $b^I;u_x;a^P=u_y$.
-\item[\emph{Child}] There is a child $y$ of $x$, a source-saturated $(y,b,w)\in\cM$ and an interface morphism $k\of I_y\to I_x$ such that $k;u_x;a^P=d_y;b^P$.
-\item[\emph{Sibling}] There is a sibling $y$ of $w$, a source-saturated $(y,b,x)\in\cM$ and an interface morphism $k\of I_y\to I_x$ such that $k;d_x=b^I;u_w;a^P$.
-\end{enumerate}
+\paragraph{Saturation.}
+
+To get the right interaction between morphisms and satisfaction, the morphisms have to be \emph{saturated} in a certain sense: a triple $(v,a,w)$ preserves or reflects satisfaction if the morphism contains \emph{supporting} mappings for all children of $w$, respectively all children of $v$. To set up a rich enough framework, we need diverse notions of support.
+
+\begin{definition}[source support]\label{def:support}
+Let $\cM\of \cT\to\cU$ be an NC-morphism. For a given $a\of v\to_\cM w$ and child $x$ of $v$:
+\begin{itemize}[topsep=\smallskipamount]
+\item \emph{(Direct source support.)} $\issdir b{x,a}$ if $b\of y\to_\cM x$ for some child $y$ of $w$ such that $b^I;u_x;a^P=u_y$.
+\item \emph{(Child-based source support.)} $\isschd b{x,a}$ if $b\of y\to_\cM w$ for some child $y$ of $x$ such that $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
+\item \emph{(Sibling-based source support.)} $\isssib b{x,a}$ if $b\of y\to_\cM x$ for some sibling $y$ of $v$ such that $k;d_x=b^I;u_w;a^P$ for some $k\of I_y\to I_w$.
+\end{itemize}
+\end{definition}
 %
-We call $\cM$ source-saturated if $\rt\cM$ is source-saturated.\todo{AR: alternatively, if all elements of $\cM$ are source-saturated}
-
-Vacuously, the condition of source saturation is fulfilled if $v$ does not have children, hence in that case all $(v,a,x)\in \cM$ are source-saturated; this will form the base case of our induction proofs.
-
-The three cases of source saturation are visualised in \cref{fig:source-saturation}.
-
+For a visualisation see \cref{fig:source-saturation}.
+%
 \begin{figure}
-\input{figs/source-saturation}
-\caption{The three options for source-saturation}
-\label{fig:source-saturation}
+	\input{figs/source-saturation}
+	\caption{The notions of support of \cref{def:support}}
+	\label{fig:source-saturation}
 \end{figure}
+%
+Based on these notions of support, we define corresponding notions of \emph{saturation}:
+
+\begin{definition}[syntactic reflection]\label{def:syntactic reflection}
+Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $a\of v\to_\cM w$.
+\begin{itemize}[topsep=\smallskipamount]
+\item \emph{(Direct reflection.)} $a:\rdir$ if for every child $x$ of $v$, there is some $b:\rdir$ such that $\issdir b{x,a}$.
+\item \emph{(Child-based reflection.)} $a:\rchd$ if for every child $x$ of $v$, there is some $b:\rchd$ such that $\issdir b{x,a}$ or $\isschd b{x,a}$.
+\item \emph{(Sibling-based reflection.)} $a:\rsib$ if for every child $x$ of $v$, there is some $b:\rsib$ such that $\issdir b{x,a}$ or $\isssib b{x,a}$.
+\end{itemize}
+\end{definition}
+
+Vacuously, each of the conditions of reflection is fulfilled if $v$ does not have children, hence in that case all $a\of v\to_\cM x$ satisfy $\rdir$, $\rchd$ and $\rsib$; this will form the base case of our induction proofs.
 
 \begin{lemma}[source saturation reflects satisfaction]\label{lem:source-saturation}
-Let $\cM\of\cT\to\cU$ be a condition tree morphism. For all source-saturated $(v,a,w)\in \cM$, if $g\sat w$ with witness $h$, then $a^I;g\sat v$ with witness $a^P;h$. It follows that, if $\cM$ is source-saturated, $g\sat\cU$ implies $g\sat\cT$.
+Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $a\of v\to_\cM w$.
+\begin{enumerate}[topsep=\smallskipamount]
+\item $a:\rdir$ implies that $a$ reflects satisfaction. 
+\item $a:\rchd$ implies that $a$ reflects satisfaction. 
+\item $a:\rsib$ implies that $a$ reflects satisfaction. 
+\end{enumerate}
 \end{lemma}
 
 \paragraph{Target saturation.}
 
-Given a morphism $\cM$, an element $(v,a,w)\in \cM$ is called \emph{target-saturated} if one of the following holds:
+\begin{definition}[target support]\label{def:target support}
+Let $\cM\of \cT\to\cU$ be an NC-morphism, let $a\of v\to_\cM w$ and let $y$ be a child of $w$.
+\begin{itemize}[topsep=\smallskipamount]
+\item \emph{(Direct target support.)} $b:\tdir(y,a)$ if 
+\begin{inumerate}
+\item either $a=\id$ or $w$ is not the root of $\cU$, and there is an arrow $a'\of P_v\to P$, with $P$ the pushout object of $(u_w,d_w)$, and
+\item $b\of y\to_\cM x$ with $x$ a child of $v$.
+\end{inumerate}
+\end{itemize}
+\end{definition}
 
-\begin{enumerate}[label=(\alph*)]
-\item There is a child $x$ of $w$ with $d_x=u_x=d_v$, such that for all children $y$ of $x$ there is a target-saturated $(y,c,w)$
-\end{enumerate}
-
-\begin{lemma}[target saturation preserves satisfaction]
-Let $\cM\of\cT\to\cU$ be a condition tree morphism. For all target-saturated $(v,a,w)\in \cM$, if $a^;g\sat v$ with witness $h$, then $g\sat w$ with witness $h'$ such that $h=a^P;h'$. It follows that, if $\cM$ is target-saturated, $g\sat\cT$ implies $g\sat\cU$.
-\end{lemma}
+\begin{definition}[syntactic preservation]
+Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $a\of v\to_\cM w$.
+\begin{itemize}[topsep=\smallskipamount]
+\item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\tdir(y,a)$ such that $b:\pdir$ .
+\item \emph{(Child-based preservation.)} $a:\pchd$ if one of the following holds:
+\begin{itemize}
+\item for every child $y$ of $w$, there is some $b:\tdir(y,a)$ such that $b:\pchd$;
+\item there is a child $x$ of $v$ with an open graph morphism $c\of d_x\to d_v$, such that for every child $y$ of $x$ there is some $b\of y \to_\cM w$ with $b:\pchd$.
+\end{itemize}
+\end{itemize}
+\end{definition}
 

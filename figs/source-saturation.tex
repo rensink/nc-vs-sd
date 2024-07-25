@@ -1,6 +1,6 @@
-\subcaptionbox{
-  Direct
-}[.25\textwidth]{
+\subcaptionbox*{
+  Direct \\ ($\issdir b{x,a}$)
+}[.25\textwidth][c]{
 \begin{tikzpicture}[on grid,baseline=(Iv)]
 \node (Iv) {};
 \node (Pv) [below=of Iv] {};
@@ -40,8 +40,8 @@
   (I) to node[opengraph,fill=none] {} (P);
 \end{tikzpicture}}%
 %
-\subcaptionbox{
-  Child rule
+\subcaptionbox*{
+  Child-based \\ ($\isschd b{x,a}$)
 }[.4\textwidth]{
 \begin{tikzpicture}[on grid,baseline=(Iv)]
 \node (Iv) {};
@@ -87,29 +87,29 @@
 \end{tikzpicture}
 }%
 %
-\subcaptionbox{
-  Sibling rule
+\subcaptionbox*{
+  Sibling-based \\ ($\isssib b{x,a}$)
 }[.35\textwidth]{
 \begin{tikzpicture}[on grid,baseline=(Iv)]
 \node (Iv) {};
 \node (Pv) [below=of Iv] {};
-\node (Iw) [below=of Pv] {};
-\node (Pw) [below=of Iw] {};
-
-\path
-  (Iv) edge[->] node[opengraph] {} node[right,pos=.6] {$d_v$} (Pv)
-  (Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw)
-  (Iw) edge[->] node[right] {$u_w$} (Pv);
-  
-\node (Ix) [right=2 of Iv] {};
+\node (Ix) [below=of Pv] {};
 \node (Px) [below=of Ix] {};
 
 \path
-  (Ix) edge[->] node[opengraph] {} node[right] {$d_x$} (Px);
+  (Iv) edge[->] node[opengraph] {} node[right,pos=.6] {$d_v$} (Pv)
+  (Ix) edge[->] node[opengraph] {} node[right] {$d_x$} (Px)
+  (Ix) edge[->] node[right] {$u_x$} (Pv);
+  
+\node (Iw) [right=2 of Iv] {};
+\node (Pw) [below=of Iw] {};
+
+\path
+  (Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw);
 
 \path[morphism]
-  (Iv) edge[->] node[above] {$a^I$} (Ix)
-  (Pv) edge[->] node[above] {$a^P$} (Px);
+  (Iv) edge[->] node[above] {$a^I$} (Iw)
+  (Pv) edge[->] node[above] {$a^P$} (Pw);
 
 \node (Iy) [left=1.5 of Iv] {};
 \node (Py) [below=of Iy] {};
@@ -117,16 +117,16 @@
 
 \path[allcolor=gray]
   (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
-  (Iv) edge[->] node[right] {$u_x$} (Pz)
+  (Iv) edge[->] node[right] {$u_v$} (Pz)
   (Iy) edge[->] node[left] {$u_y$} (Pz)
-  (Iy) edge[->,bend right=15] node[above,near start] {$k$} (Ix.south west);
+  (Iy) edge[->,bend right=15] node[above,near start] {$k$} (Iw.south west);
 
 \path[morphism=blue!40!white]
-  (Iy) edge[->] node[left,pos=.6] {$b^I$} (Iw.north west)
-  (Py) edge[->] node[left,pos=.6] {$b^P$} (Pw.north west);
+  (Iy) edge[->] node[left,pos=.6] {$b^I$} (Ix.north west)
+  (Py) edge[->] node[left,pos=.6] {$b^P$} (Px.north west);
 
 % Defs to make sure bottom is aligned
-\node (I) [below=1 of Pw] {};
+\node (I) [below=1 of Px] {};
 \node (P) [below=1 of I] {};
 \path[draw=none]
   (I) to node[opengraph,fill=none] {} (P);
