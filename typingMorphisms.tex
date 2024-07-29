@@ -33,8 +33,8 @@ Let $\cT$ and $\cU$ be conditions with the same root ($I_\cT=I_\cU$) and $\cM \o
     \item  [{[$\rsib$]}] $\cM \of \rsib$ if $\cM$ is source-saturated using the  direct and the sibling rules (but not the child rule);
     \item [{[$\pdir$]}] $\cM \of \pdir$ if $\cM$ is target-saturated using only the  direct rule;
     \item [{[$\pchd$]}] $\cM \of \pchd$ if $\cM$ is target-saturated using the  direct and the child rules;
-    \item [{[$\rfl$]}] $\cM \of \rfl$ if $\cM$ reflects satisfaction;
-    \item [{[$\prs$]}] $\cM \of \prs$ if $\cM$ preserves satisfactions;
+    % \item [{[$\rfl$]}] $\cM \of \rfl$ if $\cM$ reflects satisfaction;
+    % \item [{[$\prs$]}] $\cM \of \prs$ if $\cM$ preserves satisfactions;
 \end{description}
 
 Based on the results of the previous section, we can state the following facts.
@@ -44,16 +44,23 @@ The following implications, presented as inference rules, hold for all arrows $\
 
 $$\infer[{[1]}]{\cI_\cT \of \rdir}{} \quad \infer[{[2]}]{\cM\of \rchd}{\cM\of \rdir} \quad \infer[{[3]}]{\cM\of \rsib}{\cM\of \rdir} \quad \infer[{[4]}]{\cM;\cN\of \rchd}{\cM\of \rchd & \cN \of \rchd}  \quad \infer[{[5]}]{\cM;\cN\of \rsib}{\cM\of \rsib & \cN \of \rsib} $$
 
-$$\infer[{[6]}]{\cM\of \rfl}{\cM\of \rchd} \quad \infer[{[7]}]{\cM\of \rfl}{\cM\of \rsib} \quad \infer[{[8]}]{\cM;\cN\of \rfl}{\cM\of \rfl & \cN \of \rfl} $$ 
 
 $$\infer[{[9]}]{\cI_\cT \of \pdir}{} \quad \infer[{[10]}]{\cM\of \pchd}{\cM\of \pdir} \quad 
 % \infer[{[1]}]{\cM\of \rsib}{\cM\of \rdir} \quad 
 \infer[{[11]}]{\cM;\cN\of \pchd}{\cM\of \pchd & \cN \of \pchd}  $$
+\end{proposition} 
+
+\begin{definition}[properties $\rfl$ and $\prs$]
+    \label{def:prop-rfl-prs}
+    The properties $\rfl$ (provably reflects satisfaction) and $\prs$ (provably preserves satisfaction) are defined by the following rules:
+
+$$\infer[{[6]}]{\cM\of \rfl}{\cM\of \rchd} \quad \infer[{[7]}]{\cM\of \rfl}{\cM\of \rsib} \quad \infer[{[8]}]{\cM;\cN\of \rfl}{\cM\of \rfl & \cN \of \rfl} $$ 
 
 $$\infer[{[12]}]{\cM\of \prs}{\cM\of \pchd} \quad
 % \infer{\cM\of \rfl}{\cM\of \rsib} \quad 
 \infer[{[13]}]{\cM;\cN\of \prs}{\cM\of \prs & \cN \of \prs} $$ 
-\end{proposition} 
+\end{definition}
+
 
 The properties just summarized allow us to define easily some wide subcategories of $\NC$.
 
@@ -80,29 +87,60 @@ The properties just summarized allow us to define easily some wide subcategories
     \end{itemize}
     Furthermore, the following functors relate syntactic categories of structural morphisms among nested conditions with the preorder of entailment among conditions:
     \begin{itemize}
-    \item $\NC_\rfl \to \NC^{\models}$
-    \item $\NC_\prs^{op} \to \NC^{\models}$
+    \item $\NC_\rfl^{op} \to \NC^{\models}$
+    \item $\NC_\prs \to \NC^{\models}$
     \end{itemize} 
 \end{proposition}
 
-The last two functors state a form of soundness: (1) if there is an $\rfl$-arrow from $\cT$ to $\cU$, then $\cT \entails \cU$, and (2)  if there is a $\prs$-arrow from $\cT$ to $\cU$, then $\cU \entails \cT$. 
-The main goal of the next section is enrich this ``soundness" result to achieve ``completeness''. That is, we introduce further syntactic categories of nested conditions such that there is an arrow betwee two conditions IF AND ONLY IF the first entails the second.
+The last two functors state a form of soundness: (1) if there is an $\rfl$-arrow from $\cU$ to $\cT$ , then $\cT \entails \cU$, and (2)  if there is a $\prs$-arrow from $\cT$ to $\cU$, then $\cT \entails \cU$. 
+The main goal of the next section is enrich this ``soundness" result to achieve ``completeness''. That is, we introduce further syntactic categories of nested conditions such that there is an arrow between two conditions IF AND ONLY IF the second entails the first one.
 
 \subsection{Path categories of nested conditions}
 
 \begin{definition}[path category of nested conditions]
     Let $\NC^*$ be the category having all the objects of $\NC$, and undirected paths of arrows of $\NC$ as arrows, denoted $\cP\of \cT \leadsto \cU$. 
 
-    More explicitly, undirected paths between objects are defined by the following rules, where if $\cM\of \cT \to \cU$ is and arrow of $\NC$ by $\op{\cM}: \cU \leadsto \cT$ we denote the path of length one going the other way around.
+    More explicitly, undirected paths between objects are defined by the following rules, where if $\cM\of \cT \to \cU$ is an arrow of $\NC$ by $\op{\cM}: \cU \leadsto \cT$ we denote the path of length one going the other way around.
 
     $$ \infer{\cI_\cT\of \cT \leadsto \cT}{\cI_\cT\of \cT \to \cT} \qquad 
     \infer{\cP \cdot \cM \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cU \to \cV} \qquad 
     \infer{\cP \cdot \op{\cM} \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cV \to \cU}$$
 
-    The $\op{\_}$ operation extends to paths in the obvious way\todo{AC: there should be a general name for this kind of operation}, so that if $cP\of \cT \leadsto \cU$ then $\op{cP}\of \cU \leadsto \cT$:
-    
-   % $$ \op{\cI_\cT} = \cI_\cT \qquad \op{\cP\cdot \cM} = \op{cM}\cdot \op{\cP} \qquad \op{\cP}\cdot \op{\cM} = \cM\cdot \op{\cP} $$ 
+    Alternatively:\todo{AC: I think this is better, as it fits better with the equations. Should }
 
+    $$ \infer{\cI_\cT\of \cT \leadsto \cT}{\cI_\cT\of \cT \to \cT} \qquad 
+    \infer{\cM \of \cT \leadsto \cU}{\cM \of \cT \to \cU} \qquad 
+    \infer{\op{\cM} \of \cU \leadsto \cT}{\cM \of \cT \to \cU}\qquad
+    \infer{\cP \cdot \cQ \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cQ \of \cU \leadsto \cV}$$
+
+    Paths are subject to the obvious equations making $\NC^*$ a category:
+
+    $$ \cI_\cT \cdot \cP = \cP = \cP \cdot \cI_\cU \mbox{\quad if\quad} \cP\of \cT \leadsto \cU$$
+    $$\cP \cdot (\cQ \cdot \cR) = (\cP \cdot \cQ) \cdot \cR$$
+    
+    The $\op{\_}$ operation extends to paths in the obvious way\todo{AC: there should be a general name for this kind of operation}, so that if $\cP\of \cT \leadsto \cU$ then $\op{\cP}\of \cU \leadsto \cT$:
+   $$ \op{\cI}_\cT = \cI_\cT \qquad \op{(\cP\cdot \cM)} = \op{\cM}\cdot \op{\cP} \qquad \op{(\cP\cdot \op{\cM})} = \cM\cdot \op{\cP} $$ 
+   Alternatively:
+$$ \op{\cI}_\cT = \cI_\cT \qquad 
+\op{(\op{\cM})} = \cM \qquad \op{(\cP\cdot \cQ)} = \op{\cQ} \cdot \op{\cP} $$ 
+\end{definition}
+
+We extend now the properties of Definition \ref{def:prop-rfl-prs} to arrows of $\NC^*$.
+
+\begin{definition}[properties of paths]
+    $$\infer{(\cM \of \cT \leadsto \cU)\of \prs}{(\cM \of \cT \to \cU)\of \prs}\qquad \infer{(\cM \of \cT \leadsto \cU)\of \rfl}{(\cM \of \cT \to \cU)\of \rfl}\qquad \infer{(\op{\cM} \of \cU \leadsto \cT)\of \prs}{(\cM \of \cT \to \cU)\of \rfl}
+    \qquad \infer{(\op{\cM} \of \cU \leadsto \cT)\of \rfl}{(\cM \of \cT \to \cU)\of \prs}$$
+$$\infer{\cP\cdot\cQ\of \prs}{\cP\of \prs & \cQ \of \prs} \qquad \infer{\cP\cdot\cQ\of \rfl}{\cP\of \rfl & \cQ \of \rfl} $$
+
+Furhter, let $\NC^*_{\prs}$ be the wide subcategory of $\NC^*$ containing as arrows all the paths $\cP$ such that  $\cP \of \prs$, and similarly $\NC^*_{\rfl}$ be the one containing all paths $\cP$ such that  $\cP \of \rfl$.
 
 \end{definition}
+
+\begin{theorem}[soundness and completeness]
+    There are identity-on-objects functors  $\op{(\NC^*_{\rfl})} \to \NC^{\entails}$ and $\NC^*_{\prs} \to \NC^{\entails}$. Furthermore, both functors are sujective on arrows. 
+
+    That is, for conditions $\cT$, $\cU$ having the same root, if $\cT \entails \cU$ then there is an undirected path $\cP:\cU \leadsto \cT $satisfying property $\rfl$, \dots
+\end{theorem}
+
+
 
