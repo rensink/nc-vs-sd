@@ -36,8 +36,9 @@
 
 
 % Root of a tree
-\newcommand{\rt}[1]{\top_{#1}}
+\newcommand{\rt}[1]{\mathit{rt}_{#1}}
 \newcommand{\setof}[1]{\{{#1}\}}
+\newcommand{\tupof}[1]{\langle #1\rangle}
 \newcommand{\st}{.\;}
 \newcommand{\id}{{\mathit{id}}}
 
@@ -75,7 +76,9 @@
 \newcommand{\rchd}{{\mathsf{r\mhyphen chd}}}
 \newcommand{\rsib}{{\mathsf{r\mhyphen sib}}}
 
-\newcommand{\tdir}{\mathsf{t\mhyphen dir}}
+\newcommand{\tdir}[1]{\mathsf{t\mhyphen dir}(#1)}
+
+\newcommand{\istdir}[2]{{#1}:\tdir{#2}}
 
 \newcommand{\pdir}{{\mathsf{p\mhyphen dir}}}
 \newcommand{\pchd}{{\mathsf{p\mhyphen chd}}}

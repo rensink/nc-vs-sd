@@ -12,23 +12,23 @@
 \end{itemize}
 %
 \begin{definition}[nested condition]\label{def:nested condition}
-A \emph{nested condition} is a tuple $(V,E,\setof{d_v}_{v\in V},\setof{u_w}_{(v,w)\in C})$ such that
+A \emph{nested condition} is a tuple $\tupof{V, E, \setof{d_v}_{v\in V}, \setof{u_w}_{(v,w)\in C}}$ such that
 
 \begin{itemize}[topsep=\smallskipamount]
 \item $V$ is a set of vertices;
 
-\item $C\subseteq V\times V$ is a set of edges representing the parent-child relation, such that one $v\in P$ (the \emph{root}) has no outgoing edge, and all other elements of $V$ have exactly one outgoing edge (to their \emph{parent});
+\item $C\subseteq V\times V$ is a set of edges representing the parent-child relation, such that one $v\in P$ (the \emph{root}) has no incoming edge, and all other elements of $V$ have exactly one incoming edge (from their \emph{parent});
 
 \item for all $v\in V$, $d_v$ is an open graph. We denote $I_v=I_{d_v}$ and $P_v=P_{d_v}$.
 
-\item for all $c=(v,w)\in C$, $u_w\of I_w\to P_v$ is an open graph.
+\item for all $c=(v,w)\in C$, $u_w$ is an open graph with $I_{c_w}=I_v$ and $P_{c_w}=P_w$.
 \end{itemize}
 \end{definition}
 %
-The root of a nested condition $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$. We often identify the triple $(v,a,w)$ with the open graph morphism $a$, when $v$ and $w$ are clear from the context.
+The root of a nested condition $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
-Let $\cT$ be a condition tree and $g\of I^v\to G$ an assignment. $g$ \emph{satisfies $v\in V_\cT$}, denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
+Let $\cT$ be a condition tree and $g\of I_v\to G$ an assignment. $g$ \emph{satisfies $v\in V_\cT$}, denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
 \begin{inumerate}
 \item $g=d_v;h$, and 
 \item $u_w;a_P\nsat w$ for all children $w$ of $v$.
@@ -36,10 +36,10 @@ Let $\cT$ be a condition tree and $g\of I^v\to G$ an assignment. $g$ \emph{satis
 $h$ is then called a \emph{witness} of $g\sat v$.
 $g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
 \end{definition}
+%
+If $g$ satisfies $v$ $\cT$], we also call $g$ a \emph{$v$-model} [$\cT$-model].
 
-\paragraph{Morphisms.}
-
-\begin{definition}
+\begin{definition}[morphism]
 Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.
 \end{definition}
 %
@@ -61,11 +61,11 @@ Condition trees and their morphisms form a category, denoted {\NC}.
 
 We are interested in nested condition morphisms that either preserve or reflect satisfaction, in the following sense.
 
-\begin{definition}
+\begin{definition}[preservation and reflection of models]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item $a$ \emph{preserves satisfaction} if $a^I;g\sat v$ with witness $h$, where either $w=\rt\cU$ or $g=u_w;g'$ for some $g'$, implies $g\sat w$ with witness $h'$ such that $h=a^P;h'$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
-\item $a$ \emph{reflects satisfaction} if $g\sat w$ with witness $h$ implies $a^I;g\sat v$ with witness $a^P;h$. $\cM$ preserves satisfaction if $\rt\cM$ preserves satisfaction.
+\item $a$ \emph{preserves} a $v$-model $g\sat v$ with witness $h$ if $g=a^I;g'$ and $h=a^P;h'$ for some $g',h'$ such that $g'\sat w$ with witness $h'$. $\cM$ preserves models if $\rt\cM$ preserves all $v$-models erasing $\id$.
+\item $a$ \emph{reflects} a $w$-model $g\sat w$ with witness $h$ if $a^I;g\sat v$ with witness $a^P;h$. $\cM$ reflects models if $\rt\cM$ reflects all $w$-models adding $\id$.
 \end{itemize}
 \end{definition}
 
@@ -117,21 +117,29 @@ Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
 \begin{definition}[target support]\label{def:target support}
 Let $\cM\of \cT\to\cU$ be an NC-morphism, let $\trip vaw\in\cM$ and let $y$ be a child of $w$.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct target support.)} $b:\tdir(y,a)$ if 
+\item \emph{(Direct target support.)} $b:\tdir{y,a}$ if 
 \begin{inumerate}
-\item either $a=\id$ or $w$ is not the root of $\cU$, and there is an arrow $a'\of P_v\to P$, with $P$ the pushout object of $(u_w,d_w)$, and
-\item $\trip ybx\in \cM$ with $x$ a child of $v$.
+\item $v=\rt\cT$ and $a=\id$, or $v\neq\rt\cT$ and there is an arrow $a'\of P_w\to P$ with $P$ the pushout object of $(u_v,d_v)$; and
+\item $\trip ybx\in \cM$ for some child $x$ of $v$, such that $b^I;u_x;a^P=u_y$.
 \end{inumerate}
 \end{itemize}
 \end{definition}
+%
+For a visualisation see \cref{fig:target-saturation}.
+%
+\begin{figure}
+	\input{figs/target-saturation}
+	\caption{The notions of support of \cref{def:target support}}
+	\label{fig:target-saturation}
+\end{figure}
 
 \begin{definition}[syntactic preservation]
 Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\tdir(y,a)$ such that $b:\pdir$ .
+\item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pdir$ .
 \item \emph{(Child-based preservation.)} $a:\pchd$ if one of the following holds:
 \begin{itemize}
-\item for every child $y$ of $w$, there is some $b:\tdir(y,a)$ such that $b:\pchd$;
+\item for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pchd$;
 \item there is a child $x$ of $v$ with an open graph morphism $c\of d_x\to d_v$, such that for every child $y$ of $x$ there is some $\trip ybw\in\cM$ with $b:\pchd$.
 \end{itemize}
 \end{itemize}
