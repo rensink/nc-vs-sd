@@ -100,13 +100,13 @@ The main goal of the next section is enrich this ``soundness" result to achieve 
 \begin{definition}[path category of nested conditions]
     Let $\NC^*$ be the category having all the objects of $\NC$, and undirected paths of arrows of $\NC$ as arrows, denoted $\cP\of \cT \leadsto \cU$. 
 
-    More explicitly, undirected paths between objects are defined by the following rules, where if $\cM\of \cT \to \cU$ is an arrow of $\NC$ by $\op{\cM}: \cU \leadsto \cT$ we denote the path of length one going the other way around.
+    More explicitly, undirected paths between objects are defined by the following rules, where if $\cM\of \cT \to \cU$ is an arrow of $\NC$ by $\op{\cM}: \cU \leadsto \cT$ we denote the correponding path going the other way around:
 
-    $$ \infer{\cI_\cT\of \cT \leadsto \cT}{\cI_\cT\of \cT \to \cT} \qquad 
-    \infer{\cP \cdot \cM \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cU \to \cV} \qquad 
-    \infer{\cP \cdot \op{\cM} \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cV \to \cU}$$
+    % $$ \infer{\cI_\cT\of \cT \leadsto \cT}{\cI_\cT\of \cT \to \cT} \qquad 
+    % \infer{\cP \cdot \cM \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cU \to \cV} \qquad 
+    % \infer{\cP \cdot \op{\cM} \of \cT \leadsto \cV}{\cP\of \cT \leadsto \cU & \cM \of \cV \to \cU}$$
 
-    Alternatively:\todo{AC: I think this is better, as it fits better with the equations. Should }
+    % Alternatively:\todo{AC: I think this is better, as it fits better with the equations. Should }
 
     $$ \infer{\cI_\cT\of \cT \leadsto \cT}{\cI_\cT\of \cT \to \cT} \qquad 
     \infer{\cM \of \cT \leadsto \cU}{\cM \of \cT \to \cU} \qquad 
@@ -119,8 +119,8 @@ The main goal of the next section is enrich this ``soundness" result to achieve 
     $$\cP \cdot (\cQ \cdot \cR) = (\cP \cdot \cQ) \cdot \cR$$
     
     The $\op{\_}$ operation extends to paths in the obvious way\todo{AC: there should be a general name for this kind of operation}, so that if $\cP\of \cT \leadsto \cU$ then $\op{\cP}\of \cU \leadsto \cT$:
-   $$ \op{\cI}_\cT = \cI_\cT \qquad \op{(\cP\cdot \cM)} = \op{\cM}\cdot \op{\cP} \qquad \op{(\cP\cdot \op{\cM})} = \cM\cdot \op{\cP} $$ 
-   Alternatively:
+%    $$ \op{\cI}_\cT = \cI_\cT \qquad \op{(\cP\cdot \cM)} = \op{\cM}\cdot \op{\cP} \qquad \op{(\cP\cdot \op{\cM})} = \cM\cdot \op{\cP} $$ 
+%    Alternatively:
 $$ \op{\cI}_\cT = \cI_\cT \qquad 
 \op{(\op{\cM})} = \cM \qquad \op{(\cP\cdot \cQ)} = \op{\cQ} \cdot \op{\cP} $$ 
 \end{definition}
@@ -128,9 +128,15 @@ $$ \op{\cI}_\cT = \cI_\cT \qquad
 We extend now the properties of Definition \ref{def:prop-rfl-prs} to arrows of $\NC^*$.
 
 \begin{definition}[properties of paths]
-    $$\infer{(\cM \of \cT \leadsto \cU)\of \prs}{(\cM \of \cT \to \cU)\of \prs}\qquad \infer{(\cM \of \cT \leadsto \cU)\of \rfl}{(\cM \of \cT \to \cU)\of \rfl}\qquad \infer{(\op{\cM} \of \cU \leadsto \cT)\of \prs}{(\cM \of \cT \to \cU)\of \rfl}
-    \qquad \infer{(\op{\cM} \of \cU \leadsto \cT)\of \rfl}{(\cM \of \cT \to \cU)\of \prs}$$
-$$\infer{\cP\cdot\cQ\of \prs}{\cP\of \prs & \cQ \of \prs} \qquad \infer{\cP\cdot\cQ\of \rfl}{\cP\of \rfl & \cQ \of \rfl} $$
+    $$
+    %\infer{(\cM \of \cT \leadsto \cU)\of \prs}{(\cM \of \cT \to \cU)\of \prs}
+    % \qquad \infer{(\cM \of \cT \leadsto \cU)\of \rfl}{(\cM \of \cT \to \cU)\of \rfl} 
+    \qquad \infer{\cM \of \cT \leadsto \cU)\of \rfl}{(\cM \of \cT \to \cU)\of \rfl} 
+    %\qquad \infer{(\op{\cM} \of \cU \leadsto \cT)\of \prs}{(\cM \of \cT \to \cU)\of \rfl}
+    \qquad \infer{(\op{\cM} \of \cU \leadsto \cT)\of \rfl}{(\cM \of \cT \to \cU)\of \prs}
+    \qquad \infer{\cP\cdot\cQ\of \rfl}{\cP\of \rfl & \cQ \of \rfl} 
+    \qquad \infer{\op{\cP} \of \prs}{\cP\of \rfl} $$
+% $$\infer{\cP\cdot\cQ\of \prs}{\cP\of \prs & \cQ \of \prs} \qquad \infer{\cP\cdot\cQ\of \rfl}{\cP\of \rfl & \cQ \of \rfl} $$
 
 Furhter, let $\NC^*_{\prs}$ be the wide subcategory of $\NC^*$ containing as arrows all the paths $\cP$ such that  $\cP \of \prs$, and similarly $\NC^*_{\rfl}$ be the one containing all paths $\cP$ such that  $\cP \of \rfl$.
 
