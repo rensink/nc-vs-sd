@@ -37,7 +37,7 @@ $h$ is then called a \emph{witness} of $g\sat v$.
 $g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
 \end{definition}
 %
-If $g$ satisfies $v$ $\cT$], we also call $g$ a \emph{$v$-model} [$\cT$-model].
+If $g$ satisfies $v$ [$\cT$], we also call $g$ a \emph{$v$-model} [$\cT$-model].
 
 \begin{definition}[morphism]
 Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.
@@ -64,8 +64,8 @@ We are interested in nested condition morphisms that either preserve or reflect 
 \begin{definition}[preservation and reflection of models]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item $a$ \emph{preserves} a $v$-model $g\sat v$ with witness $h$ if $g=a^I;g'$ and $h=a^P;h'$ for some $g',h'$ such that $g'\sat w$ with witness $h'$. $\cM$ preserves models if $\rt\cM$ preserves all $v$-models erasing $\id$.
-\item $a$ \emph{reflects} a $w$-model $g\sat w$ with witness $h$ if $a^I;g\sat v$ with witness $a^P;h$. $\cM$ reflects models if $\rt\cM$ reflects all $w$-models adding $\id$.
+\item $a$ \emph{preserves} a $v$-model $g\sat v$ with witness $h$ if $g=a^I;g'$ and $h=a^P;h'$ for some $g',h'$ such that $g'\sat w$ with witness $h'$. $\cM$ preserves models if $\rt\cM$ preserves all $v$-models.
+\item $a$ \emph{reflects} a $w$-model $g\sat w$ with witness $h$ if $a^I;g\sat v$ with witness $a^P;h$. $\cM$ reflects models if $\rt\cM$ reflects all $w$-models.
 \end{itemize}
 \end{definition}
 
@@ -136,7 +136,7 @@ For a visualisation see \cref{fig:target-saturation}.
 \begin{definition}[syntactic preservation]
 Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pdir$ .
+\item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pdir$.
 \item \emph{(Child-based preservation.)} $a:\pchd$ if one of the following holds:
 \begin{itemize}
 \item for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pchd$;
