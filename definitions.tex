@@ -11,8 +11,8 @@
 \item An \emph{open graph morphism} $a\of g\to h$ a pair of graph morphisms $a^I:I_g\to I_h, a^P:P_g\to P_h$ such that $a^I;h=g;a^P$.
 \end{itemize}
 %
-\begin{definition}[nested condition]\label{def:nested condition}
-A \emph{nested condition} is a tuple $\tupof{V, E, \setof{d_v}_{v\in V}, \setof{u_w}_{(v,w)\in C}}$ such that
+\begin{definition}[condition tree]\label{def:condition tree}
+A \emph{condition tree} is a tuple $\cT=\tupof{V, C, \setof{d_v}_{v\in V}, \setof{u_w}_{(v,w)\in C}}$ such that
 
 \begin{itemize}[topsep=\smallskipamount]
 \item $V$ is a set of vertices;
@@ -25,7 +25,7 @@ A \emph{nested condition} is a tuple $\tupof{V, E, \setof{d_v}_{v\in V}, \setof{
 \end{itemize}
 \end{definition}
 %
-The root of a nested condition $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
+The root of a condition tree $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
 Let $\cT$ be a condition tree and $g\of I_v\to G$ an assignment. $g$ \emph{satisfies $v\in V_\cT$}, denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
@@ -47,7 +47,7 @@ We typically denote a triple $(v,a,w)$ of the kind above as $v\trans a w$.
 
 Given a condition tree $\cT$, the identity morphism $\cI_\cT$ is defined as
 \[ \cI_\cT = \setof{\trip v{\id_{d_v}}v \mid v\in V_\cT} \enspace. \]
-Given two condition tree moprhisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition is defined as
+Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition is defined as
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
 	\setof{\trip v{a;b}x \mid \exists s\st \trip v a w\in\cM, \trip wbx\in \cN} \\
@@ -56,10 +56,10 @@ Given two condition tree moprhisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their 
 \]
 
 \begin{proposition}
-Condition trees and their morphisms form a category, denoted {\NC}.
+Condition trees and their morphisms form a category, denoted {\CT}.
 \end{proposition}
 
-We are interested in nested condition morphisms that either preserve or reflect satisfaction, in the following sense.
+We are interested in condition tree morphisms that either preserve or reflect satisfaction, in the following sense.
 
 \begin{definition}[preservation and reflection of models]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
@@ -74,7 +74,7 @@ Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 To get the right interaction between morphisms and satisfaction, the morphisms have to be \emph{saturated} in a certain sense: a triple $(v,a,w)$ preserves or reflects satisfaction if the morphism contains \emph{supporting} mappings for all children of $w$, respectively all children of $v$. To set up a rich enough framework, we need diverse notions of support.
 
 \begin{definition}[source support]\label{def:support}
-Let $\cM\of \cT\to\cU$ be an NC-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$:
+Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$:
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct source support.)} $\issdir b{x,a}$ if $\trip ybx\in\cM$ for some child $y$ of $w$ such that $b^I;u_x;a^P=u_y$.
 \item \emph{(Child-based source support.)} $\isschd b{x,a}$ if $\trip ybw\in\cM$ for some child $y$ of $x$ such that $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
@@ -93,7 +93,7 @@ For a visualisation see \cref{fig:source-saturation}.
 Based on these notions of support, we define corresponding notions of \emph{saturation}:
 
 \begin{definition}[syntactic reflection]\label{def:syntactic reflection}
-Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $\trip vaw\in\cM$.
+Let $\cM\of \cT\to\cU$ be an CT-morphism, and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct reflection.)} $a:\rdir$ if for every child $x$ of $v$, there is some $b:\rdir$ such that $\issdir b{x,a}$.
 \item \emph{(Child-based reflection.)} $a:\rchd$ if for every child $x$ of $v$, there is some $b:\rchd$ such that $\issdir b{x,a}$ or $\isschd b{x,a}$.
@@ -103,7 +103,7 @@ Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $\trip vaw\in\cM$.
 
 Vacuously, each of the conditions of reflection is fulfilled if $v$ does not have children, hence in that case all $\trip vax$ satisfy $\rdir$, $\rchd$ and $\rsib$; this will form the base case of our induction proofs.
 
-\begin{lemma}[source saturation reflects satisfaction]\label{lem:source-saturation}
+\begin{lemma}[syntactic reflection implies semantic reflection]\label{lem:reflection}
 Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
 \begin{enumerate}[topsep=\smallskipamount]
 \item $a:\rdir$ implies that $a$ reflects satisfaction. 
@@ -115,7 +115,7 @@ Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
 \paragraph{Target saturation.}
 
 \begin{definition}[target support]\label{def:target support}
-Let $\cM\of \cT\to\cU$ be an NC-morphism, let $\trip vaw\in\cM$ and let $y$ be a child of $w$.
+Let $\cM\of \cT\to\cU$ be an CT-morphism, let $\trip vaw\in\cM$ and let $y$ be a child of $w$.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct target support.)} $b:\tdir{y,a}$ if 
 \begin{inumerate}
@@ -134,7 +134,7 @@ For a visualisation see \cref{fig:target-saturation}.
 \end{figure}
 
 \begin{definition}[syntactic preservation]
-Let $\cM\of \cT\to\cU$ be an NC-morphism, and let $\trip vaw\in\cM$.
+Let $\cM\of \cT\to\cU$ be an CT-morphism, and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pdir$.
 \item \emph{(Child-based preservation.)} $a:\pchd$ if one of the following holds:
