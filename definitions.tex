@@ -21,17 +21,17 @@ A \emph{condition tree} is a tuple $\cT=\tupof{V, C, \setof{d_v}_{v\in V}, \seto
 
 \item for all $v\in V$, $d_v$ is an open graph. We denote $I_v=I_{d_v}$ and $P_v=P_{d_v}$.
 
-\item for all $c=(v,w)\in C$, $u_w$ is an open graph with $I_{c_w}=I_v$ and $P_{c_w}=P_w$.
+\item for all $c=(v,w)\in C$, $u_w$ is an open graph with $I_{c_w}=I_v$ and $P_{c_w}=P_w$. \todo{AC:I read $(v,w)$ as the edge from the parent $v$  to the child $w$. Then $u_w$ is simply a morphism $u_w \of I_w \to P_v$. Or, if seen as an open graph, $I_{u_w}=I_w$ and $P_{u_w}=P_v$}
 \end{itemize}
 \end{definition}
 %
 The root of a condition tree $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
-Let $\cT$ be a condition tree and $g\of I_v\to G$ an assignment. $g$ \emph{satisfies $v\in V_\cT$}, denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
+Let $\cT$ be a condition tree, $v$ a vertex $v\in V_\cT$,  and $g\of I_v\to G$ an assignment. $g$ \emph{satisfies $v$},\todo{AC: better $g$ satisfies $\hat v$? Then we don't need a special case for $\cT$, as $\cT = \widehat{\rt\cT}$.} denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
 \begin{inumerate}
 \item $g=d_v;h$, and 
-\item $u_w;a_P\nsat w$ for all children $w$ of $v$.
+\item $u_w;h\nsat w$ for all children $w$ of $v$.
 \end{inumerate}
 $h$ is then called a \emph{witness} of $g\sat v$.
 $g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
@@ -40,7 +40,7 @@ $g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
 If $g$ satisfies $v$ [$\cT$], we also call $g$ a \emph{$v$-model} [$\cT$-model].
 
 \begin{definition}[morphism]
-Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.
+Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.\todo{AC: Formally a morphism should be a set of triples + a distinguished triple $\rt\cM$, which is needed to fix source and target (because in principle there could be more triples between the roots). If so, the distinguished triple should be handled in what follows.}
 \end{definition}
 %
 We typically denote a triple $(v,a,w)$ of the kind above as $v\trans a w$.
@@ -50,7 +50,7 @@ Given a condition tree $\cT$, the identity morphism $\cI_\cT$ is defined as
 Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition is defined as
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
-	\setof{\trip v{a;b}x \mid \exists s\st \trip v a w\in\cM, \trip wbx\in \cN} \\
+	\setof{\trip v{a;b}x \mid \exists w\st \trip v a w\in\cM, \trip wbx\in \cN} \\
 	\cup \setof{\trip v{a;b}x \mid \exists w\st \trip vaw\in\cN, \trip wbx\in\cM} \enspace.
 \end{array}
 \]
@@ -64,8 +64,8 @@ We are interested in condition tree morphisms that either preserve or reflect sa
 \begin{definition}[preservation and reflection of models]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item $a$ \emph{preserves} a $v$-model $g\sat v$ with witness $h$ if $g=a^I;g'$ and $h=a^P;h'$ for some $g',h'$ such that $g'\sat w$ with witness $h'$. $\cM$ preserves models if $\rt\cM$ preserves all $v$-models.
-\item $a$ \emph{reflects} a $w$-model $g\sat w$ with witness $h$ if $a^I;g\sat v$ with witness $a^P;h$. $\cM$ reflects models if $\rt\cM$ reflects all $w$-models.
+\item $a$ \emph{preserves} a $v$-model $g\sat v$ with witness $h$ if $g=a^I;g'$ and $h=a^P;h'$ for some $g',h'$ such that $g'\sat w$ with witness $h'$. $\cM$ preserves models if $\rt\cM$ preserves all $v$-models.\todo{AC: should be $\cT$-models?}
+\item $a$ \emph{reflects} a $w$-model $g\sat w$ with witness $h$ if $a^I;g\sat v$ with witness $a^P;h$. $\cM$ reflects models if $\rt\cM$ reflects all $w$-models. \todo{AC: all $\cU$-models?}
 \end{itemize}
 \end{definition}
 
@@ -78,7 +78,7 @@ Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and chil
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct source support.)} $\issdir b{x,a}$ if $\trip ybx\in\cM$ for some child $y$ of $w$ such that $b^I;u_x;a^P=u_y$.
 \item \emph{(Child-based source support.)} $\isschd b{x,a}$ if $\trip ybw\in\cM$ for some child $y$ of $x$ such that $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
-\item \emph{(Sibling-based source support.)} $\isssib b{x,a}$ if $\trip ybx\in\cM$ for some sibling $y$ of $v$ such that $k;d_x=b^I;u_w;a^P$ for some $k\of I_y\to I_w$.
+\item \emph{(Sibling-based source support.)} $\isssib b{x,a}$ if $\trip ybx\in\cM$ for some sibling $y$ of $v$ such that $k;d_w=b^I;u_x;a^P$ for some $k\of I_y\to I_w$.
 \end{itemize}
 \end{definition}
 %
@@ -101,7 +101,7 @@ Let $\cM\of \cT\to\cU$ be an CT-morphism, and let $\trip vaw\in\cM$.
 \end{itemize}
 \end{definition}
 
-Vacuously, each of the conditions of reflection is fulfilled if $v$ does not have children, hence in that case all $\trip vax$ satisfy $\rdir$, $\rchd$ and $\rsib$; this will form the base case of our induction proofs.
+Vacuously, each of the conditions of reflection is fulfilled if $v$ does not have children, hence in that case all $\trip vaw$ satisfy $\rdir$, $\rchd$ and $\rsib$; this will form the base case of our induction proofs.
 
 \begin{lemma}[syntactic reflection implies semantic reflection]\label{lem:reflection}
 Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.

@@ -1,14 +1,13 @@
-
-
-Arend
-- festschrift
-- swap direcion of morphims - done
-
-Journal submission
-- completeness for arrow bsed conditions
-- logical operators: AND, OR, NEG, 
+Journal submission [after FestColloquim]
+- include additionally:
+  - correspondance between NGC and FOL formulas
+  - explicit read-back: from condition to formula
+  - from formula to conditions give a construction for and/or/not/exists
+  - section on computable entailment 
+  - I would like to get rid of I_{X,Y}, the empty shifters. 
+- completeness for arrow based conditions - NO
 - Existential quantification: relations with backward shift, properties? Adjointness? Not clear. Relation with shift????
-- logical characterization of provable entailment
+- logical characterization of provable entailment ??? sarebbe bello
 
 String diagrams
 - justifcation of using discrete interfaces
@@ -20,12 +19,33 @@ String diagrams
 - we induce morphisms on string diagrams, which is sound and complete wrt entailment 
 
 Condition trees
-- objects: condition trees 
-- morphisms: arbitrary collections of (v,a,w) a:v->w open graph morphism (in any direction)
-- composition defined whenever it exists
-- conditions on morphisms
-  - reflect/preserve satisfaciton (smemantically)
-  - reflect satisfaciton structurally (standard/doble negation (convolution) rule/sibling rule)
-  - preserve satisfaciton structurally (child rule forall)
-- typing morphisms according to properties leading to several categories 
+- objects: condition trees - trees of open graphs (graphs with interface) where sons have a morphims from interface to body of parent  DONE
+- morphisms: arbitrary collections of (v,a,w) a:v->w open graph morphism (in any direction) DONE
+- composition defined whenever it exists DONE
+- conditions on morphisms (type system)
+  - reflect/preserve satisfaciton (semantically) DONE
+  - reflect satisfaciton structurally (standard/double negation (convolution) rule/sibling rule) DONE
+  - preserve satisfaciton structurally (child rule forall) DONE
+
+- typing morphisms according to properties leading to several categories DONE
+
+Entailment of CTs and of FOL formulas. Is it obvious that they coincide?
+
+T \entails U iff [[T]] \entails [[U]] 
+\Phi entails \Psi iff CT[\Phi] \entails CT[\Psi]
+
+Shoudl be, but proof obligation? Should relate satisfaciton for CT's with satisfaction for FOL. 
+
+
+Main result: there are indentity-on-object functors (CT*_{rfl})^{op} \to CT^\entails and CT*_{prs} to CT^\entails which are surjective on obejcts.
+Existence: trivial f all definitions are stated correctly, because a path from U to V in (CT*_{rfl})^{op} is made of arrows which are mapped (taking the right direction) to entailments.
+Surjectivity:
+T \entails U means that there is an undirected path form U to T.
+
+T \entails U means [[T]] \entails [[U]], by the above.
+By completenss of FOL-string diagrams, in a suitable hom there is 
+SD([[U]]) <= SD([[T]]). <= is witnessed by? *** check how completeness work in the paper by Pippo.
+Then mimic it by translating CT into string diagrams.... 
+
+
 
