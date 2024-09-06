@@ -39,6 +39,8 @@ $g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
 %
 If $g$ satisfies $v$ [$\cT$], we also call $g$ a \emph{$v$-model} [$\cT$-model].
 
+\todo[inline]{At this point introduce the connection from condition trees to FOL}
+
 \begin{definition}[morphism]
 Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.\todo{AC: Formally a morphism should be a set of triples + a distinguished triple $\rt\cM$, which is needed to fix source and target (because in principle there could be more triples between the roots). If so, the distinguished triple should be handled in what follows.}
 \end{definition}
