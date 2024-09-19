@@ -17,32 +17,31 @@ A \emph{condition tree} is a tuple $\cT=\tupof{V, C, \setof{d_v}_{v\in V}, \seto
 \begin{itemize}[topsep=\smallskipamount]
 \item $V$ is a set of vertices;
 
-\item $C\subseteq V\times V$ is a set of edges representing the parent-child relation, such that one $v\in P$ (the \emph{root}) has no incoming edge, and all other elements of $V$ have exactly one incoming edge (from their \emph{parent});
+\item $C\subseteq V\times V$ is a set of edges representing the parent-child relation, such that one $v\in P$ (the \emph{root}) has no incoming edge, and all other elements of $V$ have exactly one incoming edge (from their \emph{parent}, denoted $\parentof v$);
 
 \item for all $v\in V$, $d_v$ is an open graph. We denote $I_v=I_{d_v}$ and $P_v=P_{d_v}$.
 
-\item for all $c=(v,w)\in C$, $u_w$ is an open graph with $I_{c_w}=I_v$ and $P_{c_w}=P_w$. \todo{AC:I read $(v,w)$ as the edge from the parent $v$  to the child $w$. Then $u_w$ is simply a morphism $u_w \of I_w \to P_v$. Or, if seen as an open graph, $I_{u_w}=I_w$ and $P_{u_w}=P_v$}
+\item for all $c=(v,w)\in C$, $u_w$ is a graph morphism $I_w\to P_c$.
 \end{itemize}
 \end{definition}
 %
-The root of a condition tree $\cT$ is denoted $\rt\cT$; its \emph{root interface} is $I_\cT=I_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$.
+The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parentof v$ denotes $v$'s parent.
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
-Let $\cT$ be a condition tree, $v$ a vertex $v\in V_\cT$,  and $g\of I_v\to G$ an assignment. $g$ \emph{satisfies $v$},\todo{AC: better $g$ satisfies $\hat v$? Then we don't need a special case for $\cT$, as $\cT = \widehat{\rt\cT}$.} denoted $g\sat v$, if there is a graph morphism $h\of P^v\to g$ such that
+Let $\cT$ be a condition tree and $g\of I_\cT\to G$ an assignment. $g$ \emph{satisfies $\cT$} denoted $g\sat \cT$, if there is a graph morphism $h\of P_\cT\to G$ such that
 \begin{inumerate}
-\item $g=d_v;h$, and 
-\item $u_w;h\nsat w$ for all children $w$ of $v$.
+\item $g=d_\cT;h$, and 
+\item $u_v;h\nsat \hat v$ for all children $v$ of $\rt\cT$.
 \end{inumerate}
-$h$ is then called a \emph{witness} of $g\sat v$.
-$g$ satisfies $\cT$, denoted $g\sat\cT$, if $g\sat\rt\cT$.
+$h$ is then called a \emph{witness} of $g\sat \cT$.
 \end{definition}
 %
-If $g$ satisfies $v$ [$\cT$], we also call $g$ a \emph{$v$-model} [$\cT$-model].
+If $g$ satisfies $\cT$, we also call $g$ a $\cT$-model.
 
 \todo[inline]{At this point introduce the connection from condition trees to FOL}
 
 \begin{definition}[morphism]
-Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism, such that $\rt\cM=(\rt\cT,(\id,r),\rt\cU)\in \cM$ for some $r$.\todo{AC: Formally a morphism should be a set of triples + a distinguished triple $\rt\cM$, which is needed to fix source and target (because in principle there could be more triples between the roots). If so, the distinguished triple should be handled in what follows.}
+Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism. $\cM$ has a distinguished element $\rt\cM$, called the \emph{root}, of the shape $\rt\cM=(\rt\cT,(\id_I,r),\rt\cU)\in \cM$ for some $r$.
 \end{definition}
 %
 We typically denote a triple $(v,a,w)$ of the kind above as $v\trans a w$.
@@ -60,20 +59,25 @@ Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their 
 \begin{proposition}
 Condition trees and their morphisms form a category, denoted {\CT}.
 \end{proposition}
+%
+We are interested in condition tree morphisms that either preserve or reflect models. In order to reason about this, we have to define the notions of preservation and reflection of models not just for morphisms, but for arbitrary triples $\trip vaw$ in those morphisms. For such a triple, in general $I_v$ and $I_w$ do not coincide (and even if they do, $a^I$ in general not an isomorphism). This means that the model sets of $\hat v$ and $\hat w$ can only be expected to be related modulo $a^I$, in the sense that we relate candidate $\hat v$-models $g_v:I_v\to G$ to candidate models $\hat w$-models $g_w:I_w\to G$ for which $g_v=a^I;g_w$.\footnote{In a previous paper \cite{RensCorr}, we distinguished \emph{reflection while adding $a^I$} and \emph{preservation while subtracting $a^I$}.}
 
-We are interested in condition tree morphisms that either preserve or reflect satisfaction, in the following sense.
+\subsection{Model reflection}
 
-\begin{definition}[preservation and reflection of models]
+With the above in mind, we first define reflection of models, this being the easier of the two.
+
+\begin{definition}[model reflection]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
-\begin{itemize}[topsep=\smallskipamount]
-\item $a$ \emph{preserves} a $v$-model $g\sat v$ with witness $h$ if $g=a^I;g'$ and $h=a^P;h'$ for some $g',h'$ such that $g'\sat w$ with witness $h'$. $\cM$ preserves models if $\rt\cM$ preserves all $v$-models.\todo{AC: should be $\cT$-models?}
-\item $a$ \emph{reflects} a $w$-model $g\sat w$ with witness $h$ if $a^I;g\sat v$ with witness $a^P;h$. $\cM$ reflects models if $\rt\cM$ reflects all $w$-models. \todo{AC: all $\cU$-models?}
+\begin{itemize}
+\item $a$ \emph{reflects} a $\hat w$-model $g$ with witness $h$ if $a^I;g\sat \hat v$ with witness $a^P;h$.
+
+\item $a$ \emph{reflects models} if $a$ reflects all $\hat w$-model/witness pairs.
+
+\item $\cM$ reflects models if $\rt\cM$ reflects models.
 \end{itemize}
 \end{definition}
-
-\paragraph{Saturation.}
-
-To get the right interaction between morphisms and satisfaction, the morphisms have to be \emph{saturated} in a certain sense: a triple $(v,a,w)$ preserves or reflects satisfaction if the morphism contains \emph{supporting} mappings for all children of $w$, respectively all children of $v$. To set up a rich enough framework, we need diverse notions of support.
+%
+A given morphism can be shown to reflect models if it is in some sense \emph{saturated}: namely, if it containing triples between certain children of nodes connected by other triples. Concretely, we will show that a triple $(v,a,w)\in \cM$ reflects models if $\cM$ contains \emph{supporting} structure for all children of $v$. To obtain a rich enough framework, we introduce diverse notions of support.
 
 \begin{definition}[source support]\label{def:support}
 Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$:
@@ -84,40 +88,76 @@ Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and chil
 \end{itemize}
 \end{definition}
 %
-For a visualisation see \cref{fig:source-saturation}.
+Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, the sets $\sdir{a,x}$, $\schd{a,x}$ and $\ssib{a,x}$ are defined by
+%
+\begin{align*}
+\sdir{a,x} ={} & \gensetof{\trip ybx\in \cM}{C(w,y), b^I;u_x;a^P=u_y} \\
+\schd{a,x} ={} & \gensetof{\trip ybw\in \cM}{C(x,y), \exists k:I_y\to I_x\st k;u_x;a^P=d_y;b^P} \\
+\ssib{a,x} ={} & \gensetof{\trip ybx\in \cM}{C(\parentof v,y), \exists k:I_y\to I_x\st k;d_w=b^I;u_x;a^P} \enspace.
+\end{align*}
+%
+For a visualisation see \cref{fig:source-support}.
 %
 \begin{figure}
 	\input{figs/source-saturation}
 	\caption{The notions of support of \cref{def:support}}
-	\label{fig:source-saturation}
+	\label{fig:source-support}
 \end{figure}
 %
-Based on these notions of support, we define corresponding notions of \emph{saturation}:
+Based on these notions of support, we define corresponding notions of \emph{syntactic reflection}:
 
 \begin{definition}[syntactic reflection]\label{def:syntactic reflection}
-Let $\cM\of \cT\to\cU$ be an CT-morphism, and let $\trip vaw\in\cM$.
+Let $\cM\of \cT\to\cU$ be a condition tree morphism, and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct reflection.)} $a:\rdir$ if for every child $x$ of $v$, there is some $b:\rdir$ such that $\issdir b{x,a}$.
-\item \emph{(Child-based reflection.)} $a:\rchd$ if for every child $x$ of $v$, there is some $b:\rchd$ such that $\issdir b{x,a}$ or $\isschd b{x,a}$.
-\item \emph{(Sibling-based reflection.)} $a:\rsib$ if for every child $x$ of $v$, there is some $b:\rsib$ such that $\issdir b{x,a}$ or $\isssib b{x,a}$.
+\item \emph{(Direct reflection.)} $a\in\rdir$ if for every child $x$ of $v$, there is some $b\in\rdir$ such that $\issdir b{x,a}$.
+\item \emph{(Child-based reflection.)} $a\in\rchd$ if for every child $x$ of $v$, there is some $b\in\rchd$ such that $\issdir b{x,a}$ or $\isschd b{x,a}$.
+\item \emph{(Sibling-based reflection.)} $a\in\rsib$ if for every child $x$ of $v$, there is some $b\in \rsib$ such that $\issdir b{x,a}$ or $\isssib b{x,a}$.
 \end{itemize}
 \end{definition}
+%
+Alternatively: $\rdir$, $\rchd$ and $\rsib$ are the smallest sets satisfying the following recursive equations:
+\begin{align*}
+	\rdir ={} & \gensetof{\trip vaw\in \cM}{\forall x\st C(v,x) \Rightarrow \rdir \cap \sdir{a,x}\neq\emptyset} \\
+	\rchd ={} &\gensetof{\trip vaw\in \cM}{\forall x\st C(v,x) \Rightarrow \rchd \cap (\sdir{a,x}\cup \schd{a,x}) \neq\emptyset} \\
+	\rsib ={} &\gensetof{\trip vaw\in \cM}{\forall x\st C(v,x) \Rightarrow \rsib \cap (\sdir{a,x}\cup \ssib{a,x}) \neq\emptyset} \enspace.
+\end{align*}
+%
+Clearly, $\rdir\subseteq \rchd\cap \rsib$; also, if $v$ does not have children then $\trip vaw\in \rdir$ for all $\trip vaw\in\cM$. The latter observation will form the base case of our induction proofs.
 
-Vacuously, each of the conditions of reflection is fulfilled if $v$ does not have children, hence in that case all $\trip vaw$ satisfy $\rdir$, $\rchd$ and $\rsib$; this will form the base case of our induction proofs.
-
-\begin{lemma}[syntactic reflection implies semantic reflection]\label{lem:reflection}
+\begin{lemma}[syntactic reflection implies model reflection]\label{lem:reflection}
 Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
 \begin{enumerate}[topsep=\smallskipamount]
-\item $a:\rdir$ implies that $a$ reflects satisfaction. 
-\item $a:\rchd$ implies that $a$ reflects satisfaction. 
-\item $a:\rsib$ implies that $a$ reflects satisfaction. 
+\item $a\in\rdir$ implies that $a$ reflects models. 
+\item $a\in\rchd$ implies that $a$ reflects models. 
+\item $a\in\rsib$ implies that $a$ reflects models.
 \end{enumerate}
 \end{lemma}
 
-\paragraph{Target saturation.}
+\subsection{Model preservation}
+
+In order to reason concisely about model preservation, we call a graph morphism $f:I\to P$ \emph{$e$-prefixed}, for some graph morphism $e:I\to P'$, if $f=e;f'$ for some (not necessarily unique) graph morphism $f':P'\to P$.
+
+To define model preservation, we have to take into account that (as observed earlier) a triple $\trip vaw$ cannot be expected to carry over any $\hat v$-model $g$ to some $\hat w$-model: rather, $g$ should at least be $a^I$-prefixed for this to make much sense. In fact, we define the notion of model preservation for $u$-prefixed models of $\hat v$, where $u$ is a parameter that can itself be instantiated by any $a^I$-prefixed morphism. (Such a $u$-prefixed model is thus certainly an $a^I$-prefixed model.) This additional complication is required to make our induction proofs work.
+%
+\begin{definition}[model preservation]
+Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
+\begin{itemize}[topsep=\smallskipamount]
+\item $a$ \emph{preserves} an $a^I$-prefixed $\hat v$-model $g=a^I;g'$ with witness $h$ if $h=a^P;h'$ for some $h'$ such that $g'\sat \hat w$ with witness $h'$.
+		
+\item Let $u:I_v\to P$ be an $a^I$-prefixed graph morphism. $a$ \emph{preserves $u$-prefixed models} if $a$ preserves all $u$-prefixed $\hat v$-model/witness pairs.
+		
+\item $\cM$ preserves models if $\rt\cM$ preserves $\id$-prefixed models.
+\end{itemize}
+\end{definition}
+%
+Like for model reflection, we prove model preservation for morphisms with a certain ``syntactic" structure.
+
+\begin{definition}
+Let $\cM\of \cT\to\cU$ be a condition tree morphism, and let $u\of I\times P$ be a graph morphism. A triple $\trip vaw\in\cM$ is a \emph{$u$-fusion} if $a^I$ is epi, $u$ is $a^I$-prefixed and the pushout of $u$ over $d_v$ is $a^P$-prefixed. The set of $u$-fusions in $\cM$ is denoted $\fuse(u)$.
+\end{definition}
 
 \begin{definition}[target support]\label{def:target support}
-Let $\cM\of \cT\to\cU$ be an CT-morphism, let $\trip vaw\in\cM$ and let $y$ be a child of $w$.
+Let $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and let $y$ be a child of $w$.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct target support.)} $b:\tdir{y,a}$ if 
 \begin{inumerate}
@@ -127,12 +167,12 @@ Let $\cM\of \cT\to\cU$ be an CT-morphism, let $\trip vaw\in\cM$ and let $y$ be a
 \end{itemize}
 \end{definition}
 %
-For a visualisation see \cref{fig:target-saturation}.
+For a visualisation see \cref{fig:target-support}.
 %
 \begin{figure}
 	\input{figs/target-saturation}
 	\caption{The notions of support of \cref{def:target support}}
-	\label{fig:target-saturation}
+	\label{fig:target-support}
 \end{figure}
 
 \begin{definition}[syntactic preservation]

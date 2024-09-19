@@ -33,11 +33,13 @@
 \newcommand{\of}{{:}\,}
 \newcommand{\trans}[1]{\xrightarrow{#1}}
 \newcommand{\trip}[3]{{#1}\trans{#2}{#3}}
-
+\newcommand{\parent}{\pi}
+\newcommand{\parentof}[1]{\parent{#1}}
 
 % Root of a tree
 \newcommand{\rt}[1]{\mathit{rt}_{#1}}
 \newcommand{\setof}[1]{\{{#1}\}}
+\newcommand{\gensetof}[2]{\setof{{#1}\mid{#2}}}
 \newcommand{\tupof}[1]{\langle #1\rangle}
 \newcommand{\st}{.\;}
 \newcommand{\id}{{\mathit{id}}}
@@ -63,22 +65,24 @@
 
 \mathchardef\mhyphen="2D
 
-\newcommand{\sdir}[1]{\mathsf{s\mhyphen dir}(#1)}
-\newcommand{\schd}[1]{\mathsf{s\mhyphen chd}(#1)}
-\newcommand{\ssib}[1]{\mathsf{s\mhyphen sib}(#1)}
+\newcommand{\sdir}[1]{\mathsf{ss\mhyphen dir}(#1)}
+\newcommand{\schd}[1]{\mathsf{ss\mhyphen chd}(#1)}
+\newcommand{\ssib}[1]{\mathsf{ss\mhyphen sib}(#1)}
 
-\newcommand{\issdir}[2]{{#1}:\sdir{#2}}
-\newcommand{\isschd}[2]{{#1}:\schd{#2}}
-\newcommand{\isssib}[2]{{#1}:\ssib{#2}}
+\newcommand{\issdir}[2]{{#1}\in\sdir{#2}}
+\newcommand{\isschd}[2]{{#1}\in\schd{#2}}
+\newcommand{\isssib}[2]{{#1}\in\ssib{#2}}
 
 
 \newcommand{\rdir}{{\mathsf{r\mhyphen dir}}}
 \newcommand{\rchd}{{\mathsf{r\mhyphen chd}}}
 \newcommand{\rsib}{{\mathsf{r\mhyphen sib}}}
 
-\newcommand{\tdir}[1]{\mathsf{t\mhyphen dir}(#1)}
+\newcommand{\fuse}{{\mathsf{fuse}}}
 
-\newcommand{\istdir}[2]{{#1}:\tdir{#2}}
+\newcommand{\tdir}[1]{\mathsf{ts\mhyphen dir}(#1)}
+
+\newcommand{\istdir}[2]{{#1}\in\tdir{#2}}
 
 \newcommand{\pdir}{{\mathsf{p\mhyphen dir}}}
 \newcommand{\pchd}{{\mathsf{p\mhyphen chd}}}
