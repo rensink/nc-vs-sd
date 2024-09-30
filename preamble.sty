@@ -33,8 +33,8 @@
 \newcommand{\of}{{:}\,}
 \newcommand{\trans}[1]{\xrightarrow{#1}}
 \newcommand{\trip}[3]{{#1}\trans{#2}{#3}}
-\newcommand{\parent}{\pi}
-\newcommand{\parentof}[1]{\parent{#1}}
+\newcommand{\parentsymb}{\pi}
+\newcommand{\parent}[1]{\parentsymb{#1}}
 
 % Root of a tree
 \newcommand{\rt}[1]{\mathit{rt}_{#1}}
@@ -43,6 +43,13 @@
 \newcommand{\tupof}[1]{\langle #1\rangle}
 \newcommand{\st}{.\;}
 \newcommand{\id}{{\mathit{id}}}
+
+\newcommand{\parentof}{\mathrel{\prec\mskip-8mu\cdot}}
+\newcommand{\ancestof}{\prec}
+\newcommand{\ancesteq}{\preceq}
+\newcommand{\childof}{\mathrel{\cdot\mskip-8mu\succ}}
+\newcommand{\descof}{\succ}
+\newcommand{\desceq}{\succeq}
 
 \newcommand{\sat}{\models}
 \newcommand{\nsat}{\not\sat}
@@ -65,27 +72,31 @@
 
 \mathchardef\mhyphen="2D
 
-\newcommand{\sdir}[1]{\mathsf{ss\mhyphen dir}(#1)}
-\newcommand{\schd}[1]{\mathsf{ss\mhyphen chd}(#1)}
-\newcommand{\ssib}[1]{\mathsf{ss\mhyphen sib}(#1)}
+\newcommand{\sdir}[2][]{\mathsf{re\mhyphen dir}_{#1}(#2)}
+\newcommand{\schd}[2][]{\mathsf{re\mhyphen chd}_{#1}(#2)}
+\newcommand{\ssib}[2][]{\mathsf{re\mhyphen sib}_{#1}(#2)}
 
-\newcommand{\issdir}[2]{{#1}\in\sdir{#2}}
-\newcommand{\isschd}[2]{{#1}\in\schd{#2}}
-\newcommand{\isssib}[2]{{#1}\in\ssib{#2}}
+\newcommand{\issdir}[3][]{{#2}\in\sdir[#1]{#3}}
+\newcommand{\isschd}[3][]{{#2}\in\schd[#1]{#3}}
+\newcommand{\isssib}[3][]{{#2}\in\ssib[#1]{#3}}
 
+\newcommand{\re}[1]{\mathsf{re}(#1)}
 
 \newcommand{\rdir}{{\mathsf{r\mhyphen dir}}}
 \newcommand{\rchd}{{\mathsf{r\mhyphen chd}}}
 \newcommand{\rsib}{{\mathsf{r\mhyphen sib}}}
+\newcommand{\rgen}{{\mathsf{r}}}
 
 \newcommand{\fuse}{{\mathsf{fuse}}}
 
-\newcommand{\tdir}[1]{\mathsf{ts\mhyphen dir}(#1)}
+\newcommand{\tdir}[1]{\mathsf{pe\mhyphen dir}(#1)}
+\newcommand{\tchd}[1]{\mathsf{pe\mhyphen chd}(#1)}
 
 \newcommand{\istdir}[2]{{#1}\in\tdir{#2}}
 
 \newcommand{\pdir}{{\mathsf{p\mhyphen dir}}}
 \newcommand{\pchd}{{\mathsf{p\mhyphen chd}}}
+\newcommand{\pgen}{{\mathsf{p}}}
 
 \newenvironment{inumerate}{%
   \begin{enumerate*}[label=\emph{(\roman*)}]

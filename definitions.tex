@@ -12,12 +12,12 @@
 \end{itemize}
 %
 \begin{definition}[condition tree]\label{def:condition tree}
-A \emph{condition tree} is a tuple $\cT=\tupof{V, C, \setof{d_v}_{v\in V}, \setof{u_w}_{(v,w)\in C}}$ such that
+A \emph{condition tree} is a tuple $\cT=\tupof{V, {\parentof}, \setof{d_v}_{v\in V}, \setof{u_w}_{(v,w)\in C}}$ such that
 
 \begin{itemize}[topsep=\smallskipamount]
 \item $V$ is a set of vertices;
 
-\item $C\subseteq V\times V$ is a set of edges representing the parent-child relation, such that one $v\in P$ (the \emph{root}) has no incoming edge, and all other elements of $V$ have exactly one incoming edge (from their \emph{parent}, denoted $\parentof v$);
+\item ${\parentof}\subseteq V\times V$ is a parent-child relation, such that one $v\in P$ (the \emph{root}) has no predecessor, and all other elements of $V$ have exactly one predecessor (their \emph{parent}, denoted $\parent v$);
 
 \item for all $v\in V$, $d_v$ is an open graph. We denote $I_v=I_{d_v}$ and $P_v=P_{d_v}$.
 
@@ -25,7 +25,7 @@ A \emph{condition tree} is a tuple $\cT=\tupof{V, C, \setof{d_v}_{v\in V}, \seto
 \end{itemize}
 \end{definition}
 %
-The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parentof v$ denotes $v$'s parent.
+We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parent v$ denotes $v$'s parent.
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
 Let $\cT$ be a condition tree and $g\of I_\cT\to G$ an assignment. $g$ \emph{satisfies $\cT$} denoted $g\sat \cT$, if there is a graph morphism $h\of P_\cT\to G$ such that
@@ -60,11 +60,11 @@ Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their 
 Condition trees and their morphisms form a category, denoted {\CT}.
 \end{proposition}
 %
-We are interested in condition tree morphisms that either preserve or reflect models. In order to reason about this, we have to define the notions of preservation and reflection of models not just for morphisms, but for arbitrary triples $\trip vaw$ in those morphisms. For such a triple, in general $I_v$ and $I_w$ do not coincide (and even if they do, $a^I$ in general not an isomorphism). This means that the model sets of $\hat v$ and $\hat w$ can only be expected to be related modulo $a^I$, in the sense that we relate candidate $\hat v$-models $g_v:I_v\to G$ to candidate models $\hat w$-models $g_w:I_w\to G$ for which $g_v=a^I;g_w$.\footnote{In a previous paper \cite{RensCorr}, we distinguished \emph{reflection while adding $a^I$} and \emph{preservation while subtracting $a^I$}.}
+We are interested in condition tree morphisms that either preserve or reflect models. In order to reason about this, we have to define the notions of preservation and reflection of models not just for morphisms, but for arbitrary triples $\trip vaw$ in those morphisms. For such a triple, in general $I_v$ and $I_w$ do not coincide. This means that the model sets of $\hat v$ and $\hat w$ can only be expected to be related modulo $a^I$, in the sense that we relate candidate $\hat v$-models $g_v:I_v\to G$ to candidate models $\hat w$-models $g_w:I_w\to G$ for which $g_v=a^I;g_w$.\footnote{In a previous paper \cite{RensCorr}, we distinguished \emph{reflection while adding $a^I$} and \emph{preservation while subtracting $a^I$}.}
 
 \subsection{Model reflection}
 
-With the above in mind, we first define reflection of models, this being the easier of the two.
+With the above in mind, we first define reflection of models, this being the more straightforward of the two directions.
 
 \begin{definition}[model reflection]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
@@ -77,23 +77,24 @@ Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 \end{itemize}
 \end{definition}
 %
-A given morphism can be shown to reflect models if it is in some sense \emph{saturated}: namely, if it containing triples between certain children of nodes connected by other triples. Concretely, we will show that a triple $(v,a,w)\in \cM$ reflects models if $\cM$ contains \emph{supporting} structure for all children of $v$. To obtain a rich enough framework, we introduce diverse notions of support.
+A given morphism can be shown to reflect models if it provides enough \emph{evidence} for reflection: namely, if for a candidate model-reflecting triple $\trip vaw\in \cM$ (i.e., for which we want to show that every $\hat w$-model/witness pair $g,h$ gives rise to a $\hat v$-model/witness pair $a^I;g,a^P;h$) and every source child $x$ of $v$, there is further structure in $\hat v$ and $\cM$ that ensure that $u_x;a^P;h\nsat \hat x$. To obtain a rich enough framework, we introduce diverse notions of evidence.
 
-\begin{definition}[source support]\label{def:support}
-Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$:
+\begin{definition}[reflection evidence]\label{def:support}
+Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$, we define the following kinds of \emph{reflection evidence}.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct source support.)} $\issdir b{x,a}$ if $\trip ybx\in\cM$ for some child $y$ of $w$ such that $b^I;u_x;a^P=u_y$.
-\item \emph{(Child-based source support.)} $\isschd b{x,a}$ if $\trip ybw\in\cM$ for some child $y$ of $x$ such that $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
-\item \emph{(Sibling-based source support.)} $\isssib b{x,a}$ if $\trip ybx\in\cM$ for some sibling $y$ of $v$ such that $k;d_w=b^I;u_x;a^P$ for some $k\of I_y\to I_w$.
+\item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\issdir b{x,a}$, if $w\parentof y$ and $b^I;u_x;a^P=u_y$.
+\item \emph{(Child-based reflection evidence.)} $\trip ybw\in\cM$ provides \emph{child-based reflection evidence}, denoted $\isschd b{x,a}$, if $x\parentof y$ and $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
+\item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$  provides \emph{sibling-based reflection evidence}, denoted $\isssib b{x,a}$, if $\parent x\parentof y$ and $k;d_w=b^I;u_x;a^P$ for some $k\of I_y\to I_w$.
 \end{itemize}
 \end{definition}
 %
-Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, the sets $\sdir{a,x}$, $\schd{a,x}$ and $\ssib{a,x}$ are defined by
+Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, we can define the sets $\sdir{a,x}$, $\schd{a,x}$ and $\ssib{a,x}$ as below, and the set $\re{a,x}$ of (generalised) reflection evidence as their union.
 %
 \begin{align*}
-\sdir{a,x} ={} & \gensetof{\trip ybx\in \cM}{C(w,y), b^I;u_x;a^P=u_y} \\
-\schd{a,x} ={} & \gensetof{\trip ybw\in \cM}{C(x,y), \exists k:I_y\to I_x\st k;u_x;a^P=d_y;b^P} \\
-\ssib{a,x} ={} & \gensetof{\trip ybx\in \cM}{C(\parentof v,y), \exists k:I_y\to I_x\st k;d_w=b^I;u_x;a^P} \enspace.
+\sdir{a,x} ={} & \gensetof{\trip ybx\in \cM}{w\parentof y, b^I;u_x;a^P=u_y} \\
+\schd{a,x} ={} & \gensetof{\trip ybw\in \cM}{x\parentof y, \exists k:I_y\to I_x\st k;u_x;a^P=d_y;b^P} \\
+\ssib{a,x} ={} & \gensetof{\trip ybx\in \cM}{\parent v\parentof y, \exists k:I_y\to I_x\st k;d_w=b^I;u_x;a^P} \\
+\re{a,x} ={} & \sdir{a,x}\cup \schd{a,x} \cup \ssib{a,x} \enspace.
 \end{align*}
 %
 For a visualisation see \cref{fig:source-support}.
@@ -104,7 +105,7 @@ For a visualisation see \cref{fig:source-support}.
 	\label{fig:source-support}
 \end{figure}
 %
-Based on these notions of support, we define corresponding notions of \emph{syntactic reflection}:
+Based on these notions of evidence, we define corresponding notions of \emph{syntactic reflection}:
 
 \begin{definition}[syntactic reflection]\label{def:syntactic reflection}
 Let $\cM\of \cT\to\cU$ be a condition tree morphism, and let $\trip vaw\in\cM$.
@@ -112,26 +113,40 @@ Let $\cM\of \cT\to\cU$ be a condition tree morphism, and let $\trip vaw\in\cM$.
 \item \emph{(Direct reflection.)} $a\in\rdir$ if for every child $x$ of $v$, there is some $b\in\rdir$ such that $\issdir b{x,a}$.
 \item \emph{(Child-based reflection.)} $a\in\rchd$ if for every child $x$ of $v$, there is some $b\in\rchd$ such that $\issdir b{x,a}$ or $\isschd b{x,a}$.
 \item \emph{(Sibling-based reflection.)} $a\in\rsib$ if for every child $x$ of $v$, there is some $b\in \rsib$ such that $\issdir b{x,a}$ or $\isssib b{x,a}$.
+\item \emph{(General reflection.)} $s\in \rgen$ if for every child $x$ of $v$, there is some $b\in \rgen$ such that $\issdir b{x,a}$, $\isschd b{x,a}$ or $\isssib b{x,a}$.
 \end{itemize}
 \end{definition}
 %
-Alternatively: $\rdir$, $\rchd$ and $\rsib$ are the smallest sets satisfying the following recursive equations:
+Alternatively: $\rdir$, $\rchd$, $\rsib$ and $\rgen$ are the smallest sets satisfying the following recursive equations:
 \begin{align*}
-	\rdir ={} & \gensetof{\trip vaw\in \cM}{\forall x\st C(v,x) \Rightarrow \rdir \cap \sdir{a,x}\neq\emptyset} \\
-	\rchd ={} &\gensetof{\trip vaw\in \cM}{\forall x\st C(v,x) \Rightarrow \rchd \cap (\sdir{a,x}\cup \schd{a,x}) \neq\emptyset} \\
-	\rsib ={} &\gensetof{\trip vaw\in \cM}{\forall x\st C(v,x) \Rightarrow \rsib \cap (\sdir{a,x}\cup \ssib{a,x}) \neq\emptyset} \enspace.
+\rdir ={} & \gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rdir \cap \sdir{a,x}\neq\emptyset} \\
+\rchd ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rchd \cap (\sdir{a,x}\cup \schd{a,x}) \neq\emptyset} \\
+\rsib ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rsib \cap (\sdir{a,x}\cup \ssib{a,x}) \neq\emptyset} \\
+\rgen ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rgen \cap \re{a,x} \neq\emptyset} \enspace.
 \end{align*}
 %
-Clearly, $\rdir\subseteq \rchd\cap \rsib$; also, if $v$ does not have children then $\trip vaw\in \rdir$ for all $\trip vaw\in\cM$. The latter observation will form the base case of our induction proofs.
+Clearly, $\rdir\subseteq \rchd\cap \rsib$ and $\rdir\cup \rchd \cup \rsib \subseteq \rgen$; also, if $v$ does not have children then $\trip vaw\in \rdir$ for all $\trip vaw\in\cM$. The latter observation will form the base case of our induction proofs.
 
 \begin{lemma}[syntactic reflection implies model reflection]\label{lem:reflection}
-Let $\cM\of\cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
-\begin{enumerate}[topsep=\smallskipamount]
-\item $a\in\rdir$ implies that $a$ reflects models. 
-\item $a\in\rchd$ implies that $a$ reflects models. 
-\item $a\in\rsib$ implies that $a$ reflects models.
-\end{enumerate}
+If $\cM\of \cT\to \cU$ is a condition tree morphism, then $a$ reflects models for all $a\in\rgen_\cM$.
 \end{lemma}
+%
+\begin{proof}
+We consider the $\trip vaw\in \rgen_\cM$. Let $g\sat \hat w$; we set out to prove that $a^I;g\sat \hat v$. By way of induction hypothesis, we assume that this property holds for $\trip xyb\in \rgen_\cM$ whenever $x\ancesteq v$ and $y\ancesteq w$ and one of the ancestries is not reflexive, or $x\ancesteq w$ and $y\ancesteq v$ and one of the ancestries is not reflexive. The base case is obtained when both $v$ and $w$ are leaves, and the induction is well-founded because both $\cT$ and $\cU$ have finite depth.
+
+$g\sat \hat w$ implies that there is a witness $h$ such that $g=d_w;h$ and $h\nsat \hat u_z$ for all $z\childof w$. It follows that $a^I;g=a^I;d_w;h=d_v;a^P;h$, hence $a^P;h$ is a prospective witness for $a^I;g\sat \hat v$, and we are done if we can show that $u^x;a^P;h\nsat \hat x$ for all $x\childof v$. Now we use the fact that $\trip vaw\in \rgen_\cM$ and hence $\rgen_\cM\cap \re[\cM]{a,x}\neq \emptyset$. Let $b\in \rgen \cap \re{a,x}$. The proof proceeds by contradiction, using a case distinction.
+\begin{itemize}
+\item $b\in \sdir[\cM]{a,x}$. It follows that $\trip ybx\in\cM$ such that $w\parentof y$ and $b^I;u_x;a^P=u_y$.
+
+\item $b\in \schd[\cM]{a,x}$. It follows that $\trip ybw\in \cM$ such that $x\parentof y$ and $k;u_x;a^P=d_y;b^P$ for some $k\of I_y\to I_x$.
+
+\item $b\in \ssib[\cM]{a,x}$. It follows that $\trip ybx\in \cM$ such that $\parent x\parentof y$ and $k;d_w=b^I;u_x;a^P$ for some $k\of I_y\to I_x$.
+\end{itemize}
+\end{proof}
+
+\begin{corollary}
+If $\cM$ is a condition tree morphism, then $\rt\cM\in \rgen_\cM$ implies that $\cM$ reflects models.
+\end{corollary}
 
 \subsection{Model preservation}
 
