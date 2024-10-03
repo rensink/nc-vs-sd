@@ -43,6 +43,8 @@
 \newcommand{\tupof}[1]{\langle #1\rangle}
 \newcommand{\st}{.\;}
 \newcommand{\id}{{\mathit{id}}}
+% Depth of a tree
+\newcommand{\depth}{{\mathit{dp}}}
 
 \newcommand{\parentof}{\mathrel{\prec\mskip-8mu\cdot}}
 \newcommand{\ancestof}{\prec}
@@ -80,7 +82,7 @@
 \newcommand{\isschd}[3][]{{#2}\in\schd[#1]{#3}}
 \newcommand{\isssib}[3][]{{#2}\in\ssib[#1]{#3}}
 
-\newcommand{\re}[1]{\mathsf{re}(#1)}
+\newcommand{\re}[2][]{\mathsf{re}_{#1}(#2)}
 
 \newcommand{\rdir}{{\mathsf{r\mhyphen dir}}}
 \newcommand{\rchd}{{\mathsf{r\mhyphen chd}}}
