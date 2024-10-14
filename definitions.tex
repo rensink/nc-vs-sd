@@ -12,7 +12,7 @@
 \end{itemize}
 %
 \begin{definition}[condition tree]\label{def:condition tree}
-A \emph{condition tree} is a tuple $\cT=\tupof{V, {\parentof}, \setof{d_v}_{v\in V}, \setof{u_w}_{(v,w)\in C}}$ such that
+A \emph{condition tree} is a tuple $\cT=\tupof{V, {\parentof}, \setof{d_v}_{v\in V}, \setof{u_w}_{v\parentof w}}$ such that
 
 \begin{itemize}[topsep=\smallskipamount]
 \item $V$ is a set of vertices;
@@ -58,7 +58,7 @@ Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their 
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
 	\setof{\trip v{a;b}x \mid \exists w\st \trip v a w\in\cM, \trip wbx\in \cN} \\
-	\cup \setof{\trip v{a;b}x \mid \exists w\st \trip vaw\in\cN, \trip wbx\in\cM} \enspace.
+	{}\cup \setof{\trip v{a;b}x \mid \exists w\st \trip vaw\in\cN, \trip wbx\in\cM} \enspace.
 \end{array}
 \]
 
@@ -66,16 +66,16 @@ Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their 
 Condition trees and their morphisms form a category, denoted {\CT}.
 \end{proposition}
 %
-We are interested in condition tree morphisms that either preserve or reflect models. In order to reason about this (inductively), we have to define the notions of model preservation and reflection not just on the level of morphisms, but for arbitrary triples $\trip vaw$ in those morphisms. For such a triple, in general $I_v$ and $I_w$ do not coincide. This means that the model sets of $\hat v$ and $\hat w$, being graph morphisms sourced at $I_v$ and $I_w$, are typically disjoint. Instead the model sets can only be expected to be related modulo $a^I$, in the sense that we relate candidate $\hat v$-models $g_v:I_v\to G$ to candidate $\hat w$-models $g_w:I_w\to G$ for which $g_v=a^I;g_w$.\footnote{In a previous paper \cite{RensCorr}, we introduced the terms \emph{reflection while adding $a^I$} and \emph{preservation while subtracting $a^I$}.}
+We are interested in condition tree morphisms that either \emph{preserve} models (any $\cT$-model is a $\cU$-model) or \emph{reflect} models (any $\cU$-model is a $\cT$-model). In order to reason about this (inductively), we have to define the notions of model preservation and reflection not just on the level of morphisms, but for arbitrary triples $\trip vaw$ in those morphisms. For such a triple, in general $I_v$ and $I_w$ do not coincide. This means that the model sets of $\hat v$ and $\hat w$, being graph morphisms sourced at $I_v$ and $I_w$, are typically disjoint. Instead, the models can only be expected to be related modulo $a^I$, in the sense that candidate $\hat v$-models $g_v:I_v\to G$ are related to candidate $\hat w$-models $g_w:I_w\to G$ for which $g_v=a^I;g_w$.\footnote{In a previous paper \cite{RensCorr}, we introduced the terms \emph{reflection while adding $a^I$} and \emph{preservation while subtracting $a^I$}.}
 
 \subsection{Model reflection}
 
-With the above in mind, we first define reflection of models, this being the more straightforward of the two directions. In fact, we have two versions of model reflect; it currently is unclear which is the ``better''. The difference is that weak reflection does not impose any requirement on the witnesses, whereas strong reflection requires that the witness of the reflected model is itself a reflected witness of the original model.
+With the above in mind, we first define reflection of models, this being the more straightforward of the two directions.\todo[inline]{In fact, we have two versions of model reflect; it currently is unclear which is the ``better''. The difference is that (ordinary) reflection does not impose any requirement on the witnesses, whereas strong reflection requires that the witness of the reflected model is itself a reflected witness of the original model.}
 
 \begin{definition}[model reflection]
-Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
-\begin{itemize}
-\item $a$ \emph{reflects a $\hat w$-model $g$} if $a^I;g\sat \hat v$.
+Let $\cM\of \cT\to\cU$ be a morphism.
+\begin{itemize}[topsep=\itemsep]
+\item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if $a^I;g\sat \hat v$.
 
 \item $\cM$ reflects models if $\rt\cM$ reflects all $\cU$-models.
 \end{itemize}
@@ -83,7 +83,7 @@ Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 %
 \begin{definition}[strong model reflection]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
-\begin{itemize}
+\begin{itemize}[topsep=\itemsep]
 \item $a$ \emph{reflects a $\hat w$-model $g$ with witness $h$} if $a^I;g\sat \hat v$ with witness $a^P;h$.
 	
 \item $a$ \emph{strongly reflects models} if $a$ reflects all $\hat w$-model/witness pairs.
@@ -92,11 +92,11 @@ Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 \end{itemize}
 \end{definition}
 %
-\begin{quote}\it
+\todo[inline]{
 The first of these, ``ordinary'' reflection, is the property we are really after; at some point we thought that strong reflection would be necessary for building an inductive proof, but currently that seems not to be the case. If that is born out, we can forget about strong reflection.
-\end{quote}
+}
 %
-A given morphism can be shown to reflect models if it provides enough internal \emph{evidence} for reflection: in particular, if for a candidate model-reflecting triple $\trip vaw\in \cM$ (i.e., for which we want to show that every $\hat w$-model pair $g$ gives rise to a $\hat v$-model $a^I;g$), for every child $x$ of $v$ there is further structure in $\hat v$ and $\cM$ that ensures that $u_x;a^P;h\nsat \hat x$. To obtain a rich enough framework, we introduce diverse notions of evidence.
+A given triple $\trip vaw$ can be shown to reflect models if it provides enough internal \emph{evidence} for reflection. In particular, for a candidate model-reflecting triple $\trip vaw\in \cM$ (i.e., for which we want to show that every $\hat w$-model $g$ gives rise to a $\hat v$-model $a^I;g$), for every child $x$ of $v$ we require the existence of further triples in $\cM$ (the evidence) that enable the construction of a witness for $a^I;g\sat \hat v$ from a witness for $g\sat \hat w$. To obtain a rich enough framework, we introduce diverse forms of evidence.
 
 \begin{definition}[reflection evidence]\label{def:support}
 Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$, we define the following kinds of \emph{reflection evidence}.
@@ -151,7 +151,7 @@ If $\cM\of \cT\to \cU$ is a condition tree morphism, then $a$ reflects models fo
 \end{lemma}
 %
 \begin{proof}
-We consider the $\trip vaw\in \rgen_\cM$. Let $g\sat \hat w$; we set out to prove that $a^I;g\sat \hat v$. By way of induction hypothesis, we assume that this property holds for $\trip xyb\in \rgen_\cM$ when the . The base case is obtained when both $v$ and $w$ are leaves, and the induction is well-founded because both $\cT$ and $\cU$ have finite depth.
+Consider $\trip vaw\in \rgen_\cM$. Let $g\sat \hat w$; we set out to prove that $a^I;g\sat \hat v$. By way of induction hypothesis, we assume that this property holds for $\trip xyb\in \rgen_\cM$ when the\todo{complete}. The base case is obtained when both $v$ and $w$ are leaves, and the induction is well-founded because both $\cT$ and $\cU$ have finite depth.
 
 $g\sat \hat w$ for $g\of I_w\to G$ implies that there is a witness $h\of P_w\to G$ such that $g=d_w;h$ and $u_z;h\nsat \hat z$ for all $z\childof w$. It follows that $a^I;g=a^I;d_w;h=d_v;a^P;h$, hence $a^P;h$ is a prospective witness for $a^I;g\sat \hat v$, and we are done if we can show that $u_x;a^P;h\nsat \hat x$ for all $x\childof v$. Now we use the fact that (by definition of $\rgen_\cM$) there is some $b\in \rgen \cap \re{a,x}$. The proof proceeds by assuming that $u_x;a^P;h\nsat \hat x$ for some $x\childof v$ and showing that this leads to a contradiction, using a case distinction based on the kind of reflection evidence provided by $b$. Note that the induction hypothesis applies to $b$.
 %

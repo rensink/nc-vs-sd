@@ -46,10 +46,20 @@
 % Depth of a tree
 \newcommand{\depth}{{\mathit{dp}}}
 
-\newcommand{\parentof}{\mathrel{\prec\mskip-8mu\cdot}}
+\newcommand{\parentof}{%
+	\mathchoice{\mathrel{\prec\mskip-10mu\cdot}}%
+			   {\mathrel{\prec\mskip-10mu\cdot}}%
+			   {\mathrel{\prec\mskip-5mu\cdot}}%
+			   {\mathrel{\prec\mskip-5mu\cdot}}%
+}
 \newcommand{\ancestof}{\prec}
 \newcommand{\ancesteq}{\preceq}
-\newcommand{\childof}{\mathrel{\cdot\mskip-8mu\succ}}
+\newcommand{\childof}{%
+    \mathchoice{\mathrel{\cdot\mskip-10mu\succ}}%
+               {\mathrel{\cdot\mskip-10mu\succ}}%
+               {\mathrel{\cdot\mskip-5mu\succ}}%
+               {\mathrel{\cdot\mskip-5mu\succ}}%
+}
 \newcommand{\descof}{\succ}
 \newcommand{\desceq}{\succeq}
 
