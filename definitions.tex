@@ -41,7 +41,7 @@ If $g$ satisfies $\cT$, we also call $g$ a $\cT$-model.
 \todo[inline]{At this point introduce the connection from condition trees to FOL}
 
 \begin{definition}[morphism]
-Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism. $\cM$ has a distinguished element $\rt\cM$, called the \emph{root}, of the shape $\rt\cM=(\rt\cT,(\id_I,r),\rt\cU)\in \cM$ for some $r$.
+Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism.\todo{AR: I currently think that we can in general require $u_v$ to be $a$-prefixed for all non-root $\trip vaw\in\cM$: this seems to be always guaranteed, and is needed for some of the proofs.} $\cM$ has a distinguished element $\rt\cM$, called the \emph{root}, of the shape $\rt\cM=(\rt\cT,(\id_I,r),\rt\cU)\in \cM$ for some $r$.
 \end{definition}
 %
 We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$. Moreover, we also sometimes use the open graph morphism $a$ to refer to the triple $\trip vaw$, when that causes no confusion and the identity of $v$ and $w$ is clear from the context.
@@ -107,6 +107,14 @@ Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and chil
 \end{itemize}
 \end{definition}
 %
+For a visualisation see \cref{fig:source-support}.
+%
+\begin{figure}
+	\input{figs/source-saturation}
+	\caption{The notions of support of \cref{def:support}}
+	\label{fig:source-support}
+\end{figure}
+%
 Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, we can define the sets $\sdir{a,x}$, $\schd{a,x}$ and $\ssib{a,x}$ as below, as well as the set $\re{a,x}$ of (generalised) reflection evidence as their union.
 %
 \begin{align*}
@@ -116,13 +124,27 @@ Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, we can define the
 \re{a,x} ={} & \sdir{a,x}\cup \schd{a,x} \cup \ssib{a,x} \enspace.
 \end{align*}
 %
-For a visualisation see \cref{fig:source-support}.
+These evidence arrows satisfy the following (rather technical) properties.
 %
-\begin{figure}
-	\input{figs/source-saturation}
-	\caption{The notions of support of \cref{def:support}}
-	\label{fig:source-support}
-\end{figure}
+\begin{lemma}\label{lem:evidence}
+Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
+\begin{enumerate}
+\item If $\trip ybx\in \sdir{a,x}$ and $b$ reflects models, then $u_x;a^P;h\nsat \hat x$.
+\item If $\trip ybw\in \schd{a,x}$ and $b$ reflects models, then $u_x;a^P;h\nsat \hat x$.
+\item If $\trip ybx\in \ssib{a,x}$ and $b$ reflects models, then $k;g\sat \hat y$ or $u_x;a^P;h\nsat \hat x$.\todo{The proof does not use $\parent v\parentof y$.}
+\end{enumerate}
+\end{lemma}
+%
+\begin{proof}
+In each case, assume $u_x;a^P;h\sat \hat x$.
+\begin{enumerate}
+\item $\trip ybx\in \sdir{a,x}$ means that $w\parentof y$ and $b^I;u_x;a^P=u_y$. Since $b$ reflects models, $u_x;a^P;h\sat \hat x$ implies $b^I;u_x;a^P;h\sat \hat y$, implying $u_y;h\sat \hat y$, which contradicts $g\sat \hat w$.
+
+\item $\trip ybw\in \schd{a,x}$ means that $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a^P=d_y;b^P$. Since $u_x;a^P;h\sat \hat x$, there must be some witness $f\of P_x\to G$ such that $u_x;a^P;h=d_x;f$ and $u_y;f\nsat \hat y$. Since $b$ reflects models we have $b^I;g\sat \hat y$; since $b^I;g= b^I;d_w;h= d_y;b^P;h= k;u_x;a^P;h=k;d_x;f=u_y;f$, this gives rise to a contradiction.
+
+\item $\trip ybx\in \ssib{a,x}$ means that there is a mediating morphism $k\of I_y\to I_w$ such that $k;d_w=b^I;u_x;a^P$. Since $b$ reflects models we have $b^I;u_x;a^P;h\sat \hat y$, and hence $k;g=k;d_w;h=b^I;u_x;a^P;h\sat \hat y$.
+\end{enumerate}
+\end{proof}
 %
 Based on these notions of evidence, we define corresponding notions of \emph{syntactic reflection}:
 
@@ -153,15 +175,7 @@ If $\cM\of \cT\to \cU$ is a condition tree morphism, then $a$ reflects models fo
 \begin{proof}
 Consider $\trip vaw\in \rgen_\cM$. Let $g\sat \hat w$; we set out to prove that $a^I;g\sat \hat v$. By way of induction hypothesis, we assume that this property holds for $\trip xyb\in \rgen_\cM$ when the\todo{complete}. The base case is obtained when both $v$ and $w$ are leaves, and the induction is well-founded because both $\cT$ and $\cU$ have finite depth.
 
-$g\sat \hat w$ for $g\of I_w\to G$ implies that there is a witness $h\of P_w\to G$ such that $g=d_w;h$ and $u_z;h\nsat \hat z$ for all $z\childof w$. It follows that $a^I;g=a^I;d_w;h=d_v;a^P;h$, hence $a^P;h$ is a prospective witness for $a^I;g\sat \hat v$, and we are done if we can show that $u_x;a^P;h\nsat \hat x$ for all $x\childof v$. Now we use the fact that (by definition of $\rgen_\cM$) there is some $b\in \rgen \cap \re{a,x}$. The proof proceeds by assuming that $u_x;a^P;h\nsat \hat x$ for some $x\childof v$ and showing that this leads to a contradiction, using a case distinction based on the kind of reflection evidence provided by $b$. Note that the induction hypothesis applies to $b$.
-%
-\begin{itemize}
-\item $b\in \sdir[\cM]{a,x}$. It follows that $\trip ybx\in\cM$ such that $w\parentof y$ and $b^I;u_x;a^P=u_y$. From the assumption that $u_x;a^P;h\sat \hat x$, by the induction hypothesis we may conclude $b^I;u_x;a^P;h\sat \hat y$, implying $u_y;h\sat \hat y$, which contradicts $g\sat \hat w$.
-
-\item $b\in \schd[\cM]{a,x}$. It follows that $\trip ybw\in \cM$ such that $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a^P=d_y;b^P$. From the assumption $u_x;a^P;h\sat \hat x$, there must be some witness $f\of P_x\to G$ such that $u_x;a^P;h=d_x;f$ and $u_y;f\nsat \hat y$. By the induction hypothesis, however, we have $b^I;g\sat \hat y$; since $b^I;g= b^I;d_w;h= d_y;b^P;h= k;u_x;a^P;h=k;d_x;f=u_y;f$, this gives rise to a contradiction.
-
-\item $b\in \ssib[\cM]{a,x}$. It follows that $\trip ybx\in \cM$ such that $\parent x\parentof y$ and $k;d_w=b^I;u_x;a^P$ for some $k\of I_y\to I_x$.\todo{AR: This proof cannot completed without a radical change to the statement of the lemma, as there is no way to work in the parent of $v$}
-\end{itemize}
+$g\sat \hat w$ for $g\of I_w\to G$ implies that there is a witness $h\of P_w\to G$. It follows that $a^I;g=a^I;d_w;h=d_v;a^P;h$, hence $a^P;h$ is a prospective witness for $a^I;g\sat \hat v$. Let $x\childof v$. By definition of $\rgen_\cM$, there is some $b\in \rgen \cap \re{a,x}$. By the induction hypothesis, $b$ preserves models; hence \ref{lem:evidence} implies $u_x;a^P;h\nsat \hat x$.\todo{Except for the child rule}
 \end{proof}
 
 \begin{corollary}
