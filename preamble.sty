@@ -7,6 +7,7 @@
 \usepackage{cleveref}
 \usepackage{subcaption}
 \usepackage{proof}
+\usepackage{comment}
 
 
 % Categories - AC
@@ -46,22 +47,30 @@
 % Depth of a tree
 \newcommand{\depth}{{\mathit{dp}}}
 
+% Direct parent relation
 \newcommand{\parentof}{%
 	\mathchoice{\mathrel{\prec\mskip-10mu\cdot}}%
 			   {\mathrel{\prec\mskip-10mu\cdot}}%
 			   {\mathrel{\prec\mskip-5mu\cdot}}%
 			   {\mathrel{\prec\mskip-5mu\cdot}}%
 }
+% Transitive parent relation
 \newcommand{\ancestof}{\prec}
+% Transitive and reflexive parent relation
 \newcommand{\ancesteq}{\preceq}
+% Direct child relation
 \newcommand{\childof}{%
     \mathchoice{\mathrel{\cdot\mskip-10mu\succ}}%
                {\mathrel{\cdot\mskip-10mu\succ}}%
                {\mathrel{\cdot\mskip-5mu\succ}}%
                {\mathrel{\cdot\mskip-5mu\succ}}%
 }
+% Transitive child relation
 \newcommand{\descof}{\succ}
+% Transitive an reflexive child relation
 \newcommand{\desceq}{\succeq}
+% Sibling relation
+\newcommand{\sibling}{\smallsmile}
 
 \newcommand{\sat}{\models}
 \newcommand{\nsat}{\not\sat}
@@ -79,6 +88,10 @@
 \newcommand{\cT}{{\mathcal{T}}}
 \newcommand{\cU}{{\mathcal{U}}}
 \newcommand{\cV}{{\mathcal{V}}}
+
+\newcommand\I{^{\mathsf I}}
+\renewcommand\P{^{\mathsf P}}
+\newcommand\U{^{\mathsf U}}
 
 \newcommand{\natN}{\mathbb{N}}
 

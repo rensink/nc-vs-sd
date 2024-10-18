@@ -1,0 +1,20 @@
+\begin{tikzpicture}[on grid,baseline=(Iv)]
+\node (U) {};
+\node (Iv) [below=of U] {};
+\node (Pv) [below=of Iv] {};
+
+\path
+  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
+  (Iv) edge[->] node[left] {$u_v$} (U);
+  
+\node (Iw) [right=1.5 of Iv] {};
+\node (Pw) [below=of Iw] {};
+
+\path
+  (Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw);
+
+\path[morphism]
+  (Iv) edge[->] node[pos=.4,above] {$a\I$} (Iw)
+  (Pv) edge[->] node[above] {$a\P$} (Pw)
+  (Iw.north) edge[->] node[above right] {$a\U$} (U);
+\end{tikzpicture}
