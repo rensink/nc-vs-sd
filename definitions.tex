@@ -41,32 +41,29 @@ If $g$ satisfies $\cT$, we also call $g$ a $\cT$-model.
 \todo[inline]{At this point introduce the connection from condition trees to FOL}
 
 \begin{definition}[morphism]\label{def:morphism}
-Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM$ from $\cT$ to $\cU$ is a set of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU)\cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism with, in addition, an associated graph morphism $a\U\of I_w\to U$ with $U$ the target graph of $u_v$, such that $u^v=a\I;a\U$.\todo{It sees that, after all, we do not need the component $a\U$.} $\cM$ has a distinguished element $\rt\cM$, called the \emph{root}, of the shape $\rt\cM=(\rt\cT,(\id_I,r),\rt\cU)\in \cM$ for some $r$, where $\rt\cM\U=\id_I$.
+Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM=\tupof{\tp,\rt{}}$ from $\cT$ to $\cU$ is a tuple consisting of
+\begin{itemize}
+\item a set $\tp$ of triples $(v,a,w)$ where $(v,w)\in (V_\cT\cup V_\cU)^2$\todo{AR: note that triples can occur within a single tree; this is required for the sibling rule} and $a\of d_v\to d_w$ is an open graph morphism;
+\item a distinguished element $\rt{}\in\tp$, called the \emph{root}, such that $\rt{}=(\rt\cT,a_{\rt{}},\rt\cU)$ for some $a_{\rt{}}=(\id_I,r)$.
+\end{itemize}
 \end{definition}
 %
-We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$. Moreover, we also sometimes use the component $a$ (with constituents $a\I$, $a\P$ and $a\U$) to refer to the triple $\trip vaw$, when that causes no confusion and the identity of $v$ and $w$ is clear from the context. \Cref{fig:triple} visualises the components of a triple $\trip vaw$.
+We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$; moreover, we usually associate $\cM$ with its component $\tp$ and write $\trip vaw\in\cM$, using $\rt\cM$ to denote the root of $\cM$. Moreover, we also sometimes use the component $a$ (with constituents $a\I$ and $a\P$) to refer to the entire triple $\trip vaw$, when that causes no confusion and the identity of $v$ and $w$ is clear from the context. \Cref{fig:triple} visualises the components of a triple $\trip vaw$.
 
 \begin{figure}
 \centering
 \input{figs/triple}
-\caption{Visualisation of a triple $\trip vaw$ as in \cref{def:morphism}. For the root triple, $I_v=I_d=I$ and $u_v=a\I=a\U=\id_I$}
+\caption{Visualisation of a triple $\trip vaw$ as in \cref{def:morphism}. For the root triple, $I_v=I_d=I$ and $u_v=a\I=\id_I$}
 \label{fig:triple}
 \end{figure}
 
-We use complete induction to reason about condition trees and condition tree morphisms. Induction will be based on the \emph{depth} of node-induced subtree:\todo{AR: I inserted this, but it's not clear to me that we need it.}
-%
-\[ \depth: v\mapsto \max \gensetof{\depth(w)}{v\childof w} \enspace. \]
-%
-For a triple $\trip vaw$, moreover, we let $\depth(a)=\depth(\hat v)+\depth(\hat w)$.
-
 \medskip\noindent
 Given a condition tree $\cT$, the identity morphism $\cI_\cT\of \cT\to\cT$ is defined as
-\[ \cI_\cT = \setof{\trip v{\id_{d_v}}v \mid v\in V_\cT} \enspace. \]
+\[ \cI_\cT = \tupof{\gensetof{(v,\id_{d_v},v)}{v\in V_\cT},(\rt\cT,\id_{d_{\rt\cT}},\rt\cT)} \enspace. \]
 Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition $\cM;\cN\of \cT\to \cV$ is defined as
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
-	\setof{\trip v{a;b}x \mid \exists w\st \trip v a w\in\cM, \trip wbx\in \cN} \\
-	{}\cup \setof{\trip v{a;b}x \mid \exists w\st \trip vaw\in\cN, \trip wbx\in\cM} \enspace.
+	\tupof{\setof{(v,a;b,x) \mid \exists w\st (v,a,w), (w,b,x)\in \cM\cup \cN},(\rt\cT,a_{\rt\cM};a_{\rt\cN},\rt\cV)} \enspace.
 \end{array}
 \]
 
@@ -114,7 +111,7 @@ A given triple $\trip vaw$ can be shown to reflect models if the morphism as a w
 \begin{definition}[reflection evidence]\label{def:evidence}
 Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$, we define the following kinds of \emph{reflection evidence}.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\issdir b{x,a}$, if $w\parentof y$ and $b\U=u_x;a\P$.
+\item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\issdir b{x,a}$, if $w\parentof y$ and $u_y=b\I;u_x;a\P$.
 \item \emph{(Child-based reflection evidence.)} $\trip ybw\in\cM$ provides \emph{child-based reflection evidence}, denoted $\isschd b{x,a}$, if $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.
 \item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isssib b{x,a}$, if $y\sibling x$ and there is a mediating morphism $s\of I_y\to I_v$ such that $u_y=s;u_v$ and $s;d_v=b\I;u_x$.
 \end{itemize}
@@ -144,7 +141,7 @@ Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and 
 \begin{enumerate}
 \item\label{re-dir} If $\trip ybx\in \sdir{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
 \item\label{re-chd} If $\trip ybw\in \schd{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
-\item\label{re-sib} If $\trip ybx\in \ssib{a,x}$ and $b$ reflects models, then either there is a sibling $v'$ of $v$ with a morphism $s'\of I_{v'}\to I_v$ such that $u_{v'}=s';u_v$ and $s';a\I;g\sat \hat v'$, or $u_x;a\P;h\nsat \hat x$.
+\item\label{re-sib} If $\trip ybx\in \ssib{a,x}$ and $b$ reflects models, then either there is a sibling $v'\sibling v$ with a morphism $s'\of I_{v'}\to I_v$ such that $u_{v'}=s';u_v$ and $s';a\I;g\sat \hat v'$, or $u_x;a\P;h\nsat \hat x$.
 \end{enumerate}
 \end{lemma}
 %
@@ -186,13 +183,20 @@ If $\cM\of \cT\to \cU$ is a condition tree morphism, then all $a\in\rgen_\cM$ re
 \end{lemma}
 %
 \begin{proof}
-Consider $\trip vaw\in \rgen_\cM$. Let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. By way of induction hypothesis, we assume that this property holds for $\trip xby\in \rgen_\cM$ when the\todo{complete}. The base case is obtained when both $v$ and $w$ are leaves, and the induction is well-founded because both $\cT$ and $\cU$ have finite depth.
+By induction, using the fact that $\rgen$ is the smallest set satisfying the equation above, which implies that $\rgen=\bigcup_{i\geq 0} \rgen^i$ where
+%
+\begin{align*}
+\rgen^0 = {} & \gensetof{\trip vaw\in \cM}{\neg \exists x\st x\childof v} \\
+\rgen^{i+1} = {} & \gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rgen^i \cap \re{a,x} \neq\emptyset} \enspace.
+\end{align*}
+%
+Consider $\trip vaw\in \rgen$ and let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. Let $h\of P_w\to G$ be the witness for $g\sat \hat w$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$.
 
-$g\sat \hat w$ for $g\of I_w\to G$ implies that there is a witness $h\of P_w\to G$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$. Let $x\childof v$. By definition of $\rgen_\cM$, there is some $b\in \rgen \cap \re{a,x}$. By the induction hypothesis, $b$ preserves models; hence one of the clauses of \cref{lem:evidence} applies. It follows that either $u_x;a\P;h\nsat \hat x$ or (in case of Clause~\ref{re-sib}) possibly there is a sibling $v'$ of $v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. In either case $a$ reflects $g$.
+Assume that $a\in \rgen^i$ and the property has been proved for all $a\in \rgen^j$ with $j<i$. If $i=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise, let $x\childof v$. By definition of $\rgen^i$, there is some $b\in \rgen^{i-1} \cap \re{a,x}$. By the induction hypothesis, $b$ preserves models; hence one of the clauses of \cref{lem:evidence} applies. It follows that either $u_x;a\P;h\nsat \hat x$ or (in case of Clause~\ref{re-sib}) possibly there is a sibling $v'$ of $v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. In either case $a$ reflects $g$.
 \end{proof}
 
 \begin{corollary}
-If $\cM$ is a condition tree morphism, then $\rt\cM\in \rgen_\cM$ implies that $\cM$ reflects models.
+If $\cM$ is a condition tree morphism, then $\rt\cM\in \rgen$ implies that $\cM$ reflects models.
 \end{corollary}
 
 \subsection{Model preservation}
