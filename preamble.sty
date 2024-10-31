@@ -93,19 +93,20 @@
 
 \newcommand\I{^{\mathsf I}}
 \renewcommand\P{^{\mathsf P}}
+\newcommand\Q{^{\mathsf Q}}
 %\newcommand\U{^{\mathsf U}}
 
 \newcommand{\natN}{\mathbb{N}}
 
 \mathchardef\mhyphen="2D
 
-\newcommand{\sdir}[2][]{\mathsf{re\mhyphen dir}_{#1}(#2)}
-\newcommand{\schd}[2][]{\mathsf{re\mhyphen chd}_{#1}(#2)}
-\newcommand{\ssib}[2][]{\mathsf{re\mhyphen sib}_{#1}(#2)}
+\newcommand{\redir}[2][]{\mathsf{re\mhyphen dir}_{#1}(#2)}
+\newcommand{\rechd}[2][]{\mathsf{re\mhyphen chd}_{#1}(#2)}
+\newcommand{\resib}[2][]{\mathsf{re\mhyphen sib}_{#1}(#2)}
 
-\newcommand{\issdir}[3][]{{#2}\in\sdir[#1]{#3}}
-\newcommand{\isschd}[3][]{{#2}\in\schd[#1]{#3}}
-\newcommand{\isssib}[3][]{{#2}\in\ssib[#1]{#3}}
+\newcommand{\isredir}[3][]{{#2}\in\redir[#1]{#3}}
+\newcommand{\isrechd}[3][]{{#2}\in\rechd[#1]{#3}}
+\newcommand{\isresib}[3][]{{#2}\in\resib[#1]{#3}}
 
 \newcommand{\re}[2][]{\mathsf{re}_{#1}(#2)}
 
@@ -116,14 +117,16 @@
 
 \newcommand{\fuse}{{\mathsf{fuse}}}
 
-\newcommand{\tdir}[1]{\mathsf{pe\mhyphen dir}(#1)}
-\newcommand{\tchd}[1]{\mathsf{pe\mhyphen chd}(#1)}
+\newcommand{\pedir}[1]{\mathsf{pe\mhyphen dir}(#1)}
+\newcommand{\peuniv}[1]{\mathsf{pe\mhyphen chd}(#1)}
 
-\newcommand{\istdir}[2]{{#1}\in\tdir{#2}}
+\newcommand{\ispedir}[2]{{#1}\in\pedir{#2}}
 
 \newcommand{\pdir}{{\mathsf{p\mhyphen dir}}}
 \newcommand{\pchd}{{\mathsf{p\mhyphen chd}}}
 \newcommand{\pgen}{{\mathsf{p}}}
+
+\newcommand{\ishift}{{\mathsf{ishift}}}
 
 \newenvironment{inumerate}{%
   \begin{enumerate*}[label=\emph{(\roman*)}]

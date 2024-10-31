@@ -25,7 +25,7 @@ A \emph{condition tree} $\cT$ is a quadruple of the form $\tupof{V, {\parentof},
 \end{itemize}
 \end{definition}
 %
-We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parent v$ denotes $v$'s parent. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (possibly identical) children of the same parent, or if $v=w=\rt{}$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).}
+We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parent v$ denotes $v$'s parent. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (poresibly identical) children of the same parent, or if $v=w=\rt{}$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).}
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
 Let $\cT$ be a condition tree and $g\of I_\cT\to G$ a graph morphism. $g$ \emph{satisfies $\cT$} denoted $g\sat \cT$, if there is a graph morphism $h\of P_\cT\to G$ such that
@@ -56,6 +56,11 @@ We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$; moreove
 \caption{Visualisation of a triple $\trip vaw$ as in \cref{def:morphism}. For the root triple, $I_v=I_d=I$ and $u_v=a\I=\id_I$}
 \label{fig:triple}
 \end{figure}
+
+\todo[inline]{We could extend the child relation to triples, as follows.}
+Given a morphism $\cM$, we define a parent relation ${\childof}\subseteq \cM\times \cM$ as follows:
+\[ (v,a,w)\parentof (x,b,y) \;\Leftrightarrow\; v\parentof x\wedge w\parentof y \wedge u_y=b\I;u_x;a\P \enspace. \]
+\todo[inline]{This might provide a more acceresible and uniform way to define the notions of direct (preservation and reflection) evidence.}
 
 \medskip\noindent
 Given a condition tree $\cT$, the identity morphism $\cI_\cT\of \cT\to\cT$ is defined as
@@ -111,9 +116,9 @@ A given triple $\trip vaw$ can be shown to reflect models if the morphism as a w
 \begin{definition}[reflection evidence]\label{def:evidence}
 Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$, we define the following kinds of \emph{reflection evidence}.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\issdir b{x,a}$, if $w\parentof y$ and $u_y=b\I;u_x;a\P$.
-\item \emph{(Child-based reflection evidence.)} $\trip ybw\in\cM$ provides \emph{child-based reflection evidence}, denoted $\isschd b{x,a}$, if $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.
-\item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isssib b{x,a}$, if $y\sibling x$ and there is a mediating morphism $s\of I_y\to I_v$ such that $u_y=s;u_v$ and $s;d_v=b\I;u_x$.
+\item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\isredir b{x,a}$, if $w\parentof y$ and $u_y=b\I;u_x;a\P$.
+\item \emph{(Child-based reflection evidence.)} $\trip ybw\in\cM$ provides \emph{child-based reflection evidence}, denoted $\isrechd b{x,a}$, if $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.
+\item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isresib b{x,a}$, if $y\sibling x$ and there is a mediating morphism $s\of I_y\to I_v$ such that $u_y=s;u_v$ and $s;d_v=b\I;u_x$.
 \end{itemize}
 \end{definition}
 %
@@ -125,13 +130,13 @@ For a visualisation see \cref{fig:source-support}.
 	\label{fig:source-support}
 \end{figure}
 
-Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, we can define the sets $\sdir{a,x}$, $\schd{a,x}$ and $\ssib{a,x}$ as below, as well as the set $\re{a,x}$ of (generalised) reflection evidence as their union.
+Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, we can define the sets $\redir{a,x}$, $\rechd{a,x}$ and $\resib{a,x}$ as below, as well as the set $\re{a,x}$ of (generalised) reflection evidence as their union.
 %
 \begin{align*}
-\sdir{a,x} ={} & \gensetof{\trip ybx\in \cM}{w\parentof y, b\I;u_x;a\P=u_y} \\
-\schd{a,x} ={} & \gensetof{\trip ybw\in \cM}{x\parentof y, \exists k:I_y\to I_x\st k;d_x=u_y\wedge k;u_x;a\P=d_y;b\P} \\
-\ssib{a,x} ={} & \gensetof{\trip ybx\in \cM}{v\sibling y, \exists s:I_y\to I_v\st u_y=s;u_v \wedge s;d_w=b\I;u_x} \\
-\re{a,x} ={} & \sdir{a,x}\cup \schd{a,x} \cup \ssib{a,x} \enspace.
+\redir{a,x} ={} & \gensetof{\trip ybx\in \cM}{w\parentof y, b\I;u_x;a\P=u_y} \\
+\rechd{a,x} ={} & \gensetof{\trip ybw\in \cM}{x\parentof y, \exists k:I_y\to I_x\st k;d_x=u_y\wedge k;u_x;a\P=d_y;b\P} \\
+\resib{a,x} ={} & \gensetof{\trip ybx\in \cM}{v\sibling y, \exists s:I_y\to I_v\st u_y=s;u_v \wedge s;d_w=b\I;u_x} \\
+\re{a,x} ={} & \redir{a,x}\cup \rechd{a,x} \cup \resib{a,x} \enspace.
 \end{align*}
 %
 These evidence arrows satisfy the following (rather technical) properties.
@@ -139,20 +144,20 @@ These evidence arrows satisfy the following (rather technical) properties.
 \begin{lemma}\label{lem:evidence}
 Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
 \begin{enumerate}
-\item\label{re-dir} If $\trip ybx\in \sdir{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
-\item\label{re-chd} If $\trip ybw\in \schd{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
-\item\label{re-sib} If $\trip ybx\in \ssib{a,x}$ and $b$ reflects models, then either there is a sibling $v'\sibling v$ with a morphism $s'\of I_{v'}\to I_v$ such that $u_{v'}=s';u_v$ and $s';a\I;g\sat \hat v'$, or $u_x;a\P;h\nsat \hat x$.
+\item\label{re-dir} If $\trip ybx\in \redir{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\item\label{re-chd} If $\trip ybw\in \rechd{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\item\label{re-sib} If $\trip ybx\in \resib{a,x}$ and $b$ reflects models, then either there is a sibling $v'\sibling v$ with a morphism $s'\of I_{v'}\to I_v$ such that $u_{v'}=s';u_v$ and $s';a\I;g\sat \hat v'$, or $u_x;a\P;h\nsat \hat x$.
 \end{enumerate}
 \end{lemma}
 %
 \begin{proof}
 In each case, assume $u_x;a\P;h\sat \hat x$.
 \begin{enumerate}
-\item $\trip ybx\in \sdir{a,x}$ means that $w\parentof y$ and $b\I;u_x;a\P=u_y$. Since $b$ reflects models, $u_x;a\P;h\sat \hat x$ implies there is a sibling $y'\sibling y$ with a morphism $s\of I_{y'}\to I_y$ such that $u_{y'}=s;u_y$ and $s;b\I;u_x;a\P;h\sat \hat y$, implying (due to $u_{y'};h=s;u_y;h=s;b\I;u_x;a\P;h$) that $u_{y'};h\sat \hat y$, which contradicts $g\sat \hat w$.
+\item $\trip ybx\in \redir{a,x}$ means that $w\parentof y$ and $b\I;u_x;a\P=u_y$. Since $b$ reflects models, $u_x;a\P;h\sat \hat x$ implies there is a sibling $y'\sibling y$ with a morphism $s\of I_{y'}\to I_y$ such that $u_{y'}=s;u_y$ and $s;b\I;u_x;a\P;h\sat \hat y$, implying (due to $u_{y'};h=s;u_y;h=s;b\I;u_x;a\P;h$) that $u_{y'};h\sat \hat y$, which contradicts $g\sat \hat w$.
 
-\item $\trip ybw\in \schd{a,x}$ means that $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$. Since $u_x;a\P;h\sat \hat x$, there must be some witness $f\of P_x\to G$ such that $u_x;a\P;h=d_x;f$ and $u_{y'};f\nsat \hat y'$ for all siblings $y'\sibling y$. Since $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s:I_{y'}\to I_y$ such that $u_{y'}=s;u_y$ and $s;b\I;g\sat \hat y$; since $s;b\I;g= s;b\I;d_w;h= s;d_y;b\P;h= s;k;u_x;a\P;h=s;k;d_x;f=s;u_y;f=u_{y'};f$, this gives rise to a contradiction.
+\item $\trip ybw\in \rechd{a,x}$ means that $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$. Since $u_x;a\P;h\sat \hat x$, there must be some witness $f\of P_x\to G$ such that $u_x;a\P;h=d_x;f$ and $u_{y'};f\nsat \hat y'$ for all siblings $y'\sibling y$. Since $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s:I_{y'}\to I_y$ such that $u_{y'}=s;u_y$ and $s;b\I;g\sat \hat y$; since $s;b\I;g= s;b\I;d_w;h= s;d_y;b\P;h= s;k;u_x;a\P;h=s;k;d_x;f=s;u_y;f=u_{y'};f$, this gives rise to a contradiction.
 
-\item $\trip ybx\in \ssib{a,x}$ means that there is a morphism $s\of I_y\to I_w$ such that $u_y=s;u_v$ and $s;d_w=b\I;u_x;a\P$. Since $u_x;a\P;h\sat \hat x$ and $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s''\of I_{y'}\to I_y$ such that $u_{y'}=s'';u_y$ and $s'';b\I;u_x;a\P;h\sat \hat y'$. Let $v'=y'$ and $s'=s'';s$; then $v'\sibling v$, $u_{v'};s'=u_y;s=u_v$ and $s';a\I;g= s';a\I;d_w;h= s'';s;d_v;a\P;h= s'';b\I;u_x;a\P;h \sat \hat v'$.
+\item $\trip ybx\in \resib{a,x}$ means that there is a morphism $s\of I_y\to I_w$ such that $u_y=s;u_v$ and $s;d_w=b\I;u_x;a\P$. Since $u_x;a\P;h\sat \hat x$ and $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s''\of I_{y'}\to I_y$ such that $u_{y'}=s'';u_y$ and $s'';b\I;u_x;a\P;h\sat \hat y'$. Let $v'=y'$ and $s'=s'';s$; then $v'\sibling v$, $u_{v'};s'=u_y;s=u_v$ and $s';a\I;g= s';a\I;d_w;h= s'';s;d_v;a\P;h= s'';b\I;u_x;a\P;h \sat \hat v'$.
 \end{enumerate}
 \end{proof}
 %
@@ -161,18 +166,18 @@ Based on these notions of evidence, we define corresponding notions of \emph{syn
 \begin{definition}[syntactic reflection]\label{def:syntactic reflection}
 Let $\cM\of \cT\to\cU$ be a condition tree morphism, and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct reflection.)} $a\in\rdir$ if for every child $x$ of $v$, there is some $b\in\rdir$ such that $\issdir b{x,a}$.
-\item \emph{(Child-based reflection.)} $a\in\rchd$ if for every child $x$ of $v$, there is some $b\in\rchd$ such that $\issdir b{x,a}$ or $\isschd b{x,a}$.
-\item \emph{(Sibling-based reflection.)} $a\in\rsib$ if for every child $x$ of $v$, there is some $b\in \rsib$ such that $\issdir b{x,a}$ or $\isssib b{x,a}$.
-\item \emph{(General reflection.)} $s\in \rgen$ if for every child $x$ of $v$, there is some $b\in \rgen$ such that $\issdir b{x,a}$, $\isschd b{x,a}$ or $\isssib b{x,a}$.
+\item \emph{(Direct reflection.)} $a\in\rdir$ if for every child $x$ of $v$, there is some $b\in\rdir$ such that $\isredir b{x,a}$.
+\item \emph{(Child-based reflection.)} $a\in\rchd$ if for every child $x$ of $v$, there is some $b\in\rchd$ such that $\isredir b{x,a}$ or $\isrechd b{x,a}$.
+\item \emph{(Sibling-based reflection.)} $a\in\rsib$ if for every child $x$ of $v$, there is some $b\in \rsib$ such that $\isredir b{x,a}$ or $\isresib b{x,a}$.
+\item \emph{(General reflection.)} $s\in \rgen$ if for every child $x$ of $v$, there is some $b\in \rgen$ such that $\isredir b{x,a}$, $\isrechd b{x,a}$ or $\isresib b{x,a}$.
 \end{itemize}
 \end{definition}
 %
 Alternatively: $\rdir$, $\rchd$, $\rsib$ and $\rgen$ are the smallest sets satisfying the following recursive equations:
 \begin{align*}
-\rdir ={} & \gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rdir \cap \sdir{a,x}\neq\emptyset} \\
-\rchd ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rchd \cap (\sdir{a,x}\cup \schd{a,x}) \neq\emptyset} \\
-\rsib ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rsib \cap (\sdir{a,x}\cup \ssib{a,x}) \neq\emptyset} \\
+\rdir ={} & \gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rdir \cap \redir{a,x}\neq\emptyset} \\
+\rchd ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rchd \cap (\redir{a,x}\cup \rechd{a,x}) \neq\emptyset} \\
+\rsib ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rsib \cap (\redir{a,x}\cup \resib{a,x}) \neq\emptyset} \\
 \rgen ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rgen \cap \re{a,x} \neq\emptyset} \enspace.
 \end{align*}
 %
@@ -192,7 +197,7 @@ By induction, using the fact that $\rgen$ is the smallest set satisfying the equ
 %
 Consider $\trip vaw\in \rgen$ and let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. Let $h\of P_w\to G$ be the witness for $g\sat \hat w$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$.
 
-Assume that $a\in \rgen^i$ and the property has been proved for all $a\in \rgen^j$ with $j<i$. If $i=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise, let $x\childof v$. By definition of $\rgen^i$, there is some $b\in \rgen^{i-1} \cap \re{a,x}$. By the induction hypothesis, $b$ preserves models; hence one of the clauses of \cref{lem:evidence} applies. It follows that either $u_x;a\P;h\nsat \hat x$ or (in case of Clause~\ref{re-sib}) possibly there is a sibling $v'$ of $v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. In either case $a$ reflects $g$.
+Assume that $a\in \rgen^i$ and the property has been proved for all $a\in \rgen^j$ with $j<i$. If $i=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise, let $x\childof v$. By definition of $\rgen^i$, there is some $b\in \rgen^{i-1} \cap \re{a,x}$. By the induction hypothesis, $b$ preserves models; hence one of the clauses of \cref{lem:evidence} applies. It follows that either $u_x;a\P;h\nsat \hat x$ or (in case of Clause~\ref{re-sib}) poresibly there is a sibling $v'$ of $v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. In either case $a$ reflects $g$.
 \end{proof}
 
 \begin{corollary}
@@ -206,13 +211,17 @@ In order to reason concisely about model preservation, we call a graph morphism 
 To define model preservation, we have to take into account that (as observed earlier) a triple $\trip vaw$ in general cannot be expected to carry over any $\hat v$-model $g$ to some $\hat w$-model: rather, $g$ should at least be $a\I$-prefixed for this to make sense, at which point the $\hat w$-model is the `remnant'' of $g$ after $a\I$. In fact, we define the notion of model preservation for $u$-prefixed models of $\hat v$, where $u$ is a parameter that can itself be instantiated by any $a\I$-prefixed morphism. (Such a $u$-prefixed model is thus certainly an $a\I$-prefixed model.) This additional complication is required to make our induction proofs work.
 %
 \begin{definition}[model preservation]
-Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$ such that $a\I$ is epi.
+Let $\cM\of \cT\to\cU$ be a morphism.
 \begin{itemize}[topsep=\smallskipamount]
-\item $a$ \emph{preserves} an $a\I$-prefixed $\hat v$-model $g=a\I;g'$ if $g'\sat \hat w$.
-		
-\item $\cM$ preserves models if $\rt\cM$ preserves all $\id$-prefixed $\cT$-models.
+\item $\trip vaw\in \cM$ \emph{preserves a $\hat v$-model $g$} if $a\I$ is epi and $g=a\I;g'$ implies $g'\sat \hat w$.
+
+\item $\trip vaw\in \cM$ \emph{preserves models} if it preserves all $\hat v$-models. 
+
+\item $\cM$ preserves models if $\rt\cM$ preserves models.
 \end{itemize}
 \end{definition}
+%
+Note that for the root triple $a=\rt\cM$, we have $a\I=\id_I$, which is epi, and moreover implies that $g=a\I;g'$ if and only if $g=g'$; so model preservation (of $\cM$) simply means that all $\cT$-models are also $\cU$-models, as expected.
 %
 \begin{definition}[strong model preservation]
 Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
@@ -231,32 +240,32 @@ Like for model reflection, we prove model preservation for morphisms with a cert
 Let $\cM\of \cT\to\cU$ be a condition tree morphism, and let $u\of I\to P$ be a graph morphism. A triple $\trip vaw\in\cM$ is a \emph{$u$-fusion} if $a\I$ is epi, $u$ is $a\I$-prefixed and the pushout of $u$ over $d_v$ is $a\P$-prefixed. The set of $u$-fusions in $\cM$ is denoted $\fuse(u)$.
 \end{definition}
 
-\begin{definition}[preservation evidence]\label{def:target support}
-Let $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and let $y$ be a child of $w$.
+\begin{definition}[preservation evidence]\label{def:preservation evidence}
+Let $\cM\of \cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct target support.)} $b:\tdir{y,a}$ if 
-\begin{inumerate}
-\item $v=\rt\cT$ and $a=\id$, or $v\neq\rt\cT$ and there is an arrow $a'\of P_w\to P$ with $P$ the pushout object of $(u_v,d_v)$; and
-\item $\trip ybx\in \cM$ for some child $x$ of $v$, such that $b\I;u_x;a\P=u_y$.
-\end{inumerate}
+\item \emph{(Interface shift.)} $a$ is an \emph{interface shift}, denoted $a\in \ishift$, if there is an arrow $a\Q\of P_w\to Q_v$ with $Q_v$ the pushout object of $(u_v,d_v)$.
+\item \emph{(Direct preservation evidence.)} Let $y\childof w$. A triple $\trip ybx$ provides \emph{direct preservation evidence for $y$}, denoted $b\in\pedir{y,a}$, if $x\childof v$ and $b\I;u_x;a\P=u_y$.
+\item \emph{(Universal preservation evidence.)} A triple $\trip ybw$ provides \emph{universal preservation evidence for $a$}, denoted $b\in\peuniv{a}$, if $y\childof x\childof v$ for some $x$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.
 \end{itemize}
 \end{definition}
 %
-For a visualisation see \cref{fig:target-support}.
+With respect to interface shift: if $(v,a,w)=\rt\cM$, then $u_v=\id_I$ and hence $P_v$ itself is the pushout of $(u_v,d_v)$; hence $a\in\ishift$ if and only if $a\Q$ is a section of $a\P$.
+%
+For a visualisation see \cref{fig:preservation evidence}.
 %
 \begin{figure}
-	\input{figs/target-saturation}
-	\caption{The notions of support of \cref{def:target support}}
-	\label{fig:target-support}
+	\input{figs/preservation-evidence}
+	\caption{The notions of preservation evidence of \cref{def:preservation evidence}}
+	\label{fig:preservation evidence}
 \end{figure}
 
 \begin{definition}[syntactic preservation]
 Let $\cM\of \cT\to\cU$ be an CT-morphism, and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
-\item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pdir$.
+\item \emph{(Direct preservation.)} $a:\pdir$ if for every child $y$ of $w$, there is some $b:\pedir{y,a}$ such that $b:\pdir$.
 \item \emph{(Child-based preservation.)} $a:\pchd$ if one of the following holds:
 \begin{itemize}
-\item for every child $y$ of $w$, there is some $b:\tdir{y,a}$ such that $b:\pchd$;
+\item for every child $y$ of $w$, there is some $b:\pedir{y,a}$ such that $b:\pchd$;
 \item there is a child $x$ of $v$ with an open graph morphism $c\of d_x\to d_v$, such that for every child $y$ of $x$ there is some $\trip ybw\in\cM$ with $b:\pchd$.
 \end{itemize}
 \end{itemize}

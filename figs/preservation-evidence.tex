@@ -1,0 +1,29 @@
+\subcaptionbox*{
+	Interface shift \\ ($a\in \ishift$)
+}[.5\textwidth][c]{
+\begin{tikzpicture}[on grid,baseline=(Iv)]
+	\node (Iv) {};
+	\node (Pv) [below=2 of Iv] {};
+	\node (Prt) [above right=of Iv] {};
+    \node (Qv) [above right=of Pv] {$Q_v$};
+	
+	\path
+	(Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
+	(Iv) edge[->] node[left] {$u_v$} (Prt);
+	
+	\node (Iw) [right=3 of Iv] {};
+	\node (Pw) [below=2 of Iw] {};
+	
+	\path
+	(Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw);
+	
+	\path[morphism]
+	(Iv) edge[->] node[above] {$a\I$} (Iw)
+	(Pv) edge[->] node[above] {$a\P$} (Pw);
+
+	\path[allcolor=gray]
+    (Prt) edge[->] (Qv)
+    (Pv) edge[->] (Qv)
+	(Pw) edge[->] node[above] {$a\Q$} (Qv);
+\end{tikzpicture}
+}%
