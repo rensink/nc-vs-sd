@@ -1,15 +1,20 @@
 \begin{tikzpicture}[on grid]
-\node (Iv) {};
-\node (Pv) [below=of Iv] {};
+\node (Iv) {$I_v$};
+\node (Pv) [below=of Iv] {$P_v$};
 
 \path
-  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv);
-  
-\node (Iw) [right=1.5 of Iv] {};
-\node (Pw) [below=of Iw] {};
+  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
+  (Iv) node {$I_v$}
+  (Pv) node {$P_v$};
+
+
+\node (Iw) [right=1.5 of Iv] {$I_w$};
+\node (Pw) [below=of Iw] {$P_w$};
 
 \path
-  (Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw);
+  (Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw)
+  (Iw) node {$I_w$}
+  (Pw) node {$P_w$};
 
 \path[morphism]
   (Iv) edge[->] node[above] {$a\I$} (Iw)

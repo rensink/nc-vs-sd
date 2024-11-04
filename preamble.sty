@@ -1,3 +1,4 @@
+\usepackage[dvipsnames]{xcolor}
 \usepackage{tikz}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -9,6 +10,7 @@
 \usepackage{proof}
 \usepackage{comment}
 
+\captionsetup[subfigure]{justification=centering}
 
 % Categories - AC
 \newcommand{\CT}{\ensuremath{\mathbf{CT}}}
@@ -94,7 +96,7 @@
 \newcommand\I{^{\mathsf I}}
 \renewcommand\P{^{\mathsf P}}
 \newcommand\Q{^{\mathsf Q}}
-%\newcommand\U{^{\mathsf U}}
+\newcommand\U{^{\mathsf U}}
 
 \newcommand{\natN}{\mathbb{N}}
 
@@ -118,7 +120,7 @@
 \newcommand{\fuse}{{\mathsf{fuse}}}
 
 \newcommand{\pedir}[1]{\mathsf{pe\mhyphen dir}(#1)}
-\newcommand{\peuniv}[1]{\mathsf{pe\mhyphen chd}(#1)}
+\newcommand{\peuniv}[1]{\mathsf{pe\mhyphen univ}(#1)}
 
 \newcommand{\ispedir}[2]{{#1}\in\pedir{#2}}
 
@@ -191,6 +193,13 @@
    ellipse,
    inner xsep=8,
    inner ysep=15,
+   fill=white!95!blue,
+   behind path
+}}
+\tikzset{doubleopengraph/.style={
+   ellipse,
+   inner xsep=8,
+   inner ysep=25,
    fill=white!95!blue,
    behind path
 }}

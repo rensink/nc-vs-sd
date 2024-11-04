@@ -9,7 +9,8 @@
 
 \path
   (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
-  (Ix) edge[->] node[opengraph] {} node[left] {$d_x$} (Px)
+%  (Ix) edge[->] node[opengraph] {} node[left] {$d_x$} (Px)
+  (Ix) edge[draw=none] node[opengraph] {} node {$x$} (Px)
   (Ix) edge[->] node[left] {$u_x$} (Pv);
   
 \node (Iw) [right=1.5 of Iv] {};
@@ -26,12 +27,14 @@
 \node (Py) [below=of Iy] {};
 
 \path[allcolor=gray]
-  (Iy) edge[->] node[opengraph] {} node[right] {$d_y$} (Py)
+%  (Iy) edge[->] node[opengraph] {} node[right] {$d_y$} (Py)
+  (Iy) edge[draw=none] node[opengraph] {} node {$y$} (Py)
   (Iy) edge[->] node[right] {$u_y$} (Pw);
 
 \path[morphism=blue!40!white]
   (Iy) edge[->] node[above] {$b\I$} (Ix)
-  (Py) edge[->] node[above] {$b\P$} (Px);
+%  (Py) edge[->] node[above] {$b\P$} (Px)
+  ;
 
 % Defs to make sure bottom is aligned
 \node (I) [below=1 of Px] {};
@@ -62,28 +65,25 @@
 
 \path[morphism]
   (Iv) edge[->] node[above] {$a\I$} (Iw)
-  (Pv) edge[->] node[above] {$a\P$} (Pw);
+  (Pv) edge[->] node[above] {$a\P$} (Pw)
+  ;
 
 \node (Iy) [below=of Px] {};
 \node (Py) [below=of Iy] {};
 
 \path[allcolor=black!50!white]
-  (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
-  (Iy) edge[->] node[left,pos=.6,inner sep=1] {$u_y$} (Px);
+%  (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
+  (Iy) edge[draw=none] node[opengraph] {} node {$y$} (Py)
+  (Iy) edge[->] node[left] {$u_y$} (Px);
 
 % The up-arrow
 \path[allcolor=black!50!white]
   (Iy) edge[bend right,->] node[right,near end] {$k$} (Ix);
-% The pullback
-%\node (Ixy) [left=1.5 of Px] {};
-%\path[allcolor=black!50!white]
-%  (Ixy) edge[->] node[above left] {$u$} (Ix.west)
-%  (Ixy) edge[->>] node[below left] {$d$} (Iy.west)
-%  (Ixy) edge[-{Straight Barb[black!50!white,length=5pt,width=10pt]},white] +(5mm,0mm);
 
 \path[morphism=blue!40!white]
   (Iy.east) edge[->] node[left] {$b\I$} (Iw)
-  (Py.east) edge[->] node[right] {$b\P$} (Pw);
+%  (Py.east) edge[->] node[right] {$b\P$} (Pw)
+  ;
 \end{tikzpicture}
 }%
 %
@@ -98,7 +98,8 @@
 
 \path
   (Iv) edge[->] node[opengraph] {} node[right,pos=.6] {$d_v$} (Pv)
-  (Ix) edge[->] node[opengraph] {} node[right] {$d_x$} (Px)
+%  (Ix) edge[->] node[opengraph] {} node[right] {$d_x$} (Px)
+  (Ix) edge[draw=none] node[opengraph] {} node {$x$} (Px)
   (Ix) edge[->] node[right] {$u_x$} (Pv);
   
 \node (Iw) [right=2 of Iv] {};
@@ -116,14 +117,16 @@
 \node (Pz) [above right=.75 and .75 of Iy] {};
 
 \path[allcolor=gray]
-  (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
+%  (Iy) edge[->] node[opengraph] {} node[left] {$d_y$} (Py)
+  (Iy) edge[draw=none] node[opengraph] {} node {$y$} (Py)
   (Iv) edge[->] node[right] {$u_v$} (Pz)
   (Iy) edge[->] node[left] {$u_y$} (Pz)
   (Iy) edge[->] node[below] {$s$} (Iv);
 
 \path[morphism=blue!40!white]
-  (Iy) edge[->] node[left,pos=.6] {$b\I$} (Ix.north west)
-  (Py) edge[->] node[left,pos=.6] {$b\P$} (Px.north west);
+  (Iy) edge[->] node[left=.1,pos=.7] {$b\I$} (Ix.north west)
+%  (Py) edge[->] node[left,pos=.6] {$b\P$} (Px.north west)
+  ;
 
 % Defs to make sure bottom is aligned
 \node (I) [below=1 of Px] {};

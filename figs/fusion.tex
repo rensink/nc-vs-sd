@@ -1,7 +1,8 @@
 \subcaptionbox{
-   $a\I\in \cM_\pgen$
+   $a\I$ is epi, \\ $u_v$ is $a\I$-prefixed
+   \label{fig:fusion-preservation}
 }[.3\textwidth][c]{
-\begin{tikzpicture}[on grid,baseline=(G)]
+\begin{tikzpicture}[on grid,baseline=(current bounding box.south)]
 	\node (Iv) {};
 	\node (Pv) [below=2 of Iv] {};
 	\node (Prt) [above right=of Iv] {};
@@ -21,13 +22,14 @@
 	(Iv) edge[->>] node[below] {$a\I$} (Iw)
 	(Pv) edge[->] node[above] {$a\P$} (Pw);
     
-    \node (G) [below right=of Pw,inner sep=2] {};
+    \node [below=1.4 of Pw] {};
 \end{tikzpicture}
 }%
 \subcaptionbox{
 	$a\in \fuse$
+    \label{fig:fusion-def}
 }[.35\textwidth][c]{
-\begin{tikzpicture}[on grid,baseline=(G)]
+\begin{tikzpicture}[on grid,baseline=(current bounding box.south)]
 	\node (Iv) {};
 	\node (Pv) [below=2 of Iv] {};
 	\node (Prt) [above right=1 and 1.5 of Iv] {};
@@ -54,12 +56,13 @@
     (Pv) edge[->] node[above] {$u'_v$} (Qv)
 	(Pw) edge[->] node[above=.1] {$a\Q$} (Qv);
     
-    \node (G) [below right=of Pw,inner sep=2] {};
+    \node [below=1.4 of Pw] {};
 \end{tikzpicture}}%
 \subcaptionbox{
 	``Only if'' of \Cref{lem:fusion}
+        \label{fig:fusion-proof}
 }[.35\textwidth][c]{
-\begin{tikzpicture}[on grid,baseline=(G)]
+\begin{tikzpicture}[on grid,baseline=(current bounding box.south)]
 	\node (Iv) {};
 	\node (Pv) [below=2 of Iv] {};
 	\node (Prt) [above right=1 and 1.5 of Iv] {};
@@ -92,5 +95,7 @@
     (Pv) edge[pos=.4,bend right,->] node[above] {$h$} (G.south west)
     (Qv) edge[dashed,bend right,->] node[below=.1] {$h''$} (G)
     (Pw) edge[pos=.6,dashed,->] node[above=.1] {$h'$} (G);
+    
+    \node [below=1.4 of Pw] {};
 \end{tikzpicture}
 }%

@@ -1,0 +1,126 @@
+\section{Model reflection}
+\label{sec:reflection}
+
+With the above in mind, we first define reflection of models, this being the more straightforward of the two directions.
+
+\begin{definition}[model reflection]
+Let $\cM\of \cT\to\cU$ be a morphism.
+\begin{itemize}[topsep=\itemsep]
+\item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if there is a sibling $v'\sibling v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. We say that $\trip vaw$ \emph{reflects models} if it reflects all $\hat w$-models.
+
+\item $\cM$ \emph{reflects models} if $\rt\cM$ reflects models.
+\end{itemize}
+\end{definition}
+%
+Note that, in case $\trip vaw=\rt\cM$, we have $a\I=\id_I$, and $v'\sibling v$ implies $v'=v$; hence the condition of model reflection implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
+
+\begin{comment}
+\todo[inline]{In fact, we have two versions of model reflection; it currently is unclear which is the ``better''. The difference is that (ordinary) reflection does not impose any requirement on the witnesses, whereas strong reflection requires that the witness of the reflected model is itself a reflected witness of the original model.}
+\begin{definition}[strong model reflection]
+Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
+\begin{itemize}[topsep=\itemsep]
+\item $a$ \emph{reflects a $\hat w$-model $g$ with witness $h$} if $a\I;g\sat \hat v$ with witness $a\P;h$.
+	
+\item $a$ \emph{strongly reflects models} if $a$ reflects all $\hat w$-model/witness pairs.
+		
+\item $\cM$ strongly reflects models if $\rt\cM$ reflects models.
+\end{itemize}
+\end{definition}
+%
+\todo[inline]{
+The first of these, ``ordinary'' reflection, is the property we are really after; at some point we thought that strong reflection would be necessary for building an inductive proof, but currently that seems not to be the case. If that is born out, we can forget about strong reflection.
+}
+\end{comment}
+%
+A given triple $\trip vaw$ can be shown to reflect models if the morphism as a whole provides enough internal \emph{evidence} for reflection. In particular, for a candidate model-reflecting triple $\trip vaw\in \cM$, for every child $x$ of $v$ we require the existence of further triples in $\cM$ (the evidence). To obtain a rich enough framework, we introduce diverse forms of evidence.
+
+\begin{definition}[reflection evidence]\label{def:evidence}
+Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$, we define the following kinds of \emph{reflection evidence}.
+\begin{itemize}[topsep=\smallskipamount]
+\item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\isredir b{x,a}$, if $w\parentof y$ and $u_y=b\I;u_x;a\P$.
+\item \emph{(Child-based reflection evidence.)} $\trip ybw\in\cM$ provides \emph{child-based reflection evidence}, denoted $\isrechd b{x,a}$, if $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=b\I;d_w$.
+\item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isresib b{x,a}$, if $y\sibling x$ and there is a mediating morphism $s\of I_y\to I_v$ such that $u_y=s;u_v$ and $s;d_v=b\I;u_x$.
+\end{itemize}
+\end{definition}
+%
+For a visualisation see \cref{fig:source-support}.
+%
+\begin{figure}
+	\input{figs/reflection-evidence}
+	\caption{The notions of reflection evidence of \cref{def:evidence}}
+	\label{fig:source-support}
+\end{figure}
+
+Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, we can define the sets $\redir{a,x}$, $\rechd{a,x}$ and $\resib{a,x}$ as below, as well as the set $\re{a,x}$ of (generalised) reflection evidence as their union.
+%
+\begin{align*}
+\redir{a,x} ={} & \gensetof{\trip ybx\in \cM}{w\parentof y, b\I;u_x;a\P=u_y} \\
+\rechd{a,x} ={} & \gensetof{\trip ybw\in \cM}{x\parentof y, \exists k:I_y\to I_x\st k;d_x=u_y\wedge k;u_x;a\P=b\I;d_w} \\
+\resib{a,x} ={} & \gensetof{\trip ybx\in \cM}{v\sibling y, \exists s:I_y\to I_v\st u_y=s;u_v \wedge s;d_w=b\I;u_x} \\
+\re{a,x} ={} & \redir{a,x}\cup \rechd{a,x} \cup \resib{a,x} \enspace.
+\end{align*}
+%
+These evidence arrows satisfy the following (rather technical) properties.
+%
+\begin{lemma}\label{lem:evidence}
+Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
+\begin{enumerate}
+\item\label{re-dir} If $\trip ybx\in \redir{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\item\label{re-chd} If $\trip ybw\in \rechd{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\item\label{re-sib} If $\trip ybx\in \resib{a,x}$ and $b$ reflects models, then either there is a sibling $v'\sibling v$ with a morphism $s'\of I_{v'}\to I_v$ such that $u_{v'}=s';u_v$ and $s';a\I;g\sat \hat v'$, or $u_x;a\P;h\nsat \hat x$.
+\end{enumerate}
+\end{lemma}
+%
+\begin{proof}
+In each case, assume $u_x;a\P;h\sat \hat x$.
+\begin{enumerate}
+\item $\trip ybx\in \redir{a,x}$ means that $w\parentof y$ and $b\I;u_x;a\P=u_y$. Since $b$ reflects models, $u_x;a\P;h\sat \hat x$ implies there is a sibling $y'\sibling y$ with a morphism $s\of I_{y'}\to I_y$ such that $u_{y'}=s;u_y$ and $s;b\I;u_x;a\P;h\sat \hat y$, implying (due to $u_{y'};h=s;u_y;h=s;b\I;u_x;a\P;h$) that $u_{y'};h\sat \hat y$, which contradicts $g\sat \hat w$.
+
+\item $\trip ybw\in \rechd{a,x}$ means that $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$. Since $u_x;a\P;h\sat \hat x$, there must be some witness $f\of P_x\to G$ such that $u_x;a\P;h=d_x;f$ and $u_{y'};f\nsat \hat y'$ for all siblings $y'\sibling y$. Since $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s:I_{y'}\to I_y$ such that $u_{y'}=s;u_y$ and $s;b\I;g\sat \hat y$; since $s;b\I;g= s;b\I;d_w;h= s;k;u_x;a\P;h=s;k;d_x;f=s;u_y;f=u_{y'};f$, this gives rise to a contradiction.
+
+\item $\trip ybx\in \resib{a,x}$ means that there is a morphism $s\of I_y\to I_w$ such that $u_y=s;u_v$ and $s;d_w=b\I;u_x;a\P$. Since $u_x;a\P;h\sat \hat x$ and $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s''\of I_{y'}\to I_y$ such that $u_{y'}=s'';u_y$ and $s'';b\I;u_x;a\P;h\sat \hat y'$. Let $v'=y'$ and $s'=s'';s$; then $v'\sibling v$, $u_{v'};s'=u_y;s=u_v$ and $s';a\I;g= s';a\I;d_w;h= s'';s;d_v;a\P;h= s'';b\I;u_x;a\P;h \sat \hat v'$.
+\end{enumerate}
+\end{proof}
+%
+Based on these notions of evidence, we define corresponding notions of \emph{syntactic reflection}:
+
+\begin{definition}[syntactic reflection]\label{def:syntactic reflection}
+Let $\cM\of \cT\to\cU$ be a condition tree morphism, and let $\trip vaw\in\cM$.
+\begin{itemize}[topsep=\smallskipamount]
+\item \emph{(Direct reflection.)} $a\in\rdir$ if for every child $x$ of $v$, there is some $b\in\rdir$ such that $\isredir b{x,a}$.
+\item \emph{(Child-based reflection.)} $a\in\rchd$ if for every child $x$ of $v$, there is some $b\in\rchd$ such that $\isredir b{x,a}$ or $\isrechd b{x,a}$.
+\item \emph{(Sibling-based reflection.)} $a\in\rsib$ if for every child $x$ of $v$, there is some $b\in \rsib$ such that $\isredir b{x,a}$ or $\isresib b{x,a}$.
+\item \emph{(General reflection.)} $s\in \rgen$ if for every child $x$ of $v$, there is some $b\in \rgen$ such that $\isredir b{x,a}$, $\isrechd b{x,a}$ or $\isresib b{x,a}$.
+\end{itemize}
+\end{definition}
+%
+Alternatively: $\rdir$, $\rchd$, $\rsib$ and $\rgen$ are the smallest sets satisfying the following recursive equations:
+\begin{align*}
+\rdir ={} & \gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rdir \cap \redir{a,x}\neq\emptyset} \\
+\rchd ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rchd \cap (\redir{a,x}\cup \rechd{a,x}) \neq\emptyset} \\
+\rsib ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rsib \cap (\redir{a,x}\cup \resib{a,x}) \neq\emptyset} \\
+\rgen ={} &\gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rgen \cap \re{a,x} \neq\emptyset} \enspace.
+\end{align*}
+%
+Clearly, $\rdir\subseteq \rchd\cap \rsib$ and $\rdir\cup \rchd \cup \rsib \subseteq \rgen$; also, if $v$ does not have children then $\trip vaw\in \rdir$ for all $\trip vaw\in\cM$. The latter observation will form the base case of our induction proofs.
+
+\begin{lemma}[syntactic reflection implies model reflection]\label{lem:reflection}
+If $\cM\of \cT\to \cU$ is a condition tree morphism, then all $a\in\rgen_\cM$ reflect models.
+\end{lemma}
+%
+\begin{proof}
+By induction, using the fact that $\rgen$ is the smallest set satisfying the equation above, which implies that $\rgen=\bigcup_{i\geq 0} \rgen^i$ where
+%
+\begin{align*}
+\rgen^0 = {} & \gensetof{\trip vaw\in \cM}{\neg \exists x\st x\childof v} \\
+\rgen^{i+1} = {} & \gensetof{\trip vaw\in \cM}{\forall x\childof v\st \rgen^i \cap \re{a,x} \neq\emptyset} \enspace.
+\end{align*}
+%
+Consider $\trip vaw\in \rgen$ and let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. Let $h\of P_w\to G$ be the witness for $g\sat \hat w$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$.
+
+Assume that $a\in \rgen^i$ and the property has been proved for all $a\in \rgen^j$ with $j<i$. If $i=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise, let $x\childof v$. By definition of $\rgen^i$, there is some $b\in \rgen^{i-1} \cap \re{a,x}$. By the induction hypothesis, $b$ preserves models; hence one of the clauses of \cref{lem:evidence} applies. It follows that either $u_x;a\P;h\nsat \hat x$ or (in case of Clause~\ref{re-sib}) poresibly there is a sibling $v'$ of $v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. In either case $a$ reflects $g$.
+\end{proof}
+
+\begin{corollary}
+If $\cM$ is a condition tree morphism, then $\rt\cM\in \rgen$ implies that $\cM$ reflects models.
+\end{corollary}

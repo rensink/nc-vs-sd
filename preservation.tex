@@ -1,0 +1,112 @@
+\section{Model preservation}
+\label{sec:preservation}
+
+In order to reason concisely about model preservation, we call a graph morphism $f:I\to P$ \emph{$e$-prefixed}, for some graph morphism $e:I\to P'$, if $f=e;f'$ for some graph morphism $f':P'\to P$. In practice, we often use this for $e$ that are epi, in which case $f'$ is in fact uniquely defined.
+
+To define model preservation, we have to take into account that (as observed earlier) a triple $\trip vaw$ in general cannot be expected to carry over any $\hat v$-model $g$ to some $\hat w$-model: rather, $g$ should at least be $a\I$-prefixed for this to make sense, at which point the $\hat w$-model is the `remnant'' of $g$ after $a\I$. In fact, we go one step further and only consider preservation for $u_v$-prefixed models of $\hat v$, where $u_v$ itself is required to be $a\I$-prefixed. (Such a $u_v$-prefixed model is thus certainly an $a\I$-prefixed model.) This additional complication is required to make our induction proofs work.
+%
+\begin{definition}[model preservation]
+Let $\cM\of \cT\to\cU$ be a morphism.
+\begin{itemize}[topsep=\smallskipamount]
+\item $\trip vaw\in \cM$ \emph{preserves a $\hat v$-model $g$} if $g=a\I;g'$ implies $g'\sat \hat w$.
+
+\item $\trip vaw\in \cM$ \emph{preserves models} if $a\I$ is epi, $u_v$ is $a\I$-prefixed, and $\trip vaw$ preserves all $u_v$-prefixed $\hat v$-models. 
+
+\item $\cM$ preserves models if $\rt\cM$ preserves models.
+\end{itemize}
+\end{definition}
+%
+We will use $\cM_\pgen\subseteq \cM$ to denote the subset of triples $\trip vaw\in\cM$ such that $a\I$ is epi and $u_v$ is $a\I$-prefixed. If $\trip vaw\in \cM_\pgen$, then the remnant of $u_v$ after $a\I$ is uniquely defined, and it is useful to have a default notation for it. Henceforth, we write $a\U$ for the unique graph morphism such that $u_v=a\I;a\U$. For a visualisation see \Cref{fig:fusion-preservation}.
+%
+\begin{figure}
+	\input{figs/fusion}
+	\caption{Various preservation-related visualisations}
+	\label{fig:fusion}
+\end{figure}
+
+Note that for the root triple $(v,a,w)=\rt\cM$, we have $a\I=\id_I$, which is epi and implies that $g=a\I;g'$ if and only if $g=g'$; and also $u_v=\id_I$, which is itself $a\I$-prefixed and implies that every $\hat v$-model is $u_v$-prefixed. It follows that $\rt\cM\in\cM_\pgen$ and model preservation (of $\cM$) simply means that all $\cT$-models are also $\cU$-models, as expected.
+%
+\begin{comment}
+\begin{definition}[strong model preservation]
+Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
+\begin{itemize}[topsep=\smallskipamount]
+\item $a$ \emph{preserves} an $a\I$-prefixed $\hat v$-model $g=a\I;g'$ with witness $h$ if $h=a\P;h'$ for some $h'$ such that $g'\sat \hat w$ with witness $h'$.
+		
+\item Let $u:I_v\to P$ be an $a\I$-prefixed graph morphism. $a$ \emph{strongly preserves $u$-prefixed models} if $a$ preserves all $u$-prefixed $\hat v$-model/witness pairs.
+		
+\item $\cM$ strongly preserves models if $\rt\cM$ strongly preserves $\id$-prefixed models.
+\end{itemize}
+\end{definition}
+\end{comment}
+%
+Like for model reflection, we prove model preservation for morphisms with a certain ``syntactic" structure. First, we introduce the concept of a \emph{fusion}, illustrated in \Cref{fig:fusion-def}.
+
+\begin{definition}\label{def:fusion}
+Let $\cM\of \cT\to\cU$ be a condition tree morphism. A triple $\trip vaw\in\cM_\pgen$ is a \emph{fusion} if the pushout of $u_v$ over $d_v$ is $a\P$-prefixed. The set of fusions is denoted $\fuse$.
+\end{definition}
+%
+The term \emph{fusion} is chosen because, essentially, $w$ tests for the same structure as $v$, except that some of the ``parent'' pattern (i.e., the target graph of $u_v$) is \emph{fused} into the pattern $P_w$.
+
+Fusions satisfy the following technical property:
+%
+\begin{lemma}\label{lem:fusion}
+If $\trip vaw\in\fuse$, then $u_v;g=d_v;h$ if and only if $a\U;g=d_w;h'$ with $h=a\P;h'$.
+\end{lemma}
+%
+This can be interpreted as follows: if we ignore the children of $v$ and $w$, then $u_v;g$ is a $\hat v$-model with witness $h$ if and only if $a\U;g$ is a $\hat w$-model with witness $h'$, where $h=a\P;h'$ expresses the relationship between the witnesses.
+%
+\begin{proof} Let $\trip vaw\in\fuse$, meaning that $a\I$ is epi and we have a commuting diagram as in \Cref{fig:fusion-def}.
+\begin{description}[topsep=\itemsep]
+\item[If.] Assume $a\U;g=d_w;h'$ and let $h=a\P;h'$; then $u_v;g=a\I;a\U;g=a\I;d_w;h'=d_v;a\P;h'=d_v;h$.
+\item[Only if.] (Visualised in \Cref{fig:fusion-proof}.) Assume $u_v;g=d_v;h$; then by the pushout property, there is a unique morphism $h''$ such that $d'_v;h''=g$ and $u'_v;h''=h$. Let $h'=a\Q;h''$; then the latter equation implies $h=u'_v;h''=a\P;a\Q;h''=a\P;h'$. It follows that
+\[ a\I;a\U;g=u_v;g=u_v;d'_v;h''=d_v;u'_v;h''=d_v;h=d_v;a\P;h'=a\I;d_w;h' \enspace. \]
+Since $a\I$ is epi, we may conclude $a\U;g=d_w;h'$.
+\end{description}
+\end{proof}
+
+\begin{definition}[preservation evidence]\label{def:preservation evidence}
+Let $\cM\of \cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
+\begin{itemize}[topsep=\smallskipamount]
+\item \emph{(Direct preservation evidence.)} Let $y\childof w$. A triple $\trip ybx$ provides \emph{direct preservation evidence for $y$}, denoted $b\in\pedir{y,a}$, if $x\childof v$ and $b\I;u_x;a\P=u_y$.
+\item \emph{(Universal preservation evidence.)} A triple $\trip ybw$ provides \emph{universal preservation evidence for $a$}, denoted $b\in\peuniv{a}$, if $y\childof x\childof v$ for some $x$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.
+\end{itemize}
+\end{definition}
+%
+Alternatively and more succinctly, we can define these sets as follows. Let $\trip vaw\in\cM$, $y\childof w$ and $z\childof x\childof v$:
+%
+\begin{align*}
+\pedir{a,y} ={} & \gensetof{\trip ybx\in \cM}{x\childof v, b\I;u_x;a\P=u_y} \\
+\peuniv{a,z} ={} & \gensetof{\trip zbw\in\cM}{\exists k\of I_z\to I_x\st k;d_x=u_z\wedge k;u_x;a\P=b\I;d_w}
+\end{align*}
+%
+The following lemma captures the essential properties.
+%
+\begin{lemma}\label{lem:preservation evidence}
+Let $\cM\of \cT\to \cU$ be a condition tree morphism, and let $\trip vaw\in \cM_\pgen$.
+\begin{enumerate}[topsep=\itemsep]
+\item Assume $a\in\fuse$, let $u_v;g\sat \hat v$ with witness $h$, and let $y\childof w$. If there is some $\trip xby\in \pedir{a,y}$ that preserves models, then $b\I;u_x;h\nsat \hat y$.
+\item If $a\in \fuse$ and for all $y\childof w$ there is some $\trip xby\in \pedir{a,y}$ that preserves models, then $\trip vaw$ preserves models.
+\item If there is some $x\childof v$ such that for all $z\childof x$ there is some $\trip zbv\in\peuniv{a,z}$ that preserves models, then $\trip vaw$ preserves models.
+\end{enumerate}
+\end{lemma}
+%
+\begin{proof}
+\todo[inline]{To be done}
+\end{proof}
+%
+Let $\pgen\subseteq \cM$ be the smallest set satisfying the following recursive equation:
+%
+\begin{align*}
+ \pgen = {} & \gensetof{\trip vaw\in \cM_\pgen}{\forall y\childof w\st \pgen\cap \pedir{a,y}\neq\emptyset} \\
+   {}\cup{} & \gensetof{\trip vaw\in \cM_\pgen}{\forall z\childof x\childof v\st \pgen\cap \peuniv{a,z}\neq\emptyset} \enspace.
+\end{align*}
+%
+The following can now be proved by induction, analogously to \Cref{lem:reflection}.
+%
+\begin{lemma}[syntactic preservation implies model preservation]\label{lem:preservation}
+If $\cM\of\cT\to \cU$ is a condition tree morphism, then all $a\in \pgen_\cM$ preserve models.
+\end{lemma}
+%
+\begin{corollary}
+If $\cM$ is a condition tree morphism, then $\rt\cM\in\pgen$ implies that $\cM$ preserves models.
+\end{corollary}
