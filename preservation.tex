@@ -50,10 +50,10 @@ The term \emph{fusion} is chosen because, essentially, $w$ tests for the same st
 Fusions satisfy the following technical property:
 %
 \begin{lemma}\label{lem:fusion}
-If $\trip vaw\in\fuse$, then $u_v;g=d_v;h$ if and only if $a\U;g=d_w;h'$ with $h=a\P;h'$.
+If $\trip vaw\in\fuse$, then $u_v;g=d_v;h$ if and only if $a\U;g=d_w;h'$ for some $h'$ with $h=a\P;h'$.
 \end{lemma}
 %
-This can be interpreted as follows: if we ignore the children of $v$ and $w$, then $u_v;g$ is a $\hat v$-model with witness $h$ if and only if $a\U;g$ is a $\hat w$-model with witness $h'$, where $h=a\P;h'$ expresses the relationship between the witnesses.
+This can be interpreted as follows: if we ignore the children of $v$ and $w$, then $u_v;g$ is a $\hat v$-model with witness $h$ if and only if $a\U;g$ is a $\hat w$-model with some witness $h'$ such that $h=a\P;h'$.
 %
 \begin{proof} Let $\trip vaw\in\fuse$, meaning that $a\I$ is epi and we have a commuting diagram as in \Cref{fig:fusion-def}.
 \begin{description}[topsep=\itemsep]
@@ -68,7 +68,7 @@ Since $a\I$ is epi, we may conclude $a\U;g=d_w;h'$.
 Let $\cM\of \cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct preservation evidence.)} Let $y\childof w$. A triple $\trip ybx$ provides \emph{direct preservation evidence for $y$}, denoted $b\in\pedir{y,a}$, if $x\childof v$ and $b\I;u_x;a\P=u_y$.
-\item \emph{(Universal preservation evidence.)} A triple $\trip ybw$ provides \emph{universal preservation evidence for $a$}, denoted $b\in\peuniv{a}$, if $y\childof x\childof v$ for some $x$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.
+\item \emph{(Universal preservation evidence.)} A triple $\trip ybw$ provides \emph{universal preservation evidence for $a$}, denoted $b\in\peuniv{a}$, if $y\childof x\childof v$ for some $x$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.\todo{The visualisation is the same as for $\rchd$, see \Cref{fig:reflection evidence}}
 \end{itemize}
 \end{definition}
 %
@@ -76,7 +76,7 @@ Alternatively and more succinctly, we can define these sets as follows. Let $\tr
 %
 \begin{align*}
 \pedir{a,y} ={} & \gensetof{\trip ybx\in \cM}{x\childof v, b\I;u_x;a\P=u_y} \\
-\peuniv{a,z} ={} & \gensetof{\trip zbw\in\cM}{\exists k\of I_z\to I_x\st k;d_x=u_z\wedge k;u_x;a\P=b\I;d_w}
+\peuniv{a} ={} & \gensetof{\trip ybw\in\cM}{\exists k\of I_y\to I_x\st k;d_x=u_y\wedge k;u_x;a\P=b\I;d_w}
 \end{align*}
 %
 The following lemma captures the essential properties.
@@ -86,7 +86,7 @@ Let $\cM\of \cT\to \cU$ be a condition tree morphism, and let $\trip vaw\in \cM_
 \begin{enumerate}[topsep=\itemsep]
 \item Assume $a\in\fuse$, let $u_v;g\sat \hat v$ with witness $h$, and let $y\childof w$. If there is some $\trip xby\in \pedir{a,y}$ that preserves models, then $b\I;u_x;h\nsat \hat y$.
 \item If $a\in \fuse$ and for all $y\childof w$ there is some $\trip xby\in \pedir{a,y}$ that preserves models, then $\trip vaw$ preserves models.
-\item If there is some $x\childof v$ such that for all $z\childof x$ there is some $\trip zbv\in\peuniv{a,z}$ that preserves models, then $\trip vaw$ preserves models.
+\item If there is some $x\childof v$ such that for all $y\childof x$ there is some $\trip ybv\in\peuniv{a}$ that preserves models, then $\trip vaw$ preserves models.
 \end{enumerate}
 \end{lemma}
 %
@@ -98,7 +98,7 @@ Let $\pgen\subseteq \cM$ be the smallest set satisfying the following recursive 
 %
 \begin{align*}
  \pgen = {} & \gensetof{\trip vaw\in \cM_\pgen}{\forall y\childof w\st \pgen\cap \pedir{a,y}\neq\emptyset} \\
-   {}\cup{} & \gensetof{\trip vaw\in \cM_\pgen}{\forall z\childof x\childof v\st \pgen\cap \peuniv{a,z}\neq\emptyset} \enspace.
+   {}\cup{} & \gensetof{\trip vaw\in \cM_\pgen}{\exists x\childof v\st \forall y\childof x\st \pgen\cap \peuniv{a,z}\neq\emptyset} \enspace.
 \end{align*}
 %
 The following can now be proved by induction, analogously to \Cref{lem:reflection}.
