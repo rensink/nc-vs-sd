@@ -1,3 +1,12 @@
+2024-11-15
+- Dare un nome alla relazione tra child e parent indipendentemente da reflection o preservation
+- stesso per child rule
+- stesso per sibling??
+Dopo la dimostrazione della correttezza delle condizioni per preservation/reflection vedere come tradurre induttivamente formule di FOL in condition trees. 
+======================== 
+
+
+
 Journal submission [after FestColloquim]
 - include additionally:
   - correspondance between NGC and FOL formulas
