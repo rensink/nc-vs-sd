@@ -68,7 +68,7 @@ Since $a\I$ is epi, we may conclude $a\U;g=d_w;h'$.
 Let $\cM\of \cT\to\cU$ be a condition tree morphism and let $\trip vaw\in\cM$.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct preservation evidence.)} Let $y\childof w$. A triple $\trip ybx$ provides \emph{direct preservation evidence for $y$}, denoted $b\in\pedir{y,a}$, if $x\childof v$ and $b\I;u_x;a\P=u_y$.
-\item \emph{(Universal preservation evidence.)} A triple $\trip ybw$ provides \emph{universal preservation evidence for $a$}, denoted $b\in\peuniv{a}$, if $y\childof x\childof v$ for some $x$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$.\todo{The visualisation is the same as for $\rchd$, see \Cref{fig:reflection evidence}}
+\item \emph{(Universal preservation evidence.)} A triple $\trip ybw$ provides \emph{universal preservation evidence for $a$}, denoted $b\in\peuniv{a}$, if $y\childof x\childof v$ for some $x$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=b\I;d_w$.\todo{The visualisation is the same as for $\rchd$, see \Cref{fig:reflection evidence}}
 \end{itemize}
 \end{definition}
 %
@@ -84,8 +84,8 @@ The following lemma captures the essential properties.
 \begin{lemma}\label{lem:preservation evidence}
 Let $\cM\of \cT\to \cU$ be a condition tree morphism, and let $\trip vaw\in \cM_\pgen$.
 \begin{enumerate}[topsep=\itemsep]
-\item Assume $a\in\fuse$, let $u_v;g\sat \hat v$ with witness $h$, and let $y\childof w$. If there is some $\trip xby\in \pedir{a,y}$ that preserves models, then $b\I;u_x;h\nsat \hat y$.
-\item If $a\in \fuse$ and for all $y\childof w$ there is some $\trip xby\in \pedir{a,y}$ that preserves models, then $\trip vaw$ preserves models.
+\item Assume $a\in\fuse$, let $u_v;g\sat \hat v$ with witness $h$, and let $y\childof w$. If there is some $\trip ybx\in \pedir{a,y}$ that preserves models, then $b\I;u_x;h\nsat \hat y$.
+\item If $a\in \fuse$ and for all $y\childof w$ there is some $\trip ybx\in \pedir{a,y}$ that preserves models, then $\trip vaw$ preserves models.
 \item If there is some $x\childof v$ such that for all $y\childof x$ there is some $\trip ybv\in\peuniv{a}$ that preserves models, then $\trip vaw$ preserves models.
 \end{enumerate}
 \end{lemma}
