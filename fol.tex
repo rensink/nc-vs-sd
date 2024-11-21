@@ -1,0 +1,48 @@
+\section{Equivalence to First-Order Logic}
+
+Nested conditions can express precisely the same properties of graphs as First-Order Logic (FOL). This in fact follows from previous work, but since later on in this paper we strengthen the result to the existence of functors between the respective categories, we start out by recalling the relevant conditions and giving a direct proof of the equivalence. This will also help in developing an intuition about nested conditions.
+
+We restrict to binary predicates $\la,\lb$, taken from a set $\Lab$; furthermore, we use variables $x,y$ taken from a set $\Var$. The syntax of FOL that we use is given by the grammar
+%
+\[ \phi \:::=\: \True
+        \:\mid\: \False
+		\:\mid\: \la(x_1,x_2)
+        \:\mid\: x_1=x_2
+		\:\mid\: \phi_1\wedge \phi_2
+		\:\mid\: \phi_1\vee \phi_2
+		\:\mid\: \neg\phi_1
+		\:\mid\: \exists \bar x\st \phi_1 
+		\]
+where $\la\in\Lab$ is an arbitrary predicate name, the $x_i\in\Var$ are arbitrary variables, $\bar x\in \Var^*$ is a finite sequence of distinct variables and $\la \in \Lab$ is a binary predicate. We also use the concept of \emph{free variables} of $\phi$, denoted $\fv(\phi)$, inductively defined in the usual way.
+
+For the correspondence of FOL to nested conditions, we equate $\Var$ to the universe of node identities. An open graph $g\of I\to G$ can then be seen as an assignment of free variables (the elements of $I$) to a given domain (the graph $G$) in which the existence of a $\la$-labelled edge between $g(x)$ and $g(y)$ means that the predicate $\la(x,y)$ holds. Formally, satisfaction is captured by a relation $\sat$ inductively defined as follows:
+%
+\[\begin{array}{ll}
+g\sat \True & \text{always} \\
+g\sat \False & \text{never} \\
+g\sat \la(x_1,x_2) & \iffdef \text{there is an } e\in E_G \text{ with } s(e)=g(x_1), \ell(e)=\la, t(e)=g(x_2) \\
+g\sat x_1=x_2 & \iffdef g(x_1)=g(x_2) \\
+g\sat \phi_1\wedge \phi_2 & \iffdef g\sat \phi_1 \text{ and } g\sat \phi_2 \\
+g\sat \phi_1\vee \phi_2 & \iffdef g\sat \phi_1 \text{ or } g\sat \phi_2 \\
+g\sat \neg\phi_1 & \iffdef \text{not } g\sat \phi_1 \\
+g\sat \exists x\st \phi_1  & \iffdef h\sat \phi_1 \text{ for } h\of I\cup\setof{x}\to G \text{ with } h\restr (I\setminus \setof x) =g\restr (I\setminus \setof x) \enspace.
+\end{array}\]
+%
+A sneaky technical issue is that, as usual, satisfaction $g\sat\phi$ is well-defined for $g\of I\to G$ whenever $I\supseteq\fv(\phi)$. This is in contrast to $g\sat\cT$ for a nested condition $\cT$, which is only defined if $I$ is \emph{precisely} $I_\cT$. Due to this discrepancy, there cannot be any $\phi$ and $\cT$ such that $g\sat \phi$ if and only if $g\sat \cT$; instead, the best we can hope for is that $g\sat \phi$ if and only if $g\restr I_\cT \sat \cT$. However, since the $g$-images outside $\fv(\phi)$ do not matter for $g\sat \phi$ (in formal terms, $g_1\restr \fv(\phi)=g_2\restr \fv(\phi)$ implies $g_1\sat\phi \Longleftrightarrow g_2\sat\phi$), we still think of this correspondence as ``satisfying the same models'' and of such $\phi$ and $\cT$ as being ``essentially equivalent.''
+
+In the remainder of this section, we show that
+%
+\begin{inumerate}
+\item for every nested condition, there is an essentially equivalent FOL formula;
+\item for every FOL formula, there is an essentially equivalent nested condition.
+\end{inumerate}
+%
+\subsection{From nested conditions to FOL}
+
+\subsection{From FOL to nested conditions}
+
+This is shown inductively over the structure of FOL formulas. Indeed, we show that
+\begin{itemize}
+\item for every basic predicate in FOL, there exists a corresponding nested condition;
+\item for every operator in FOL there exists a construction over nested conditions that has the same effect on satisfaction.
+\end{itemize}

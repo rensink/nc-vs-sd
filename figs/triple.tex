@@ -3,20 +3,21 @@
 \node (Pv) [below=of Iv] {$P_v$};
 
 \path
-  (Iv) edge[->] node[opengraph] {} node[left] {$d_v$} (Pv)
+  (Iv) edge[->] node[opengraph] (v) {} node[left] {$d_v$} (Pv)
   (Iv) node {$I_v$}
   (Pv) node {$P_v$};
 
 
-\node (Iw) [right=1.5 of Iv] {$I_w$};
+\node (Iw) [right=2 of Iv] {$I_w$};
 \node (Pw) [below=of Iw] {$P_w$};
 
 \path
-  (Iw) edge[->] node[opengraph] {} node[right] {$d_w$} (Pw)
+  (Iw) edge[->] node[opengraph] (w) {} node[right] {$d_w$} (Pw)
   (Iw) node {$I_w$}
   (Pw) node {$P_w$};
 
 \path[morphism]
+  (v) edge[openmorphism] (w)
   (Iv) edge[->] node[above] {$a\I$} (Iw)
   (Pv) edge[->] node[above] {$a\P$} (Pw);
 \end{tikzpicture}
