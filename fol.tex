@@ -1,6 +1,6 @@
 \section{Equivalence to First-Order Logic}
 
-Nested conditions can express precisely the same properties of graphs as First-Order Logic (FOL). This in fact follows from previous work, but since later on in this paper we strengthen the result to the existence of functors between the respective categories, we start out by recalling the relevant conditions and giving a direct proof of the equivalence. This will also help in developing an intuition about nested conditions.
+Nested conditions can express precisely the same properties of graphs as First-Order Logic (FOL). This in fact follows from previous work, but since later on in this paper we strengthen the result to the existence of functors between the respective categories, we start out by recalling the relevant definitions and giving a direct proof of the equivalence. This will also help in developing an intuition about nested conditions.
 
 We restrict to binary predicates $\la,\lb$, taken from a set $\Lab$; furthermore, we use variables $x,y$ taken from a set $\Var$. The syntax of FOL that we use is given by the grammar
 %
@@ -13,7 +13,7 @@ We restrict to binary predicates $\la,\lb$, taken from a set $\Lab$; furthermore
 		\:\mid\: \neg\phi_1
 		\:\mid\: \exists \bar x\st \phi_1 
 		\]
-where $\la\in\Lab$ is an arbitrary predicate name, the $x_i\in\Var$ are arbitrary variables, $\bar x\in \Var^*$ is a finite sequence of distinct variables and $\la \in \Lab$ is a binary predicate. We also use the concept of \emph{free variables} of $\phi$, denoted $\fv(\phi)$, inductively defined in the usual way.
+where $\la\in\Lab$ is an arbitrary predicate name and $x,x_i\in\Var$ are arbitrary variables As syntactic sugar we sometimes use $\exists \setof{x_1,\ldots,x_n}\st \phi$ to abbreviate $\exists x_1\st \cdots \exists x_n\st \phi$ --- which is allowed because $\exists x\st \exists y\st \phi$ is equivalent to $\exists y\st \exists x\st \phi$, and to $\exists x\st \phi$ if $x$ and $y$ are syntactically the same. We also use the concept of \emph{free variables} of $\phi$, denoted $\fv(\phi)$, inductively defined in the usual way.
 
 For the correspondence of FOL to nested conditions, we equate $\Var$ to the universe of node identities. An open graph $g\of I\to G$ can then be seen as an assignment of free variables (the elements of $I$) to a given domain (the graph $G$) in which the existence of a $\la$-labelled edge between $g(x)$ and $g(y)$ means that the predicate $\la(x,y)$ holds. Formally, satisfaction is captured by a relation $\sat$ inductively defined as follows:
 %
@@ -28,21 +28,64 @@ g\sat \neg\phi_1 & \iffdef \text{not } g\sat \phi_1 \\
 g\sat \exists x\st \phi_1  & \iffdef h\sat \phi_1 \text{ for } h\of I\cup\setof{x}\to G \text{ with } h\restr (I\setminus \setof x) =g\restr (I\setminus \setof x) \enspace.
 \end{array}\]
 %
-A sneaky technical issue is that, as usual, satisfaction $g\sat\phi$ is well-defined for $g\of I\to G$ whenever $I\supseteq\fv(\phi)$. This is in contrast to $g\sat\cT$ for a nested condition $\cT$, which is only defined if $I$ is \emph{precisely} $I_\cT$. Due to this discrepancy, there cannot be any $\phi$ and $\cT$ such that $g\sat \phi$ if and only if $g\sat \cT$; instead, the best we can hope for is that $g\sat \phi$ if and only if $g\restr I_\cT \sat \cT$. However, since the $g$-images outside $\fv(\phi)$ do not matter for $g\sat \phi$ (in formal terms, $g_1\restr \fv(\phi)=g_2\restr \fv(\phi)$ implies $g_1\sat\phi \Longleftrightarrow g_2\sat\phi$), we still think of this correspondence as ``satisfying the same models'' and of such $\phi$ and $\cT$ as being ``essentially equivalent.''
+A sneaky technical issue is that, as usual, satisfaction $g\sat\phi$ is well-defined for $g\of I\to G$ whenever $I\supseteq\fv(\phi)$. This is in contrast to $g\sat\cT$ for a nested condition $\cT$, which is only defined if $I$ is \emph{precisely} $I_\cT$. Due to this discrepancy, there cannot be any $\phi$ and $\cT$ such that $g\sat \phi$ if and only if $g\sat \cT$; instead, the best we can hope for is that $g\sat \phi$ if and only if $g\restr I_\cT \sat \cT$. However, since the $g$-images outside $\fv(\phi)$ do not matter for $g\sat \phi$ (in formal terms, $g_1\restr \fv(\phi)=g_2\restr \fv(\phi)$ implies $g_1\sat\phi \Longleftrightarrow g_2\sat\phi$), we still think of such $\phi$ and $\cT$ as ``satisfying the same models'' and therefore being essentially equivalent.
+
+\begin{definition}[essential equivalence]\label{def:essential-equivalence}
+A formula $\phi$ and a condition tree $\cT$ are \emph{essentially equivalent} if for all $g\of I\to G$, $g\sat \phi$ if and only if $g\restr I_\cT\sat \cT$.
+\end{definition}
 
 In the remainder of this section, we show that
 %
 \begin{inumerate}
-\item for every nested condition, there is an essentially equivalent FOL formula;
+\item for every nested condition, there is an essentially equivalent FOL formula, and
 \item for every FOL formula, there is an essentially equivalent nested condition.
 \end{inumerate}
 %
 \subsection{From nested conditions to FOL}
+
+We first define formulas for graphs, and then (inductively) for nested conditions. Let $G$ be an arbitrary graph.
+%
+\[ \phi_G = \textstyle
+% \bigwedge_{x\in N_G}{x=x} \wedge
+ \bigwedge_{e\in E_G} \ell(e)\bigl(s(e),t(e)\bigr)
+\]
+%
+In the definition below, we assume (without loss of generality, because we can always rename node identities up to isomorphism) that for all nodes $v$ of a nested condition, if $u_v\of I_v\to Q_v$ then $Q_v\cap P_v=\emptyset$; in other words, on each successive layer of the condition, the node identities (here treated as variables) are distinct. 
+
+Let $\cT$ be an arbitrary nested condition. We define $\phi_v$ for all nodes $v\in V_\cT$, inductively on the depth of the subtree $\hat v$:
+%
+\[ \phi_v = \textstyle \exists N_{P_v}\st \phi_{P_v}\wedge \bigwedge_{x\in N_{I_v}} d_v(x)=u_v(x) \wedge \bigwedge_{w\childof v} \neg\phi_w \enspace. \]
+%
+Finally, we define $\phi_\cT=\phi_{\rt\cT}$.
+%
+\begin{theorem}
+For an arbitrary nested tree $\cT$, $\phi_\cT$ is essentially equivalent to $\cT$.
+\end{theorem}
+%
+\begin{proof}
+We need to prove the property of \Cref{def:essentially equivalent}: For all $g$, $g\sat \phi$ if and only if $g\restr I_\cT\sat \cT$. However, for the induction principle to be applicable, we need to apply this to all nodes of a nested condition, which means that the $u_v$-morphism also needs to be accounted for. The property we actually prove is therefore: for all nodes $v$ of $\cT$ and all $g$, $g\sat \phi_v$ if and only if $u_v;g\restr I_v\sat \hat v$. This is proved inductively: we assume that the property holds for all $\hat w$ where $w\childof v$, and show that it then holds for $\hat v$. Since $u_{\rt\cT}=\id_{I_{\rt\cT}}$, this implies the required property.
+%
+\begin{description}
+\item[If.] Let $g'=u_v;(g\restr I_v)$. We have $g'\sat \hat v$, and hence there is some $h$ such that $d_v;h=g'$ and for all $w\childof v$, $u_w;h\nsat \hat w$.
+
+$I_w$ and $I_v$ are assumed to be disjoint, hence we can take the union $k=d_v;h\cup u_w;h=(d_v\cup u_w);h$. Since $u_w;h=k\restr I_w$, by the induction hypothesis we have $k\nsat \phi_w$, implying $k\sat \neg \phi_w$. We now set out to prove
+%
+\[ k\sat \phi_{P_v}\wedge \bigwedge_{x\in N_{I_v}} d_v(x)=u_v(x) \wedge \bigwedge_{w\childof v} \neg\phi_w \]
+%
+and observe that this implies $k\sat \phi_v$ by the semantics of $\exists$. Since $k\restr \fv(\phi_v)=g\restr \fv(\phi_v)$ it then also follows that \todo{to be finished}
+\item[Only if.] 
+\end{description}
+\end{proof}
+%
+The formula $\phi_\cT$ can in practice be simplified by alpha-converting the variable names such that they are shared as much as possible, rather than being distinct on each layer as required for the definition; depending on the condition tree, this may allow many or even all of the equations $d_v(x)=u_v(x)$ in $\phi_v$ to be omitted. This is in particular the case if both $d_v$ and $u_v$ are injective.
 
 \subsection{From FOL to nested conditions}
 
 This is shown inductively over the structure of FOL formulas. Indeed, we show that
 \begin{itemize}
 \item for every basic predicate in FOL, there exists a corresponding nested condition;
-\item for every operator in FOL there exists a construction over nested conditions that has the same effect on satisfaction.
+\item for every operator in FOL there exists a construction over nested conditions that mimics it.
 \end{itemize}
+%
+Because of the De Morgan duality $\phi\vee \phi\equiv \neg(\neg\phi\wedge \neg\psi)$, in fact we only have to give constructions (of the second kind) for $\wedge$, $\neg$ and $\exists$.
+
