@@ -30,7 +30,7 @@ g\sat \exists x\st \phi_1  & \iffdef h\sat \phi_1 \text{ for } h\of I\cup\setof{
 %
 A sneaky technical issue is that, as usual, satisfaction $g\sat\phi$ is well-defined for $g\of I\to G$ whenever $I\supseteq\fv(\phi)$. This is in contrast to $g\sat\cT$ for a nested condition $\cT$, which is only defined if $I$ is \emph{precisely} $I_\cT$. Due to this discrepancy, there cannot be any $\phi$ and $\cT$ such that $g\sat \phi$ if and only if $g\sat \cT$; instead, the best we can hope for is that $g\sat \phi$ if and only if $g\restr I_\cT \sat \cT$. However, since the $g$-images outside $\fv(\phi)$ do not matter for $g\sat \phi$ (in formal terms, $g_1\restr \fv(\phi)=g_2\restr \fv(\phi)$ implies $g_1\sat\phi \Longleftrightarrow g_2\sat\phi$), we still think of such $\phi$ and $\cT$ as ``satisfying the same models'' and therefore being essentially equivalent.
 
-\begin{definition}[essential equivalence]\label{def:essential-equivalence}
+\begin{definition}[essential equivalence]\label{def:essential equivalence}
 A formula $\phi$ and a condition tree $\cT$ are \emph{essentially equivalent} if for all $g\of I\to G$, $g\sat \phi$ if and only if $g\restr I_\cT\sat \cT$.
 \end{definition}
 
@@ -63,7 +63,7 @@ For an arbitrary nested tree $\cT$, $\phi_\cT$ is essentially equivalent to $\cT
 \end{theorem}
 %
 \begin{proof}
-We need to prove the property of \Cref{def:essentially equivalent}: For all $g$, $g\sat \phi$ if and only if $g\restr I_\cT\sat \cT$. However, for the induction principle to be applicable, we need to apply this to all nodes of a nested condition, which means that the $u_v$-morphism also needs to be accounted for. The property we actually prove is therefore: for all nodes $v$ of $\cT$ and all $g$, $g\sat \phi_v$ if and only if $u_v;g\restr I_v\sat \hat v$. This is proved inductively: we assume that the property holds for all $\hat w$ where $w\childof v$, and show that it then holds for $\hat v$. Since $u_{\rt\cT}=\id_{I_{\rt\cT}}$, this implies the required property.
+We need to prove the property of \Cref{def:essential equivalence}: For all $g$, $g\sat \phi$ if and only if $g\restr I_\cT\sat \cT$. However, for an inductive proof, we need to apply this to all nodes of a nested condition, which means that the $u_v$-morphism also needs to be accounted for. The property we actually prove is therefore: for all nodes $v$ of $\cT$ and all $g$, $g\sat \phi_v$ if and only if $u_v;g\restr I_v\sat \hat v$. This is proved inductively: we assume that the property holds for all $\hat w$ where $w\childof v$, and show that it then holds for $\hat v$. Since $u_{\rt\cT}=\id_{I_{\rt\cT}}$, this implies the required property.
 %
 \begin{description}
 \item[If.] Let $g'=u_v;(g\restr I_v)$. We have $g'\sat \hat v$, and hence there is some $h$ such that $d_v;h=g'$ and for all $w\childof v$, $u_w;h\nsat \hat w$.
