@@ -15,7 +15,22 @@ We restrict to binary predicates $\la,\lb$, taken from a set $\Lab$; furthermore
 		\]
 where $\la\in\Lab$ is an arbitrary predicate name, $x_1,x_2\in\Var$ are arbitrary variables and $X\subseteq \Var$ an arbitrary set of variables. We use the common $\exists x\st \phi$ as syntactic sugar for $\exists\setof x\st \phi$. We also use the concept of \emph{free variables} of $\phi$, denoted $\fv(\phi)$, inductively defined in the usual way.
 
-For the correspondence of FOL to nested conditions, we equate $\Var$ to the universe of node identities. An open graph $g\of I\to G$ can then be seen as an assignment of free variables (the elements of $I$) to a given domain (the graph $G$) in which the existence of a $\la$-labelled edge between $g(x)$ and $g(y)$ means that the predicate $\la(x,y)$ holds. Formally, satisfaction is captured by a relation $\sat$ inductively defined over the structure of the formula. In fact, for reasons to become clear below, we defined $g\sat \phi$ for arbitrary $g\of A\to B$ such that $\fv(\phi)\subseteq N_A$, as follows:
+In this section we use a concrete category of \emph{multi-sorted graphs}.
+%
+\begin{definition}
+A multi-sorted graph is a tuple $\tupof{N,E,s,t,\ell}$ where
+\begin{itemize}
+\item $N$ is a set of nodes;
+\item $E$ is a set of edges;
+\item $s,t\of N\to E$ are the source and target function, respectively;
+\item $\ell\of E\to \Lab$ is the edge labelling function.
+\end{itemize}
+A multi-sorted graph morphism $f\of A\to B$ is a tuple $f=\tupof{f^N,f^E}$ where $f^N\of N_A\to N_B$ and $f^E\of E_A\to E_B$ are functions satisfying $f^E;s_B=s_A;f^N$, $f^E;t_B=t_B;f^N$ and $f^E;\ell_B=\ell_A$.
+\end{definition}
+%
+Although our theory mostly abstracts from node and edge identities by relating graphs through morphisms, in the context of FOL interpretation we sometimes have to rely on meaningful, fixed node identities (namely where they correspond to variables). We call $A$ and $B$ \emph{consistent} if their source, target and label functions coincide on $E_A\cap E_B$, and \emph{disjoint} if $N_A\cap N_B=E_A\cap E_B=\emptyset$ (in which case they are certainly consistent).  If $A$ and $B$ are disjoint, we use $A\cup B$ to denote their union; also, if $g\of A\to G$ and $h\of B\to G$ for disjoint $A$ and $B$, then $g\cup h\of (A\cup B)\to G$ denotes the union of $g$ and $h$. We call $A$ a subgraph of $B$, denoted $A\subseteq B$, if $B=A\cup B$; likewise, $f$ is a sub-morphism of $g$, denoted $f\subseteq g$, if $f\cup g=g$. If $A$ and $B$ are consistent, then $B\setminus A$ denotes the subgraph of $B$ consisting of nodes $N_B\setminus N_A$ and all edges in $E_B\setminus E_A$ with both source and target in that node set, and for $g\of A\to G$ we use $g\restr B$ and $g\setminus B$ to denote the restriction of $g$ to (the nodes and edges of) $B$ and $A\setminus B$, respectively. Finally, if $X$ is a set then $\tupof X$ will denote the discrete (i.e., edge-less) graph with node set $X$.
+
+For the correspondence of FOL to nested conditions, we equate $\Var$ to the universe of node identities. A graph morphism $g\of A\to G$ can then be seen as an assignment of free variables (the nodes of $A$) to a given domain (the graph $G$) in which the existence of a $\la$-labelled edge between $g(x)$ and $g(y)$ means that the predicate $\la(x,y)$ holds. Formally, satisfaction is captured by a relation $\sat$ inductively defined over the structure of the formula. In fact, for reasons to become clear below, we defined $g\sat \phi$ for arbitrary $g\of A\to G$ such that $\fv(\phi)\subseteq N_A$, as follows:
 %
 \[\begin{array}{ll}
 g\sat \True & \text{always} \\
@@ -25,20 +40,16 @@ g\sat x_1=x_2 & \iffdef g(x_1)=g(x_2) \\
 g\sat \phi_1\wedge \phi_2 & \iffdef g\sat \phi_1 \text{ and } g\sat \phi_2 \\
 g\sat \phi_1\vee \phi_2 & \iffdef g\sat \phi_1 \text{ or } g\sat \phi_2 \\
 g\sat \neg\phi_1 & \iffdef \text{not } g\sat \phi_1 \\
-g\sat \exists X\st \phi_1  & \iffdef h\sat \phi_1 \text{ for some } h \text{ with } h\setminus X =g\setminus X \enspace.
+g\sat \exists X\st \phi_1  & \iffdef h\sat \phi_1 \text{ for some } h \text{ with } h\setminus \tupof X =g\setminus \tupof X \enspace.
 \end{array}\]
 %
-When comparing the satisfaction relations for nested conditions and FOL formulas, a technical issue is that the sets of models for which they are defined are not the same: as seen above, $g\sat\phi$ is defined for $g\of A\to G$ whenever $\fv(\phi)\subseteq N_A$, whereas $g\sat\cT$ for a nested condition $\cT$ is only defined if $A$ is \emph{precisely} $I_\cT$. Due to this discrepancy, there cannot be any $\phi$ and $\cT$ such that $g\sat \phi$ if and only if $g\sat \cT$; instead, the best we can hope for is that this holds whenever $A=I_{\fv(\phi)}$. The following property implies that this is indeed all we need to be interested in, since $g$-images for $A$-elements outside $\fv(\phi)$ do not make a difference for satisfaction.
+When comparing the satisfaction relations for nested conditions and FOL formulas, a technical issue is that the sets of models for which they are defined are not the same: as seen above, $g\sat\phi$ is defined for $g\of A\to G$ whenever $\fv(\phi)\subseteq N_A$, whereas $g\sat\cT$ for a nested condition $\cT$ is only defined if $A$ is \emph{precisely} $I_\cT$. Due to this discrepancy, there cannot be any $\phi$ and $\cT$ such that $g\sat \phi$ if and only if $g\sat \cT$; instead, the best we can hope for is that this holds whenever $A=\tupof{\fv(\phi)}$. The following property implies that this is indeed all we need to be interested in, since $g$-images for $A$-elements outside $\fv(\phi)$ do not make a difference for satisfaction.
 
 \begin{proposition}\label{prop:free vars only}
-Let $\phi$ be a FOL-formula and $g\of A\to G$ such that $\fv(\phi)\subseteq N_A$; then $g\sat \phi$ if and only if $g\restr I_{\fv(\phi)}\sat \phi$.
+Let $\phi$ be a FOL-formula and $g\of A\to G$ such that $\tupof{\fv(\phi)}\subseteq A$; then $g\sat \phi$ if and only if $g\restr \tupof{\fv(\phi)}\sat \phi$.
 \end{proposition}
-
-$g\sat \phi$ if and only if $g\restr I_\cT \sat \cT$. However, since the $g$-images outside $\fv(\phi)$ do not matter for $g\sat \phi$ (in formal terms, $g_1\restr \fv(\phi)=g_2\restr \fv(\phi)$ implies $g_1\sat\phi \Longleftrightarrow g_2\sat\phi$), we still think of such $\phi$ and $\cT$ as ``satisfying the same models'' and therefore being essentially equivalent.
-
-\begin{definition}[essential equivalence]\label{def:essential equivalence}
-A formula $\phi$ and a condition tree $\cT$ are \emph{essentially equivalent} if for all $g\of I\to G$, $g\sat \phi$ if and only if $g\restr I_\cT\sat \cT$.
-\end{definition}
+%
+Because of this property, when constructing a morphism $g\of A\to G$ such that such that $g\sat \phi$, we may assume $A$ to be any graph for which $\tupof{\fv(\phi)}\subseteq A$, without loss of generality.
 
 In the remainder of this section, we show that
 %
@@ -56,17 +67,17 @@ We first define formulas for graphs, and then (inductively) for nested condition
  \bigwedge_{e\in E_P} \ell(e)\bigl(s(e),t(e)\bigr)
 \]
 %
-The essential property of $\phi_P$ is the following.
+Note that $\fv(\phi_P)=N_P$. The essential property of $\phi_P$ is the following.
 %
 \begin{proposition}\label{prop:graph formula}
 Let $P$ be an arbitrary graph.
 \begin{enumerate}
 \item If $g\of P\to G$ is an arbitrary graph morphism, then $g\sat \phi_P$;
-\item If $g\of A\to G$ such that $g\sat \phi_P$, then $k\sat \phi_P$ for some $k\of P\to G$.\todo{This is probably not yet quite what we need}
+\item If $g\of \tupof{N_P}\to G$ such that $g\sat \phi_P$, then $g\subseteq g'$ for some $g'\of P\to G$.
 \end{enumerate}
 \end{proposition}
 %
-In the definition below, we assume (without loss of generality, because we can always rename node identities up to isomorphism) that for all nodes $v$ of a nested condition, if $u_v\of I_v\to Q_v$ then $Q_v\cap P_v=\emptyset$; in other words, on each successive layer of the condition, the node identities (here treated as variables) are distinct. 
+In the definition below, we assume (without loss of generality, because we can always rename node identities up to isomorphism) that for all nodes $v$ of a nested condition, $U_v$ and $P_v$ are disjoint; in other words, on each successive layer of the condition, the node identities (here treated as variables) are distinct. 
 
 Let $\cT$ be an arbitrary nested condition. We define $\phi_v$ for all nodes $v\in V_\cT$, inductively on the depth of the subtree $\hat v$:
 %
@@ -81,23 +92,33 @@ For an arbitrary nested tree $\cT$ and an arbitrary open graph $g\of I_\cT\to G$
 \begin{proof}
 For our proof, we need an induction hypothesis for all nodes $v$ of a nested condition, in which the $u_v$-morphism is also accounted for. The property we actually prove is therefore:
 \begin{quote}
-For all nodes $v$ of $\cT$ with $u_v\of I_v\to Q_v$ and all $g\of Q_v\to G$, $g\sat \phi_v$ if and only if $u_v;g\sat \hat v$.
+For all nodes $v$ of $\cT$ and all $g\of U_v\to G$, $g\sat \phi_v$ if and only if $u_v;g\sat \hat v$.
 \end{quote}
-This is proved inductively: we assume that the property holds for all $w\childof v$, and show that it then holds for $v$. Since $u_{\rt\cT}=\id_{I_\cT}$ and hence $Q_{\rt\cT}=I_\cT$, this implies the proof obligation.
+This is proved inductively: we assume that the property holds for all $w\childof v$, and show that it then holds for $v$. Since $u_{\rt\cT}=\id_{I_\cT}$ and hence $U_{\rt\cT}=I_\cT$, this implies the proof obligation.
 %
 \begin{description}
-\item[If.] Assume $u_v;g\sat \hat v$, meaning that there is some $h\of P_v\to G$ such that $d_v;h=u_v;g$ and for all $w\childof v$, $u_w;h\nsat \hat w$. Since (by assumption) the node sets of $P_v$ and $Q_v$ are disjoint, we can construct the graph $A=P_v\cup Q_v$ and the graph morphism $k=g\cup h\of A\to G$. Note that $P_v=A\setminus N_{P_v}$ and hence $g=k\setminus N_{P_v}$.
+\item[If.] Assume $u_v;g\sat \hat v$, meaning that there is some $h\of P_v\to G$ such that $d_v;h=u_v;g$ and $u_w;h\nsat \hat w$ for all $w\childof v$. Since (by assumption) $P_v$ and $U_v$ are disjoint, we can construct the graph $A=P_v\cup U_v$ and the graph morphism $k=g\cup h\of A\to G$. Note that $P_v=A\setminus N_{P_v}$ and hence $g=k\setminus N_{P_v}$.
 
-
-By \Cref{prop:graph formula}, it follows that $h\sat P_v$. Moreover, by the induction hypothesis, $h\nsat \phi_w$, implying $h\sat\neg \phi_w$. \Cref{prop:free vars only} then implies $k\sat P_v$ and $k\sat \neg\phi_w$. Also, for any $x\in N_{I_v}$, $k(d_v(x))=g(d_v(x))=h(u_v(x))=k(u_v(x))$, hence $k\sat d_v(x)=u_v(x)$. All in all, we have
+By \Cref{prop:graph formula}, it follows that $h\sat P_v$. Moreover, by the induction hypothesis, $h\nsat \phi_w$, implying $h\sat\neg \phi_w$. \Cref{prop:free vars only} then implies $k\sat P_v$ and $k\sat \neg\phi_w$. Also, for any $x\in N_{I_v}$, $k(d_v(x))=g(d_v(x))=h(u_v(x))=k(u_v(x))$, hence $k\sat d_v(x)=u_v(x)$. All in all, we have $k\sat \psi_v$ with
 %
 \begin{equation}\label{eq:k}
-k\sat \textstyle \phi_{P_v}\wedge \bigwedge_{x\in N_{I_v}} d_v(x)=u_v(x) \wedge \bigwedge_{w\childof v} \neg\phi_w \enspace.
+\psi_v = \textstyle \phi_{P_v}\wedge \bigwedge_{x\in N_{I_v}} d_v(x)=u_v(x) \wedge \bigwedge_{w\childof v} \neg\phi_w \enspace.
 \end{equation}
 %
 Since $g\setminus N_{P_v}=g=k\setminus N_{P_v}$, it follows that $g\sat \phi_v$.
 
-\item[Only if.] Assume $g\sat \phi_v$, and let $k$ be such that $g\setminus N_{P_v}=k\setminus N_{P_v}$ and $k$ satisfies \Cref{eq:k}. Note that in fact $g\setminus N_{P_v}=g$ because $P_v$ and $Q_v$ are  graphs on disjoint nodes. Let $h=k\setminus N_{Q_v}$; then \todo{to be completed}
+\item[Only if.] Assume $g\sat \phi_v$. This means that there is a $k\of A\to G$ such that $g\setminus \tupof{N_{P_v}}=k\setminus \tupof{N_{P_v}}$ and $k\sat \psi_v$ (see \Cref{eq:k}). Because $P_v$ and $U_v$ are disjoint, due to \Cref{prop:free vars only} we may assume without loss of generality that $A= U_v\cup\tupof{N_{P_v}}$, and hence $k=g\cup h$ for some $h\of \tupof{N_{P_v}}\to G$. Based on this, we can show the existence of a witness for $g\sat \hat v$, as follows.
+\begin{itemize}
+\item Firstly, $k\sat \phi_{P_v}$ implies (by \Cref{prop:free vars only}) $h\sat \phi_{P_v}$, and hence (by \Cref{prop:graph formula}) $h\subseteq h'$ for some $h'\of P_v\to G$.
+
+\item Let $k'=g\cup h'$; then (again by \Cref{prop:free vars only}) $k'\sat \psi_v$.
+
+\item Next, $k'\sat \bigwedge_{x\in N_{I_v}} d_v(x)=u_v(x)$ means that $h'(d_v(x))=k'(d_v(x))=k'(u_v(x))=g(u_v(x))$ for all $x\in N_{I_v}$, and since $I_v=\tupof{N_{I_v}}$ this implies $d_v;h'=u_v;g$.
+
+\item Finally, $k'\sat \neg\phi_w$ implies (by \Cref{prop:free vars only}) $h'\sat\neg\phi_w$, hence $h'\nsat\phi_w$, hence (by the induction hypothesis) $u_w;h'\nsat \hat w$, for all $w\childof v$.
+\end{itemize}
+
+Taken together, this establishes that $h'$ is a witness for  $g\sat \phi_v$.
 \end{description}
 \end{proof}
 %
