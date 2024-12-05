@@ -57,4 +57,9 @@ SD([[U]]) <= SD([[T]]). <= is witnessed by? *** check how completeness work in t
 Then mimic it by translating CT into string diagrams.... 
 
 
+18/10/2024
+Probelmi con la dimostrazione 
+- sibling rule ha un or, problematico per la prova per induzione del Lemma 2. Nel Lemma 1 si vede l'or.
+Una soluzione sarebbe dimostrare che "o un nodo o un sibling ha un modello" invece che "un nodo ha un modello": quando arrivi alla radice non ci sono sibilings quindi è fatto. 
+
 
