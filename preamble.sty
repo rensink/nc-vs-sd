@@ -79,6 +79,22 @@
 \newcommand{\sat}{\models}
 \newcommand{\nsat}{\not\sat}
 
+% \mathsf label symbols
+\newcommand{\la}{\mathsf{a}}
+\newcommand{\lb}{\mathsf{b}}
+
+% Universes
+\newcommand{\Lab}{\mathit{Lab}}
+\newcommand{\Var}{\mathit{Var}}
+
+% FOL macros
+\newcommand{\True}{\mathsf{true}}
+\newcommand{\False}{\mathsf{false}}
+\newcommand{\fv}{\mathit{fv}}
+\newcommand{\iffdef}{:\Leftrightarrow}
+\newcommand{\restr}{\restriction}
+
+% Calligraphic symbols
 \newcommand{\cC}{{\mathcal{C}}}
 \newcommand{\cG}{{\mathcal{G}}}
 \newcommand{\cH}{{\mathcal{H}}}
@@ -141,6 +157,9 @@
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
 
+\colorlet{morphismColor}{blue!90!white}
+\colorlet{openColor}{white!95!blue}
+
 \tikzset{>=latex}
 \tikzset{triangle/.style=
   {isosceles triangle,
@@ -161,7 +180,7 @@
     draw=#1,
   },
   morphism/.default={
-    blue!90!white
+    morphismColor
   }
 }
 \tikzset{medge/.style={
@@ -193,17 +212,23 @@
    ellipse,
    inner xsep=8,
    inner ysep=15,
-   fill=white!95!blue,
+   line width=0pt,
+   fill=openColor,
    behind path
 }}
 \tikzset{doubleopengraph/.style={
    ellipse,
    inner xsep=8,
    inner ysep=25,
-   fill=white!95!blue,
+   fill=openColor,
    behind path
 }}
-
+\tikzset{openmorphism/.style={
+  draw=white!95!blue,
+  line width=4pt, 
+  shorten <=-1pt,
+  -stealth
+}}
 
 % Typeset the label of an extensible arrow by lowering the text
 \newcommand{\xlabel}[1]{\smash{\mathchoice

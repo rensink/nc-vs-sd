@@ -25,7 +25,7 @@ A \emph{condition tree} $\cT$ is a quadruple of the form $\tupof{V, {\parentof},
 \end{itemize}
 \end{definition}
 %
-We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parent v$ denotes $v$'s parent. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (possibly identical) children of the same parent, or if $v=w=\rt{}$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).}
+We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parent v$ denotes $v$'s parent. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (possibly identical) children of the same parent, or if $v=w=\rt{}$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).} Finally, for an arbitrary vertex $v\in \cT$ we use $U_v$ to denote the codomain of $u_v$; hence $U_w=P_v$ if $w\childof v$ and $U_w=I_\cT$ if $w=\rt\cT$.\todo{This is new notation; please comment}
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
 Let $\cT$ be a condition tree and $g\of I_\cT\to G$ a graph morphism. $g$ \emph{satisfies $\cT$} denoted $g\sat \cT$, if there is a graph morphism $h\of P_\cT\to G$ such that
@@ -53,7 +53,7 @@ We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$; moreove
 \begin{figure}
 \centering
 \input{figs/triple}
-\caption{Visualisation of a triple $\trip vaw$ as in \cref{def:morphism}. The blue ellipses are the open graphs corresponding to nodes of $\cT$ and $\cU$. For the root triple, $I_v=I_w=I$ and $a\I=\id_I$}
+\caption{Visualisation of a triple $\trip vaw$ as in \cref{def:morphism}. The light blue ellipses represent open graphs corresponding to nodes of $\cT$ and $\cU$, and the (fat) light blue arrow represents the triple as a whole. For the root triple, $I_v=I_w=I$ and $a\I=\id_I$}
 \label{fig:triple}
 \end{figure}
 
