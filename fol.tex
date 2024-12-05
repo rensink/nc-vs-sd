@@ -134,3 +134,9 @@ This is shown inductively over the structure of FOL formulas. Indeed, we show th
 %
 Because of the De Morgan duality $\phi\vee \phi\equiv \neg(\neg\phi\wedge \neg\psi)$, in fact we only have to give constructions (of the second kind) for $\wedge$, $\neg$ and $\exists$.
 
+\begin{itemize}
+\item $\cT_\True$ is given by $V=\setof v$ with $I_v=P_v=\tupof\emptyset$ (the empty graph) and $u_v=d_v=\id_{I_v}$.
+\item $\cT_\False$ is given by $V=\setof{v,w}$ with $I_v=P_v=I_w=P_w\tupof\emptyset$ and $u_v=d_v=u_w=d_w=\id_{I_v}$.
+\item $\cT_{\la(x,y)}$ is given by $V=\setof{v}$ with $I_v=\tupof{\setof{x,y}}$ and $P_v$ the extension of $I_v$ with a single $\la$-labelled edge from $x$ to $y$, $u_v=\id_{I_v}$ and $d_v$ the morphism .
+\item $\cT_{x=y}$ is fiven by $V=\setof v$ with $I_v=\tupof{x_1,x_2}$ and $P_v=\tupof{\setof{y}}$ 
+\end{itemize}
