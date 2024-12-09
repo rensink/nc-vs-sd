@@ -36,11 +36,12 @@
 \newcommand{\of}{{:}\,}
 \newcommand{\trans}[1]{\xrightarrow{\xlabel{#1}}}
 \newcommand{\trip}[3]{{#1}\trans{#2}{#3}}
-\newcommand{\parentsymb}{\pi}
-\newcommand{\parent}[1]{\parentsymb{#1}}
+%\newcommand{\parentsymb}{\pi}
+%\newcommand{\parent}[1]{\parentsymb{#1}}
 
 % Root of a tree
-\newcommand{\rt}[1]{\mathit{rt}_{#1}}
+\newcommand{\rt}{\mathit{rt}}
+\newcommand{\rtof}[1]{\rt_{#1}}
 \newcommand{\setof}[1]{\{{#1}\}}
 \newcommand{\gensetof}[2]{\setof{{#1}\mid{#2}}}
 \newcommand{\tupof}[1]{\langle #1\rangle}
@@ -64,10 +65,10 @@
 \newcommand{\ancesteq}{\preceq}
 % Direct child relation
 \newcommand{\childof}{%
-    \mathchoice{\mathrel{\cdot\mskip-10mu\succ}}%
-               {\mathrel{\cdot\mskip-10mu\succ}}%
-               {\mathrel{\cdot\mskip-5mu\succ}}%
-               {\mathrel{\cdot\mskip-5mu\succ}}%
+    \mathrel{\mathchoice{\cdot\mskip-10mu\succ}%
+                        {\cdot\mskip-10mu\succ}%
+                        {\cdot\mskip-5mu\succ}%
+                        {\cdot\mskip-5mu\succ}}%
 }
 % Transitive child relation
 \newcommand{\descof}{\succ}
@@ -90,6 +91,7 @@
 % FOL macros
 \newcommand{\True}{\mathsf{true}}
 \newcommand{\False}{\mathsf{false}}
+\newcommand{\Eq}{\mathbin{\doteq}}
 \newcommand{\fv}{\mathit{fv}}
 \newcommand{\iffdef}{:\Leftrightarrow}
 \newcommand{\restr}{\restriction}
@@ -109,7 +111,9 @@
 \newcommand{\cU}{{\mathcal{U}}}
 \newcommand{\cV}{{\mathcal{V}}}
 
+\newcommand\E{^{\mathsf E}}
 \newcommand\I{^{\mathsf I}}
+\newcommand\N{^{\mathsf N}}
 \renewcommand\P{^{\mathsf P}}
 \newcommand\Q{^{\mathsf Q}}
 \newcommand\U{^{\mathsf U}}

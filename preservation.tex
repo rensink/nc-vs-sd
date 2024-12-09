@@ -12,7 +12,7 @@ Let $\cM\of \cT\to\cU$ be a morphism.
 
 \item $\trip vaw\in \cM$ \emph{preserves models} if $a\I$ is epi, $u_v$ is $a\I$-prefixed, and $\trip vaw$ preserves all $u_v$-prefixed $\hat v$-models. 
 
-\item $\cM$ preserves models if $\rt\cM$ preserves models.
+\item $\cM$ preserves models if $\rtof\cM$ preserves models.
 \end{itemize}
 \end{definition}
 %
@@ -24,7 +24,7 @@ We will use $\cM_\pgen\subseteq \cM$ to denote the subset of triples $\trip vaw\
 	\label{fig:fusion}
 \end{figure}
 
-Note that for the root triple $(v,a,w)=\rt\cM$, we have $a\I=\id_I$, which is epi and implies that $g=a\I;g'$ if and only if $g=g'$; and also $u_v=\id_I$, which is itself $a\I$-prefixed and implies that every $\hat v$-model is $u_v$-prefixed. It follows that $\rt\cM\in\cM_\pgen$ and model preservation (of $\cM$) simply means that all $\cT$-models are also $\cU$-models, as expected.
+Note that for the root triple $(v,a,w)=\rtof\cM$, we have $a\I=\id_I$, which is epi and implies that $g=a\I;g'$ if and only if $g=g'$; and also $u_v=\id_I$, which is itself $a\I$-prefixed and implies that every $\hat v$-model is $u_v$-prefixed. It follows that $\rtof\cM\in\cM_\pgen$ and model preservation (of $\cM$) simply means that all $\cT$-models are also $\cU$-models, as expected.
 %
 \begin{comment}
 \begin{definition}[strong model preservation]
@@ -34,7 +34,7 @@ Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 		
 \item Let $u:I_v\to P$ be an $a\I$-prefixed graph morphism. $a$ \emph{strongly preserves $u$-prefixed models} if $a$ preserves all $u$-prefixed $\hat v$-model/witness pairs.
 		
-\item $\cM$ strongly preserves models if $\rt\cM$ strongly preserves $\id$-prefixed models.
+\item $\cM$ strongly preserves models if $\rtof\cM$ strongly preserves $\id$-prefixed models.
 \end{itemize}
 \end{definition}
 \end{comment}
@@ -108,5 +108,5 @@ If $\cM\of\cT\to \cU$ is a condition tree morphism, then all $a\in \pgen_\cM$ pr
 \end{lemma}
 %
 \begin{corollary}
-If $\cM$ is a condition tree morphism, then $\rt\cM\in\pgen$ implies that $\cM$ preserves models.
+If $\cM$ is a condition tree morphism, then $\rtof\cM\in\pgen$ implies that $\cM$ preserves models.
 \end{corollary}

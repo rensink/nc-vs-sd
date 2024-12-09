@@ -8,11 +8,11 @@ Let $\cM\of \cT\to\cU$ be a morphism.
 \begin{itemize}[topsep=\itemsep]
 \item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if there is a sibling $v'\sibling v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. We say that $\trip vaw$ \emph{reflects models} if it reflects all $\hat w$-models.
 
-\item $\cM$ \emph{reflects models} if $\rt\cM$ reflects models.
+\item $\cM$ \emph{reflects models} if $\rtof\cM$ reflects models.
 \end{itemize}
 \end{definition}
 %
-Note that, in case $\trip vaw=\rt\cM$, we have $a\I=\id_I$, and $v'\sibling v$ implies $v'=v$; hence the condition of model reflection implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
+Note that, in case $\trip vaw=\rtof\cM$, we have $a\I=\id_I$, and $v'\sibling v$ implies $v'=v$; hence the condition of model reflection implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
 
 \begin{comment}
 \todo[inline]{In fact, we have two versions of model reflection; it currently is unclear which is the ``better''. The difference is that (ordinary) reflection does not impose any requirement on the witnesses, whereas strong reflection requires that the witness of the reflected model is itself a reflected witness of the original model.}
@@ -23,7 +23,7 @@ Let $\cM\of \cT\to\cU$ be a morphism and let $\trip vaw\in\cM$.
 	
 \item $a$ \emph{strongly reflects models} if $a$ reflects all $\hat w$-model/witness pairs.
 		
-\item $\cM$ strongly reflects models if $\rt\cM$ reflects models.
+\item $\cM$ strongly reflects models if $\rtof\cM$ reflects models.
 \end{itemize}
 \end{definition}
 %
@@ -122,5 +122,5 @@ Assume that $a\in \rgen^i$ and the property has been proved for all $a\in \rgen^
 \end{proof}
 
 \begin{corollary}
-If $\cM$ is a condition tree morphism, then $\rt\cM\in \rgen$ implies that $\cM$ reflects models.
+If $\cM$ is a condition tree morphism, then $\rtof\cM\in \rgen$ implies that $\cM$ reflects models.
 \end{corollary}
