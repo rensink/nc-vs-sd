@@ -17,21 +17,21 @@ A \emph{condition tree} $\cT$ is a quadruple of the form $\tupof{V, {\parentof},
 \begin{itemize}[topsep=\itemsep]
 \item $V$ is a set of vertices;
 
-\item ${\parentof}\subseteq V\times V$ is a parent-child relation, such that one $v\in P$ (the \emph{root}, denoted $\rt{}$) has no predecessor, and all other elements of $V$ have exactly one predecessor (their \emph{parent});
+\item ${\parentof}\subseteq V\times V$ is a parent-child relation, such that one $v\in P$ (the \emph{root}, denoted $\rt$) has no predecessor, and all other elements of $V$ have exactly one predecessor (their \emph{parent});
 
 \item for all $v\in V$, $d_v$ is an open graph. We denote $I_v=I_{d_v}$ and $P_v=P_{d_v}$.
 
-\item for all $v\parentof w$, $u_w$ is a graph morphism $I_w\to P_v$, whereas $u_{\rt{}}=\id_{I_{\rt{}}}$.
+\item for all $v\parentof w$, $u_w$ is a graph morphism $I_w\to P_v$, whereas $u_{\rt}=\id_{I_{\rt}}$.
 \end{itemize}
 \end{definition}
 %
-We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rt\cT$; we denote $I_\cT=I_{\rt\cT}$, $P_\cT=P_{\rt\cT}$ and $d_\cT=d_{\rt\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$, and if $v\neq\rt\cT$ then $\parent v$ denotes $v$'s parent. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (possibly identical) children of the same parent, or if $v=w=\rt{}$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).} Finally, for an arbitrary vertex $v\in \cT$ we use $U_v$ to denote the codomain of $u_v$; hence $U_w=P_v$ if $w\childof v$ and $U_w=I_\cT$ if $w=\rt\cT$.\todo{This is new notation; please comment}
+We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rtof\cT$; we denote $I_\cT=I_{\rtof\cT}$, $P_\cT=P_{\rtof\cT}$ and $d_\cT=d_{\rtof\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (possibly identical) children of the same parent, or if $v=w=\rt$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).} Finally, for an arbitrary vertex $v\in \cT$ we use $U_v$ to denote the codomain of $u_v$; hence $U_w=P_v$ if $w\childof v$ and $U_w=I_\cT$ if $w=\rtof\cT$.\todo{This is new notation; please comment}
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
 Let $\cT$ be a condition tree and $g\of I_\cT\to G$ a graph morphism. $g$ \emph{satisfies $\cT$} denoted $g\sat \cT$, if there is a graph morphism $h\of P_\cT\to G$ such that
 \begin{inumerate}
 \item $g=d_\cT;h$, and 
-\item $u_v;h\nsat \hat v$ for all children $v$ of $\rt\cT$.
+\item $u_v;h\nsat \hat v$ for all children $v$ of $\rtof\cT$.
 \end{inumerate}
 $h$ is then called a \emph{witness} of $g\sat \cT$.
 \end{definition}
@@ -41,14 +41,14 @@ If $g$ satisfies $\cT$, we also call $g$ a $\cT$-model.
 \todo[inline]{At this point introduce the connection from condition trees to FOL}
 
 \begin{definition}[morphism]\label{def:morphism}
-Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM=\tupof{\tp,\rt{}}$ from $\cT$ to $\cU$ is a tuple consisting of
+Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM=\tupof{\tp,\rt}$ from $\cT$ to $\cU$ is a tuple consisting of
 \begin{itemize}
 \item a set $\tp$ of triples $(v,a,w)$ where $(v,w)\in (V_\cT\cup V_\cU)^2$\todo{AR: note that triples can occur within a single tree; this is required for the sibling rule} and $a\of d_v\to d_w$ is an open graph morphism;
-\item a distinguished element $\rt{}\in\tp$, called the \emph{root}, such that $\rt{}=(\rt\cT,a_{\rt{}},\rt\cU)$ with $a_{\rt{}}\I=\id_I$.
+\item a distinguished element $\rt\in\tp$, called the \emph{root}, such that $\rt=(\rtof\cT,a_{\rt},\rtof\cU)$ with $a_{\rt}\I=\id_I$.
 \end{itemize}
 \end{definition}
 %
-We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$; moreover, we usually associate $\cM$ with its component $\tp$ and write $\trip vaw\in\cM$, using $\rt\cM$ to denote the root of $\cM$. Moreover, we also sometimes use the component $a$ (with constituents $a\I$ and $a\P$) to refer to the entire triple $\trip vaw$, when that causes no confusion and the identity of $v$ and $w$ is clear from the context. \Cref{fig:triple} visualises the components of a triple $\trip vaw$.
+We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$; moreover, we usually associate $\cM$ with its component $\tp$ and write $\trip vaw\in\cM$, using $\rtof\cM$ to denote the root of $\cM$. Moreover, we also sometimes use the component $a$ (with constituents $a\I$ and $a\P$) to refer to the entire triple $\trip vaw$, when that causes no confusion and the identity of $v$ and $w$ is clear from the context. \Cref{fig:triple} visualises the components of a triple $\trip vaw$.
 
 \begin{figure}
 \centering
@@ -59,15 +59,15 @@ We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$; moreove
 
 \todo[inline]{We could extend the child relation to triples, as follows.}
 \noindent Given a morphism $\cM$, we define a parent relation ${\parentof}\subseteq \cM\times \cM$ as follows:
-\[ (v,a,w)\parentof (x,b,y) \;\Leftrightarrow\; v\parentof x\wedge w\parentof y \wedge u_y=b\I;u_x;a\P \enspace. \]
+\[ (v,a,w)\parentof (y,b,x) \;\Leftrightarrow\; v\parentof x\wedge w\parentof y \wedge u_y=b\I;u_x;a\P \enspace. \]
 \todo[inline]{This might provide a more acceresible and uniform way to define the notions of direct (preservation and reflection) evidence.}
 
 \medskip\noindent
-Given a condition tree $\cT$ with root $\rt{}$, the identity morphism $\cI_\cT\of \cT\to\cT$ is defined as
-\[ \cI_\cT = \tupof{\gensetof{(v,\id_{d_v},v)}{v\in V_\cT},(\rt{},\id_{d_{\rt{}}},\rt{})} \enspace. \]
+Given a condition tree $\cT$ with root $\rt$, the identity morphism $\cI_\cT\of \cT\to\cT$ is defined as
+\[ \cI_\cT = \tupof{\gensetof{(v,\id_{d_v},v)}{v\in V_\cT},(\rt,\id_{d_{\rt}},\rt)} \enspace. \]
 Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition $\cM;\cN\of \cT\to \cV$ is defined as
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
-	\tupof{\setof{(v,a;b,x) \mid \exists w\st (v,a,w), (w,b,x)\in \cM\cup \cN},(\rt\cT,a_{\rt\cM};a_{\rt\cN},\rt\cV)} \enspace.
+	\tupof{\setof{(v,a;b,x) \mid \exists w\st (v,a,w), (w,b,x)\in \cM\cup \cN},(\rtof\cT,a_{\rtof\cM};a_{\rtof\cN},\rtof\cV)} \enspace.
 \end{array}
 \]
