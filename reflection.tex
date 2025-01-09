@@ -39,7 +39,7 @@ Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and chil
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\isredir b{x,a}$, if $w\parentof y$ and $u_y=b\I;u_x;a\P$.
 \item \emph{(Child-based reflection evidence.)} $\trip ybw\in\cM$ provides \emph{child-based reflection evidence}, denoted $\isrechd b{x,a}$, if $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=b\I;d_w$.
-\item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isresib b{x,a}$, if $y\sibling x$ and there is a mediating morphism $s\of I_y\to I_v$ such that $u_y=s;u_v$ and $s;d_v=b\I;u_x$.
+\item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isresib b{x,a}$, if $y\sibling w$ and there is a mediating morphism $s\of I_y\to I_w$ such that $u_y=s;u_x$ and $s;d_w=b\I;u_x;a\P$.
 \end{itemize}
 \end{definition}
 %
@@ -56,7 +56,7 @@ Alternatively: for all $\trip vaw\in\cM$ and child $x$ of $v$, we can define the
 \begin{align*}
 \redir{a,x} ={} & \gensetof{\trip ybx\in \cM}{w\parentof y, b\I;u_x;a\P=u_y} \\
 \rechd{a,x} ={} & \gensetof{\trip ybw\in \cM}{x\parentof y, \exists k:I_y\to I_x\st k;d_x=u_y\wedge k;u_x;a\P=b\I;d_w} \\
-\resib{a,x} ={} & \gensetof{\trip ybx\in \cM}{v\sibling y, \exists s:I_y\to I_v\st u_y=s;u_v \wedge s;d_w=b\I;u_x} \\
+\resib{a,x} ={} & \gensetof{\trip ybx\in \cM}{w\sibling y, \exists s:I_y\to I_w\st u_y=s;u_x \wedge s;d_w=b\I;u_x;a\P} \\
 \re{a,x} ={} & \redir{a,x}\cup \rechd{a,x} \cup \resib{a,x} \enspace.
 \end{align*}
 %
@@ -64,10 +64,10 @@ These evidence arrows satisfy the following (rather technical) properties.
 %
 \begin{lemma}\label{lem:evidence}
 Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
-\begin{enumerate}
+\begin{enumerate}[topsep=\itemsep]
 \item\label{re-dir} If $\trip ybx\in \redir{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
 \item\label{re-chd} If $\trip ybw\in \rechd{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
-\item\label{re-sib} If $\trip ybx\in \resib{a,x}$ and $b$ reflects models, then either there is a sibling $v'\sibling v$ with a morphism $s'\of I_{v'}\to I_v$ such that $u_{v'}=s';u_v$ and $s';a\I;g\sat \hat v'$, or $u_x;a\P;h\nsat \hat x$.
+\item\label{re-sib} If $\trip ybx\in \resib{a,x}$ and $b$ reflects models, then either there is a sibling $w'\sibling w$ with a morphism $s'\of I_{w'}\to I_w$ such that $u_{w'}=s';u_w$ and $s';g\sat \hat w'$, or $u_x;a\P;h\nsat \hat x$.
 \end{enumerate}
 \end{lemma}
 %
@@ -78,7 +78,9 @@ In each case, assume $u_x;a\P;h\sat \hat x$.
 
 \item $\trip ybw\in \rechd{a,x}$ means that $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$. Since $u_x;a\P;h\sat \hat x$, there must be some witness $f\of P_x\to G$ such that $u_x;a\P;h=d_x;f$ and $u_{y'};f\nsat \hat y'$ for all siblings $y'\sibling y$. Since $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s:I_{y'}\to I_y$ such that $u_{y'}=s;u_y$ and $s;b\I;g\sat \hat y$; since $s;b\I;g= s;b\I;d_w;h= s;k;u_x;a\P;h=s;k;d_x;f=s;u_y;f=u_{y'};f$, this gives rise to a contradiction.
 
-\item $\trip ybx\in \resib{a,x}$ means that there is a morphism $s\of I_y\to I_w$ such that $u_y=s;u_v$ and $s;d_w=b\I;u_x;a\P$. Since $u_x;a\P;h\sat \hat x$ and $b$ reflects models, there is a sibling $y'\sibling y$ with a morphism $s''\of I_{y'}\to I_y$ such that $u_{y'}=s'';u_y$ and $s'';b\I;u_x;a\P;h\sat \hat y'$. Let $v'=y'$ and $s'=s'';s$; then $v'\sibling v$, $u_{v'};s'=u_y;s=u_v$ and $s';a\I;g= s';a\I;d_w;h= s'';s;d_v;a\P;h= s'';b\I;u_x;a\P;h \sat \hat v'$.
+\item $\trip ybx\in \resib{a,x}$ means that there is a morphism $s\of I_y\to I_w$ such that $u_y=s;u_w$ and $s;d_w=b\I;u_x;a\P$. Since $u_x;a\P;h\sat \hat x$ and $b$ reflects models, \todo{continue}
+
+there is a sibling $y'\sibling y$ with a morphism $s''\of I_{y'}\to I_y$ such that $u_{y'}=s'';u_y$ and $s'';b\I;u_x;a\P;h\sat \hat y'$. Let $v'=y'$ and $s'=s'';s$; then $v'\sibling v$, $u_{v'};s'=u_y;s=u_v$ and $s';a\I;g= s';a\I;d_w;h= s'';s;d_v;a\P;h= s'';b\I;u_x;a\P;h \sat \hat v'$.
 \end{enumerate}
 \end{proof}
 %
