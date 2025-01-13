@@ -15,7 +15,7 @@
 A \emph{condition tree} $\cT$ is a quadruple of the form $\tupof{V, {\parentof}, \setof{d_v}_{v\in V}, \setof{u_v}_{v\in V}}$ in which
 
 \begin{itemize}[topsep=\itemsep]
-\item $V$ is a set of vertices;
+\item $V$ is a non-empty set of vertices;
 
 \item ${\parentof}\subseteq V\times V$ is a parent-child relation, such that one $v\in P$ (the \emph{root}, denoted $\rt$) has no predecessor, and all other elements of $V$ have exactly one predecessor (their \emph{parent});
 
@@ -43,7 +43,7 @@ If $g$ satisfies $\cT$, we also call $g$ a $\cT$-model.
 \begin{definition}[morphism]\label{def:morphism}
 Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM=\tupof{\tp,\rt}$ from $\cT$ to $\cU$ is a tuple consisting of
 \begin{itemize}
-\item a set $\tp$ of triples $(v,a,w)$ where $(v,w)\in (V_\cT\cup V_\cU)^2$\todo{AR: note that triples can occur within a single tree; this is required for the sibling rule} and $a\of d_v\to d_w$ is an open graph morphism;
+\item a set $\tp$ of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU) \cup (V_\cU\times V_\cT)$\todo{AC: changed back\\ {AR: note that triples can occur within a single tree; this is required for the sibling rule}} and $a\of d_v\to d_w$ is an open graph morphism;
 \item a distinguished element $\rt\in\tp$, called the \emph{root}, such that $\rt=(\rtof\cT,a_{\rt},\rtof\cU)$ with $a_{\rt}\I=\id_I$.
 \end{itemize}
 \end{definition}

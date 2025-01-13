@@ -3,8 +3,8 @@
 - stesso per child rule
 - stesso per sibling??
 Dopo la dimostrazione della correttezza delle condizioni per preservation/reflection vedere come tradurre induttivamente formule di FOL in condition trees. 
-======================== 
 
+======================== 
 
 
 Journal submission [after FestColloquim]
@@ -46,8 +46,8 @@ T \entails U iff [[T]] \entails [[U]]
 Shoudl be, but proof obligation? Should relate satisfaciton for CT's with satisfaction for FOL. 
 
 
-Main result: there are indentity-on-object functors (CT*_{rfl})^{op} \to CT^\entails and CT*_{prs} to CT^\entails which are surjective on obejcts.
-Existence: trivial f all definitions are stated correctly, because a path from U to V in (CT*_{rfl})^{op} is made of arrows which are mapped (taking the right direction) to entailments.
+Main result: there are indentity-on-object functors (CT*_{rfl})^{op} \to CT^\entails and CT*_{prs} to CT^\entails which are surjective on objects.
+Existence: trivial if all definitions are stated correctly, because a path from U to V in (CT*_{rfl})^{op} is made of arrows which are mapped (taking the right direction) to entailments.
 Surjectivity:
 T \entails U means that there is an undirected path form U to T.
 
@@ -60,6 +60,6 @@ Then mimic it by translating CT into string diagrams....
 18/10/2024
 Probelmi con la dimostrazione 
 - sibling rule ha un or, problematico per la prova per induzione del Lemma 2. Nel Lemma 1 si vede l'or.
-Una soluzione sarebbe dimostrare che "o un nodo o un sibling ha un modello" invece che "un nodo ha un modello": quando arrivi alla radice non ci sono sibilings quindi è fatto. 
+Una soluzione sarebbe dimostrare che "o un nodo o un sibling ha un modello" invece che "un nodo ha un modello": quando arrivi alla radice non ci sono sibilings quindi è fatto. !!!
 
 
