@@ -266,6 +266,7 @@ The following clauses define for each axiom of \Cref{def:formula in context} a c
 \end{definition}
 
 \begin{proposition}
+	\label{pr:atomic satisfaction}
 Let $\cT$ be a {\proper} nested condition and $g\of I_\cT\to G$ a graph morphism.
 \begin{enumerate}
 \item If $\cT=\cT_\True$, then $g\sat \cT$ if and only if $g\sat\True$.
@@ -279,6 +280,7 @@ To encode negation, according to rule [ctx-$\neg$] given a {\proper} nested cond
 More explicitly, $\cU=\neg\cT$ is given by $V_\cU=\tupof{V_\cT\uplus\setof{rt}}$\footnote{The notation means that we assume to choose a node identity $rt$ not appearing in $V_\cT$.} with ${\parentof_\cU}= {\parentof_\cT}\cup \setof{(rt,\rtof\cT)}$, $I_{rt} = I_\cT$, $u_{rt}=\id_{I_\cT}$, $P_{rt} = \tupof{Z}$ with $Z$ a set of fresh node identities with $i: N_{I_\cT} \to Z$ a bijection, $d_{rt} = i$,  and $u_u$ for all $rt_\cT \parentof u$ adjusted by post-composing them with $i$, whereas for all remaining $v\in V_\cT$, $d_v$ and $u_v$ remain as they were in $\cT$.
 
 \begin{proposition}
+	\label{pr:negation satisfaction}
 Let $\cT$ be a {\proper} nested condition and $g\of I_\cT\to G$ a graph morphism; then $g\sat \neg\cT$ if and only if $g\nsat\cT$.
 \end{proposition}
 
@@ -293,6 +295,7 @@ ${\parentof}_{\cU}= ({\parentof}_{\cT_1}\cup {\parentof}_{\cT_2})\restr (V_\cU \
 \end{itemize}
 
 \begin{proposition}
+	\label{pr:and satisfaction}
 Let $\cT_1,\cT_2$ be {\proper} nested conditions with  $V_1\cap V_2=\emptyset$ and $I_{\cT_1}=I_{\cT_2}=I$. For all $g\of I\to G$, $g\sat \cT_1\times \cT_2$ if and only if $g\sat\cT_1$ and $g\sat \cT_2$.
 \end{proposition}
 %
@@ -306,11 +309,44 @@ A formula in context can be obtained by weakening, using rule [ctx-weak]. If the
 \end{itemize}
 
 \begin{proposition}
+\label{pr:weakening satisfaction}
 Let $\cT$ be a {\proper} nested condition and $\tupof{Z}$ a discrete graph disjoint from $\cT$. Then $\cT \oplus \tupof{Z}$ is a {\proper} nested condition and for all $g\of I_{\rt}\cup \tupof{Z}\to G$, $g\sat \cT\oplus \tupof{Z}$ if and only if $g\setminus \tupof{Z} \sat\cT$.
 \end{proposition}
 
+Finally, the encoding of the existential quantification is pretty simple. By rule [ctx-$\exists$], given a nested condition for $\ctx{Z}{\phi}$, i.e.\ $\cT_\phi$ with root interface $\tupof{Z}$ we need to provide a nested condition for  $\ctx{Z\setminus X}{\exists X \st \phi}$. We obtain it using the following operation of \emph{restriction} on nested conditions: given $\cT$ and a set $X$, nested condition $\cT\restr X$ is identical to $\cT$ but for the root $rt'$: $I_{rt'} = \tupof{N_{I_\cT}\setminus X}$, $u_{rt'} = id_{I_{rt'}}$, and $d_{rt'} = i ; d_\cT$, where $i: \tupof{N_{I_\cT}\setminus X} \to I_\cT$ is the inclusion. 
+
+Summarizing, for a formula in context $\ctx{X}{\phi}$ we define the corresponding nested condition $\cT_\phi$ with root $\tupof{X}$ \todo{AC: Denote it everywhere as $\cT_\phi \of \tupof{X}$?} inductively as follows:
+
+\begin{itemize}
+	\item $\cT_\True$, $\cT_\False$, $\cT_{\la(x_1,x_2)}$ and $\cT_{x_1\Eq x_2}$ are as in \Cref{def:atomic formulas}. \todo{AC: either this one or the next item.}
+	\item $\cT_\True \of \tupof{\emptyset}$, $\cT_\False\of \tupof{\emptyset}$, $\cT_{\la(x_1,x_2)}\of \tupof{x_1,x_2}$ and $\cT_{x_1\Eq x_2}\of \tupof{x_1,x_2}$ are as in \Cref{def:atomic formulas}.
+	\item  $\cT_{\neg \phi} \of\tupof{X} = \neg \cT_{\phi} \of \tupof{X}$
+	\item  $\cT_{\phi_1 \wedge \phi_2}\of\tupof{X} = \cT_{\phi_1}\of\tupof{X} \times \cT_{\phi_2} \of\tupof{X}$
+	\item If $X \subseteq Y$ and $\bv(\phi)\cap Y = \emptyset$, then $\cT_\phi \of \tupof{Y} =  \cT_\phi \of \tupof{X} \oplus \tupof{Y\setminus X}$
+	\item $\cT_{\exists X\st \phi}\of\tupof{Z \setminus X} = \cT_{\phi}\of\tupof{Z} \restr Z\setminus X$
+	\item $\cT_{\phi_1 \vee \phi_2}\of\tupof{X} = \cT_{\neg( \neg \phi_1 \wedge \neg \phi_2)}\of\tupof{X}$
+\end{itemize}
+
+The main result of this sections states that the proposed encoding is precise in terms of satisfaction. 
+\begin{proposition}
+	Let $\ctx{X}{\phi}$ be a formula in context, and let $\cT_\phi \of \tupof{X}$ be the corresponding nested condition. Then for any graph morphisms $g: \tupof{X} \to G$ we have
+	$$ g \sat \phi \qquad \iff \qquad g \sat \cT_\phi $$
+\end{proposition}
+\begin{proof}[Sketch]
+	\begin{itemize}
+	\item For the atomic formulas this holds by \Cref{pr:atomic satisfaction}.
+	\item For $\neg \phi$ this holds by \Cref{pr:negation satisfaction}.
+	
+	\item For $\phi_1 \wedge \phi_2$ this holds by \Cref{pr:and satisfaction}.
+	\item For a formula in context obtained by weakening, this holds by \Cref{pr:weakening satisfaction}.
+	\item We prove it explicitly for existential quantification. Given $\ctx{Z}{\phi}$, assume by induction hypothesis that for each $f: \tupof{Z} \to G$ we have that  $f \sat \phi$ if and only if $f \sat \cT_\phi$. \\
+	(if: sketchy) Assume that  $g \sat \cT_{\exists X\st \phi}$, that is $g \sat \cT_{\phi}\of\tupof{Z} \restr Z\setminus X$. Therefore there is a witness $h: P \to G$ s.t... Consider $h' = h \restr \tupof {Z}$. Then $h' \sat \cT_\phi$, and by induction hypothesis $h' \sat \phi$.
+	Now show that $h \sat \exists X\st \phi$ using the definition of satisfaction.\\
+	(only if: missing)
+\end{itemize}
 
 
+\end{proof}
 % The following proposition shows that we can now encode FOL conjunction.
 
 % \begin{proposition}
