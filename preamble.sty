@@ -9,6 +9,7 @@
 \usepackage{subcaption}
 \usepackage{proof}
 \usepackage{comment}
+\usepackage{xspace}
 
 \captionsetup[subfigure]{justification=centering}
 
@@ -53,11 +54,11 @@
 \newcommand{\tp}{T}
 
 % Direct parent relation
-\newcommand{\parentof}{%
-	\mathchoice{\mathrel{\prec\mskip-10mu\cdot}}%
-			   {\mathrel{\prec\mskip-10mu\cdot}}%
-			   {\mathrel{\prec\mskip-5mu\cdot}}%
-			   {\mathrel{\prec\mskip-5mu\cdot}}%
+\newcommand{\parentof}[1][\mskip-1mu]{%
+	\mathchoice{\mathrel{\prec\mskip-10mu\cdot_{#1}}}%
+			   {\mathrel{\prec\mskip-10mu\cdot_{#1}}}%
+			   {\mathrel{\prec\mskip-5mu\cdot_{#1}}}%
+			   {\mathrel{\prec\mskip-5mu\cdot_{#1}}}%
 }
 % Transitive parent relation
 \newcommand{\ancestof}{\prec}
@@ -72,7 +73,7 @@
 }
 
 
-\newcommand{\proper}{proper}
+\newcommand{\proper}{proper\xspace}
 
 
 % Transitive child relation
