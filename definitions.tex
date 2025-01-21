@@ -68,6 +68,7 @@ Given a condition tree $\cT$ with root $\rt$, the identity morphism $\cI_\cT\of 
 Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition $\cM;\cN\of \cT\to \cV$ is defined as
 \[ \cM;\cN =
 \begin{array}[t]{@{}l}
-	\tupof{\setof{(v,a;b,x) \mid \exists w\st (v,a,w), (w,b,x)\in \cM\cup \cN},(\rtof\cT,a_{\rtof\cM};a_{\rtof\cN},\rtof\cV)} \enspace.
+	\langle\{ (v,a;b,x) \mid \exists w\st \left( (v,a,w) \in \cM \wedge (w,b,x)\in \cN\right) \vee\\ 
+	\left( (v,a,w) \in \cN \wedge (w,b,x)\in \cM\right)\},(\rtof\cT,a_{\rtof\cM};a_{\rtof\cN},\rtof\cV)\rangle\enspace.
 \end{array}
 \]

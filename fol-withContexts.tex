@@ -13,18 +13,19 @@ We restrict to binary predicates $\la,\lb$, taken from a set $\Lab$; furthermore
 		\:\mid\: \neg\phi
 		\:\mid\: \exists X\st \phi 
 		\]
-where $\la\in\Lab$ is an arbitrary predicate name, $x_1,x_2\in\Var$ are arbitrary variables and $X\subseteq \Var$ an arbitrary set of variables. We use the common $\exists x\st \phi$ as syntactic sugar for $\exists\setof x\st \phi$. We also use the concepts of \emph{free variables} and \emph{bound variables} of $\phi$, denoted $\fv(\phi)$ and $\bv(\phi)$, respectively, both inductively defined in the usual way.\todo{AC: is $x$ bound in $\exists x \st \True$? Both answers are reasonable, I think. Here we assume it is. AR: We should make this explicit.} Note that unlike $\fv(\_)$, $\bv(\_)$ is not invariant under $\alpha$-conversion.
+where $\la\in\Lab$ is an arbitrary predicate name, $x_1,x_2\in\Var$ are arbitrary variables and $X\subseteq \Var$ an arbitrary set of variables. We use the common $\exists x\st \phi$ as syntactic sugar for $\exists\setof x\st \phi$. We also use the concepts of \emph{free variables} and \emph{bound variables} of $\phi$, denoted $\fv(\phi)$ and $\bv(\phi)$, respectively, both inductively defined in the usual way. Note that unlike $\fv(\_)$, $\bv(\_)$ is not invariant under $\alpha$-conversion.
 
 As common practice in categorical logic \cite{JacobsBook}, we consider \emph{formulas in context}\todo{AR: open formulas? enriched formulas? sorted formulas?} of the kind $\ctx{X}{\phi}$, where the context $X$ is a set of variables containing $\fv(\phi)$. As an additional constraint, we require that $X$ is disjoint from $\bv(\phi)$: This will simplify the correspondence between formulas and nested conditions without loss of generality, because bound variables can be $\alpha$-converted if needed.
 
 \begin{definition}[formulas in context]
 	\label{def:formula in context}
-	Let $X \subseteq \Var$ and $\phi$ be a FOL formula. Then $\ctx{X}{\phi}$ is a \emph{formula in context} if it can be obtained using the following axioms and formation rules:
+	Let $X \subseteq \Var$ and $\phi$ be a FOL formula. Then $\ctx{X}{\phi}$ is a \emph{\cfor} (or  \emph{formula in context}),  if it can be obtained using the following axioms and formation rules:
 	
-	$$\infer{\ctx{\emptyset}{\True}}{} \qquad 
-	\infer{\ctx{\emptyset}{\False}}{} \qquad 
-	\infer{\ctx{\{x_1, x_2\}}{\la(x_1,x_2)}}{} \qquad 
-	\infer{\ctx{\{x_1, x_2\}}{x_1\Eq x_2}}{}$$
+	$$\infer{\ctx{X}{\True}}{} \qquad 
+	\infer{\ctx{X}{\False}}{} \qquad 
+	\infer{\ctx{X}{\la(x_1,x_2)}}{\{x_1, x_2\}\subseteq X} \qquad 
+	\infer{\ctx{X}{x_1\Eq x_2}}{\{x_1, x_2\}\subseteq X}$$
+%	\infer{\ctx{\{x_1, x_2\}}{x_1\Eq x_2}}{}$$
 	$$\infer[{[\mbox{ctx-}\wedge]}]{\ctx{X}{\phi_1 \wedge \phi_2}}{\ctx{X}{\phi_1} & \ctx{X}{\phi_2}} \quad 
 	\infer[{[\mbox{ctx-}\vee]}]{\ctx{X}{\phi_1 \vee \phi_2}}{\ctx{X}{\phi_1} & \ctx{X}{\phi_2}} \quad 
 	\infer[{[\mbox{ctx-}\neg]}]{\ctx{X}{\neg \phi}}{\ctx{X}{\phi}}$$
@@ -32,7 +33,7 @@ As common practice in categorical logic \cite{JacobsBook}, we consider \emph{for
 \infer[{[\mbox{ctx-weak}]}]{\ctx{Y}{\phi}}{\ctx{X}{\phi} & X\subseteq Y & \bv(\phi)\cap Y = \emptyset}$$
 \end{definition}
 %
-For a formula in context $\ctx{X}{\phi}$ it is easy to verify that $\fv(\phi) \subseteq X$ and, thanks to the condition in the weakening rule, that $\bv(\phi) \cap X = \emptyset$. This implies that $\phi$ (and all its sub-formulas) cannot contain a free variable which is bound in a sub-formula. 
+For a {\cfor} $\ctx{X}{\phi}$ it is easy to verify that $\fv(\phi) \subseteq X$ and, thanks to the condition in the weakening rule, that $\bv(\phi) \cap X = \emptyset$. This implies that $\phi$ (and all its sub-formulas) cannot contain a free variable which is bound in a sub-formula. 
 
 \medskip\noindent
 In this section we use the following concrete category of graphs.
@@ -48,10 +49,10 @@ An edge-labelled multi-graph is a tuple $\tupof{N,E,s,t,\ell}$ where
 A multi-graph morphism $f\of A\to B$ is a tuple $f=\tupof{f\N,f\E}$ where $f\N\of N_A\to N_B$ and $f\E\of E_A\to E_B$ are functions satisfying $f\E;s_B=s_A;f\N$, $f\E;t_B=t_A;f\N$ and $f\E;\ell_B=\ell_A$.
 \end{definition}
 %
-Although our theory mostly abstracts from node and edge identities by relating graphs through morphisms, in the context of FOL interpretation we sometimes have to rely on meaningful, fixed node identities (namely where they correspond to variables). We call $A$ and $B$ \emph{consistent} if their source, target and label functions coincide on $E_A\cap E_B$, and \emph{disjoint} if $N_A\cap N_B=E_A\cap E_B=\emptyset$ (in which case they are certainly consistent).  If $A$ and $B$ are disjoint, we use $A\cup B$ to denote their union; also, if $g\of A\to G$ and $h\of B\to G$ for disjoint $A$ and $B$, then $g\cup h\of (A\cup B)\to G$ denotes the union of $g$ and $h$. We call $A$ a subgraph of $B$, denoted $A\subseteq B$, if $B=A\cup B$; likewise, $f$ is a sub-morphism of $g$, denoted $f\subseteq g$, if $f\cup g=g$. If $A$ and $B$ are consistent, then $B\setminus A$ denotes the largest subgraph of $B$ with node set $N_B\setminus N_A$, and for $g\of A\to G$ we use $g\restr B$ and $g\setminus B$ to denote the restriction of $g$ to (the nodes and edges of) $A \cap B$ and $A\setminus B$, respectively.\todo{AC: We use $g\setminus B$ also if $B$ is not a subgraph of $A$, e.g., in the definition of $g\sat \exists X\st \phi_1$. I think it is actually well-defined. AR: $g\setminus B$ is no longer used there.} Finally, if $X$ is a set then $\tupof X$ will denote the discrete (i.e., edge-less) graph with node set $X$.
+Although our theory mostly abstracts from node and edge identities by relating graphs through morphisms, in the context of FOL interpretation we sometimes have to rely on meaningful, fixed node identities (namely where they correspond to variables). We call $A$ and $B$ \emph{consistent} if their source, target and label functions coincide on $E_A\cap E_B$, and \emph{disjoint} if $N_A\cap N_B=E_A\cap E_B=\emptyset$ (in which case they are certainly consistent).  If $A$ and $B$ are disjoint\todo{AC: we need \emph{consistent} here (used in \Cref{prop:graph formula} below).}, we use $A\cup B$ to denote their union; also, if $g\of A\to G$ and $h\of B\to G$ for disjoint $A$ and $B$, then $g\cup h\of (A\cup B)\to G$ denotes the union of $g$ and $h$. We call $A$ a subgraph of $B$, denoted $A\subseteq B$, if $B=A\cup B$; likewise, $f$ is a sub-morphism of $g$, denoted $f\subseteq g$, if $f\cup g=g$. If $A$ and $B$ are consistent, then $B\setminus A$ denotes the largest subgraph of $B$ with node set $N_B\setminus N_A$, and for $g\of A\to G$ we use $g\restr B$ and $g\setminus B$ to denote the restriction of $g$ to (the nodes and edges of) $A \cap B$ and $A\setminus B$, respectively.\todo{$g\setminus B$ is no longer used. Delete it?} Finally, if $X$ is a set then $\tupof X$ will denote the discrete (i.e., edge-less) graph with node set $X$.
 
-For the correspondence of FOL to nested conditions, we equate $\Var$ to the universe of node identities. A graph morphism $g\of A\to G$ can then be seen as an assignment of variables (the nodes of $A$, playing the role of the context) to a given domain (the graph $G$) in which the existence of an $\la$-labelled edge between $g(x)$ and $g(y)$ means that the predicate $\la(x,y)$ holds. Formally, satisfaction is captured by a relation $\sat$ between morphisms and formulas in context: we write $g \sat \phi$ as a shorthand for $g \of A \to G \sat \ctx{N_A}{\phi}$. As a consequence, asserting $g \sat \phi$ has an implicit proof obligation, i.e. that $\ctx{N_A}{\phi}$ is a formula in context.  Satisfaction is defined inductively over the structure of the formula.
-% for a morphism $g\of A \to G$, by $g \sat \phi$ we mean that $g$ satisfies the formula in context $\ctx{N_A}{\phi}$. 
+For the correspondence of FOL to nested conditions, we equate $\Var$ to the universe of node identities. A graph morphism $g\of A\to G$ can then be seen as an assignment of variables (the nodes of $A$, playing the role of the context) to a given domain (the graph $G$) in which the existence of an $\la$-labelled edge between $g(x)$ and $g(y)$ means that the predicate $\la(x,y)$ holds. Formally, satisfaction is captured by a relation $\sat$ between morphisms and \cfors: we write $g \sat \phi$ as a shorthand for $g \of A \to G \sat \ctx{N_A}{\phi}$. As a consequence, asserting $g \sat \phi$ has an implicit proof obligation, i.e. that $\ctx{N_A}{\phi}$ is a {\cfor}.  Satisfaction is defined inductively over the structure of the formula.
+% for a morphism $g\of A \to G$, by $g \sat \phi$ we mean that $g$ satisfies the {\cfor} $\ctx{N_A}{\phi}$. 
 For reasons to become clear below, the source graph $A$ of $g$ is not required to be discrete.
 %   In fact, for reasons to become clear below, we defined $g\sat \phi$ for arbitrary $g\of A\to G$ such that $\fv(\phi)\subseteq N_A$, without requiring that $A$ is discrete.
 %
@@ -67,7 +68,8 @@ g\sat \exists X\st \phi  & \iffdef h\sat \phi \text{ for some $h\of B \to G$ suc
 & \text{ $X \subseteq N_B$, and }  h\restr A = g\enspace.
 \end{array}\]
 %
-Note that the last clause\todo{AR: is $X\subseteq N_B$ necessary in that clause?} requires that $\ctx{N_A}{\exists X\st \phi}$ is a formula in context, which implies that $X \cap \bv(\phi) = \emptyset$.\todo{AC: comment more on this?}
+Note that the last clause\todo{AR: is $X\subseteq N_B$ necessary in that clause?} requires that $\ctx{N_A}{\exists X\st \phi}$ is a {\cfor}, which implies that $X \cap \bv(\phi) = \emptyset$.
+%\todo{AC: comment more on this?}
 
 \begin{comment}
 When comparing the satisfaction relations for nested conditions and FOL formulas, a technical issue is that the sets of models for which they are defined are not the same: as seen above, $g\sat\phi$ is defined for $g\of A\to G$ whenever $\fv(\phi)\subseteq N_A$, whereas $g\sat\cT$ for a nested condition $\cT$ is only defined if $A$ is \emph{precisely} $I_\cT$. Due to this discrepancy, there cannot be any $\phi$ and $\cT$ such that $g\sat \phi$ if and only if $g\sat \cT$; instead, the best we can hope for is that this holds whenever $A=\tupof{\fv(\phi)}$. The following property implies that this is indeed all we need to be interested in, since $g$-images for $A$-elements outside $\fv(\phi)$ do not make a difference for satisfaction.
@@ -81,12 +83,12 @@ Because of this property, when constructing a morphism $g\of A\to G$ such that $
 
 The following result states that to check if a morphism $g:A \to G$ satisfies a formula $\phi$, it is sufficient to consider the action of the morphism on the free variables of $\phi$.
 
-\todo[inline]{AC: the condion is stronger, using formulas in context. AR: how so?}
+\todo[inline]{AC: the condion is stronger, using {\cfors}. AR: how so?}
 \begin{proposition}\label{prop:free vars only}
-	Let $\phi$ be a FOL-formula and $g\of A\to G$ such that $\ctx{N_A}{\phi}$ is a formula in context; then $g\sat \phi$ if and only if $g\restr \tupof{\fv(\phi)}\sat \phi$.
+	Let $\phi$ be a FOL-formula and $g\of A\to G$ such that $\ctx{N_A}{\phi}$ is a {\cfor}; then $g\sat \phi$ if and only if $g\restr \tupof{\fv(\phi)}\sat \phi$.
 \end{proposition}
 %
-Because of this property, when constructing a morphism $g\of A\to G$ such that $g\sat \phi$, we may assume $A$ to be any graph for which $\tupof{\fv(\phi)}\subseteq A$ and such that $\ctx{N_A}{\phi}$ is a formula in context.
+Because of this property, when constructing a morphism $g\of A\to G$ such that $g\sat \phi$, we may assume $A$ to be any graph for which $\tupof{\fv(\phi)}\subseteq A$ and such that $\ctx{N_A}{\phi}$ is a {\cfor}.
 
 \medskip
 
@@ -103,32 +105,36 @@ equivalent nested condition.
 %
 \subsection{From nested conditions to FOL}
 
-We first define formulas in context for graphs, and then (inductively) for nested conditions. Given a graph $P$, we define
+We first define {\cfors} for graphs, and then (inductively) for nested conditions. Given a graph $P$, we define
 \begin{align}
 	\phi_P = \textstyle
 % \bigwedge_{x\in N_P}{x=x} \wedge
  \bigwedge_{e\in E_P} \ell(e)\bigl(s(e),t(e)\bigr)\label{eq:phiP}
 \end{align}
 %
-Note that $\fv(\phi_P)\subseteq N_P$ and that $\ctx{N_P}{\phi_P}$ is a formula in context. The essential property of $\ctx{N_P}{\phi_P}$ is the following.
+Note that $\fv(\phi_P)\subseteq N_P$ and that $\ctx{N_P}{\phi_P}$ is a {\cfor}. The essential property of $\ctx{N_P}{\phi_P}$ is the following.
 %
 \begin{proposition}\label{prop:graph formula}
 Let $P$ be a graph.
 \begin{enumerate}
 \item If $g\of P\to G$ is a graph morphism, then $g\sat \phi_P$;
 %\item If $g\of \tupof{N_P}\to G$ and $g\sat \phi_P$, then there is a $g'\of P\to G$ such that $g\subseteq g'$ and $g' \sat \phi_P$.\todo{AC: This item is subsumed by the next one, which is used directly in the proof of Theorem\ref{th:comparing satisfactions}. Delete it after checking where it is used.}
-\item If $g:A\to G$ is a graph morphism, $\tupof{N_P} \subseteq A$\todo{Doesn't this follow from $g\sat \phi_P$?} and $g\sat \phi_P$, then there is a $g': A' \to G$ such that $P \subseteq A'$, $A \subseteq A'$, $N_{A'} = N_A$, $g' \restr A = g$ and $g' \sat \phi_P$.\todo{I think we can simplify this by saying that $g':(A\cup P)\to G$.}
+%\item If $g \of A\to G$ is a graph morphism, $\tupof{N_P} \subseteq A$\todo{Doesn't this follow from $g\sat \phi_P$?} and $g\sat \phi_P$, then there is a $g': A' \to G$ such that $P \subseteq A'$, $A \subseteq A'$, $N_{A'} = N_A$, $g' \restr A = g$ and $g' \sat \phi_P$.\todo{I think we can simplify this by saying that $g':(A\cup P)\to G$.}
+\item If graph $A$ is consistent with $P$ and $g:A\to G$ is a graph morphism such that $g\sat \phi_P$, then there is a $g'\of A \cup P \to G$ such that $g' \sat \phi_P$ and $g' \restr A = g$.
 \end{enumerate}
 \end{proposition}
 %
 
-To lift this the definition from graphs to nested conditions, it is convenient to assume that some of the graphs appearing in the latter are disjoint. We can do this without loss of generality, because we can always rename node and edge identities up to isomorphism.
+To lift this the definition from graphs to nested conditions, it is convenient to assume that some of the graphs appearing in the latter are disjoint. 
 
 \begin{definition}
 	A nested condition $\cT$ is \emph{\proper} if for all pair of nodes $v, w$ of $\cT$, if $w$ is a descendant of $v$ (i.e.\ $v {\ancestof} w$), then $P_v$ and $P_w$ 
 	%$N_{P_v}$ and $N_{P_w}$ 
 	are disjoint. 
 \end{definition}
+
+Without loss of generality, we can always assume that a nested condition is \proper, because we can rename node and edge identities up to isomorphism.
+
 %
 % [Old version] In the definition below, we assume (without loss of generality, because we can always rename node identities up to isomorphism) that for all nodes $v$ of a nested condition, $U_v$ and $P_v$ are disjoint; in other words, on each successive layer of the condition, the node identities (here treated as variables) are distinct. 
 %
@@ -146,24 +152,24 @@ Finally, we define $\phi_\cT=\phi_{\rtof\cT}$.
 
 \begin{proposition}
 	\label{prop:formula in context}
-	Let $\cT$ be a {\proper} nested condition, $v \in V_\cT$ be a node and $\psi_v, \phi_v$ be the FOL formula defined in \eqref{eq:psi} and \eqref{eq:phi}. Then $\ctx{N_{U_v}\cup N_{P_v}}{\psi_v}$ and $\ctx{N_{U_v}}{\phi_v}$ are formulas in context. 
+	Let $\cT$ be a {\proper} nested condition, $v \in V_\cT$ be a node and $\psi_v, \phi_v$ be the FOL formula defined in \eqref{eq:psi} and \eqref{eq:phi}. Then $\ctx{N_{U_v}\cup N_{P_v}}{\psi_v}$ and $\ctx{N_{U_v}}{\phi_v}$ are {\cfors}. 
  
-	As a consequence, 	 $\ctx{N_{I_\cT}} {\phi_\cT}$ is a formula in context. 
+	As a consequence, 	 $\ctx{N_{I_\cT}} {\phi_\cT}$ is a {\cfor}. 
 \end{proposition}
 \begin{proof}
-	% We prove by induction that $\ctx{N_{U_v}}{\phi_v}$ is a formula in context for each node $v \in V_\cT$. 
+	% We prove by induction that $\ctx{N_{U_v}}{\phi_v}$ is a {\cfor} for each node $v \in V_\cT$. 
 	The second statement immediately follows from the first one, since  $\phi_\cT = \phi_{\rtof\cT}$ and $U_{\rtof\cT} = I_{\rtof\cT} = I_\cT$.\\
 %
 For the first statement, we proceed by induction, assuming that the property holds for all $w\childof v$ and showing that it then holds for $v$.
-	Let $v\in V_\cT$, and assume by inductive hypothesis that $\ctx{N_{U_w}}{\phi_w}$ is a formula in context for all $w\childof v$. 
+	Let $v\in V_\cT$, and assume by inductive hypothesis that $\ctx{N_{U_w}}{\phi_w}$ is a {\cfor} for all $w\childof v$. 
 	
-	To show that $\ctx{N_{U_v} \cup N_{P_v}}{\psi_v}$ is a formula in context, by rule [ctx-$\wedge$] it is sufficient to show that 
-	(a) $\ctx{N_{U_v} \cup N_{P_v}}{\phi_{P_v}}$, (b) $\ctx{N_{U_v} \cup N_{P_v}}{\bigwedge_{x\in N_{I_v}} d_v(x)\Eq u_v(x)}$, and (c) $\ctx{N_{U_v} \cup N_{P_v}}{\bigwedge_{w\childof v} \neg\phi_w}$ are formulas in context. For (a), by the observation after \eqref{eq:phiP} we know that $\ctx{N_{P_v}}{\phi_{P_v}}$ is a formula in context, and we can conclude using rule [ctx-weak]: in fact $\bv(\phi_{P_v}) = \emptyset$.
+	To show that $\ctx{N_{U_v} \cup N_{P_v}}{\psi_v}$ is a {\cfor}, by rule [ctx-$\wedge$] it is sufficient to show that 
+	(a) $\ctx{N_{U_v} \cup N_{P_v}}{\phi_{P_v}}$, (b) $\ctx{N_{U_v} \cup N_{P_v}}{\bigwedge_{x\in N_{I_v}} d_v(x)\Eq u_v(x)}$, and (c) $\ctx{N_{U_v} \cup N_{P_v}}{\bigwedge_{w\childof v} \neg\phi_w}$ are {\cfors}. For (a), by the observation after \eqref{eq:phiP} we know that $\ctx{N_{P_v}}{\phi_{P_v}}$ is a {\cfor}, and we can conclude using rule [ctx-weak]: in fact $\bv(\phi_{P_v}) = \emptyset$.
 	%
-	For (b), note that for all $x \in N_{I_v}$ we have that $\ctx{\{d_v(x),u_v(x)\}}{d_v(x)\Eq u_v(x)}$ is a formula in context, that $\{d_v(x),u_v(x)\} \subseteq N_{U_v} \cup N_{P_v}$, and $\bv(d_v(x)\Eq u_v(x))= \emptyset$. Therefore using rules [ctx-weak] and [ctx-$\wedge$] we obtain that $\ctx{N_{U_v} \cup N_{P_v}}{\bigwedge_{x\in N_{I_v}} d_v(x)\Eq u_v(x)}$ is a formula in context. Finally, for (c), for all $w\childof v$ first observe that $U_w = P_v$. Thus by inductive hypothesis we can assume that $\ctx{N_{P_v}}{\phi_w}$ is a formula in context. Furthermore,  since $\cT$ is {\proper}, no node of $U_v$ can be bound in $\phi_w$, thus applying rules [ctx-$\neg$] and [ctx-weak] we obtain that $\ctx{N_{U_v} \cup N_{P_v}}{\neg\phi_w}$ is a formula in context, and so is 
+	For (b), note that for all $x \in N_{I_v}$ we have that $\ctx{\{d_v(x),u_v(x)\}}{d_v(x)\Eq u_v(x)}$ is a {\cfor}, that $\{d_v(x),u_v(x)\} \subseteq N_{U_v} \cup N_{P_v}$, and $\bv(d_v(x)\Eq u_v(x))= \emptyset$. Therefore using rules [ctx-weak] and [ctx-$\wedge$] we obtain that $\ctx{N_{U_v} \cup N_{P_v}}{\bigwedge_{x\in N_{I_v}} d_v(x)\Eq u_v(x)}$ is a {\cfor}. Finally, for (c), for all $w\childof v$ first observe that $U_w = P_v$. Thus by inductive hypothesis we can assume that $\ctx{N_{P_v}}{\phi_w}$ is a {\cfor}. Furthermore,  since $\cT$ is {\proper}, no node of $U_v$ can be bound in $\phi_w$, thus applying rules [ctx-$\neg$] and [ctx-weak] we obtain that $\ctx{N_{U_v} \cup N_{P_v}}{\neg\phi_w}$ is a {\cfor}, and so is 
 	$\ctx{N_{U_v} \cup N_{P_v}}{\bigwedge_{w\childof v} \neg\phi_w}$ by applying rule [ctx-$\wedge$].
 
-	To show that $\ctx{N_{U_v}}{\phi_v}$ is a formula in context, observe that since $\ctx{N_{U_v} \cup N_{P_v}}{\psi_v}$ is a formula in context and $N_{U_v}$ and $N_{P_v}$ are disjoint (because $\cT$ is {\proper}), we have, as desired:
+	To show that $\ctx{N_{U_v}}{\phi_v}$ is a {\cfor}, observe that since $\ctx{N_{U_v} \cup N_{P_v}}{\psi_v}$ is a {\cfor} and $N_{U_v}$ and $N_{P_v}$ are disjoint (because $\cT$ is {\proper}), we have, as desired:
 
 	$$\infer[{[\mbox{ctx-}\exists]}]
 	{\ctx{N_{U_v}}{\phi_v = \exists N_{P_v}\st \psi_v}}
@@ -173,7 +179,8 @@ For the first statement, we proceed by induction, assuming that the property hol
 
 \begin{theorem}
 	\label{th:comparing satisfactions}
-	Let $\cT$ be a {\proper} nested condition, $v \in V_\cT$ be a node and $g\of U_v \to G$ be a graph morphism. Then $g\sat \phi_v$ if and only if $u_v;g\sat \hat v$. \todo{AC: use different simbols for the two notions of satisfaction?}
+	Let $\cT$ be a {\proper} nested condition, $v \in V_\cT$ be a node and $g\of U_v \to G$ be a graph morphism. Then $g\sat \phi_v$ if and only if $u_v;g\sat \hat v$. 
+	%\todo{AC: use different simbols for the two notions of satisfaction?}
 	
 	As a consequence, if $g: I_\cT \to G$, then $g\sat\phi_\cT$ if and only if $g\sat\cT$.
 \end{theorem}
@@ -195,21 +202,24 @@ $g = k \restr U_v$:
 %$P_v=A\setminus N_{P_v}$ and hence $g=k\setminus N_{P_v}$.
 
 \smallskip
-By \Cref{prop:graph formula}, it follows that $h\sat \phi_{P_v}$. Moreover, by the induction hypothesis, $h\nsat \phi_w$, implying $h\sat\neg \phi_w$. \Cref{prop:free vars only} then implies $k\sat \phi_{P_v}$ and $k\sat \neg\phi_w$, given that both $\ctx{N_{U_v} \cup N_{P_v}}{\phi_v}$ and $\ctx{N_{U_v} \cup N_{P_v}}{\neg \phi_w}$ are formulas in context by \Cref{prop:formula in context}.  Also, for any $x\in N_{I_v}$,
+By \Cref{prop:graph formula},  it follows that $h\sat \phi_{P_v}$. Moreover, by the induction hypothesis, $h\nsat \phi_w$, implying $h\sat\neg \phi_w$. \Cref{prop:free vars only} then implies $k\sat \phi_{P_v}$ and $k\sat \neg\phi_w$, given that both $\ctx{N_{U_v} \cup N_{P_v}}{\phi_v}$ and $\ctx{N_{U_v} \cup N_{P_v}}{\neg \phi_w}$ are {\cfors} by \Cref{prop:formula in context}.  Also, for any $x\in N_{I_v}$,
 \[ k(d_v(x))=h(d_v(x))=(d_v;h)(x) = (u_v;g)(x) = g(u_v(x))=k(u_v(x)) \enspace, \]
-hence $k\sat d_v(x)\Eq u_v(x)$. All in all, we have $k\sat \psi_v$, where $\ctx{N_{U_v} \cup N_{P_v}}{\psi_v}$ is a formula in context by \Cref{prop:formula in context}. Since $g = k \restr U_v$, by the definition of satisfaction we have  $g\sat \exists N_{P_v}\st \psi_v$, i.e.\ $g\sat \phi_v$. 
+hence $k\sat d_v(x)\Eq u_v(x)$. All in all, we have $k\sat \psi_v$, where $\ctx{N_{U_v} \cup N_{P_v}}{\psi_v}$ is a {\cfor} by \Cref{prop:formula in context}. Since $g = k \restr U_v$, by the definition of satisfaction we have  $g\sat \exists N_{P_v}\st \psi_v$, i.e.\ $g\sat \phi_v$. 
 
 \smallskip
-\item[Only if.] Assume $g\sat \phi_v = \exists N_{P_v}\st \psi_v$. This means that 
-%$\ctx{N_{U_v}}{\phi_v}$ is a formula in context, that 
-there is a $k\of A\to G$ such that $U_v \subseteq A$, $N_{P_v} \subseteq N_A$, $k\restr U_v = g$ and $k \sat \psi_v$. Since  $k \sat \psi_v$, we know that $k \sat \phi_{P_v}$. Then by \Cref{prop:graph formula} there is a $k':A' \to G$ such that $P_v {\subseteq} A'$, $A\subseteq A'$, $N_{A'} = N_A$, $k'\restr A = k$ and $k' \sat \phi_{P_v}$. Let $h: P_v \to G$ be $P_v \hookrightarrow A' \stackrel{k'}{\to} G$ : we show that $h$ is a witness for $g \sat \hat v$.
+\item[Only if.] Assume $g\sat \phi_v$, that is $g \sat \exists N_{P_v}\st \psi_v$. This means that 
+%$\ctx{N_{U_v}}{\phi_v}$ is a {\cfor}, that 
+there is a $k\of A\to G$ such that $U_v \subseteq A$, $N_{P_v} \subseteq N_A$, $k \sat \psi_v$ and $k\restr U_v = g$. Since  $k \sat \psi_v$, we know that $k \sat \phi_{P_v}$. Without loss of generality, we assume that $E_A \cap E_{P_v} = \emptyset$\todo{AC: I don't like this, but it looks necessary.}, thus $A$ and $P$ are consistent. 
+Then by \Cref{prop:graph formula} there is a $k':A \cup P \to G$ such that $k' \sat \phi_{P_v}$ and $k'\restr A = k$. Let $h: P_v \to G$ be $P_v \hookrightarrow A \cup P \stackrel{k'}{\to} G$ : we show that $h$ is a witness for $g \sat \hat v$.
+%Then by \Cref{prop:graph formula} there is a $k':A' \to G$ such that $P_v {\subseteq} A'$, $A\subseteq A'$, $N_{A'} = N_A$, $k'\restr A = k$ and $k' \sat \phi_{P_v}$. Let $h: P_v \to G$ be $P_v \hookrightarrow A' \stackrel{k'}{\to} G$ : we show that $h$ is a witness for $g \sat \hat v$.
 
-First, note that $k'\sat \psi_v = \left( \phi_{P_v}\wedge \bigwedge_{x\in N_{I_v}} d_v(x)\Eq u_v(x) \wedge \bigwedge_{w\childof v} \neg\phi_w \right)$ by \Cref{prop:free vars only}, because $k\sat \psi_v$ and $N_{A'}=N_A$. 
+
+First, note that $k'\sat \psi_v = \left( \phi_{P_v}\wedge \bigwedge_{x\in N_{I_v}} d_v(x)\Eq u_v(x) \wedge \bigwedge_{w\childof v} \neg\phi_w \right)$ by \Cref{prop:free vars only}, because $k\sat \psi_v$ and $N_{A\cup P}=N_A$. 
 \begin{itemize}
 
 \item $k'\sat \bigwedge_{x\in N_{I_v}} d_v(x)\Eq u_v(x)$ implies that $h(d_v(x))=k'(d_v(x))=k'(u_v(x))= k(u_v(x)) = g(u_v(x))$ for all $x\in N_{I_v}$, and since $I_v=\tupof{N_{I_v}}$ this implies $d_v;h=u_v;g$.
 
-\item $k'\sat \neg\phi_w$ (for all $w\childof v$) implies $h\sat\neg\phi_w$ (by \Cref{prop:free vars only}, since $\ctx{N_{P_v} = N_{U_w}}{\phi_w}$ is a formula in context by \Cref{prop:formula in context}), hence $h\nsat\phi_w$, hence (by the induction hypothesis) $u_w;h'\nsat \hat w$.
+\item $k'\sat \neg\phi_w$ (for all $w\childof v$) implies $h\sat\neg\phi_w$ (by \Cref{prop:free vars only}, since $\ctx{N_{P_v} = N_{U_w}}{\phi_w}$ is a {\cfor} by \Cref{prop:formula in context}), hence $h\nsat\phi_w$, hence (by the induction hypothesis) $u_w;h'\nsat \hat w$.
 
 \end{itemize}
 
@@ -232,17 +242,17 @@ First, note that $k'\sat \psi_v = \left( \phi_{P_v}\wedge \bigwedge_{x\in N_{I_v
 %
 The formula $\phi_\cT$ can in practice be simplified by $\alpha$-converting the variable names such that they are shared as much as possible, rather than being distinct on each layer as required for the definition; depending on the condition tree, this may allow many or even all of the equations $d_v(x)\Eq u_v(x)$ in $\phi_v$ to be omitted. This is in particular the case if both $d_v$ and $u_v$ are injective. From the logical pont of view, this can be obtained by repeatedly applying the law $\left( \exists x \st x = y \wedge P(x)\right) \equiv P(y)$.
 
-\subsection{From formulas in context to nested conditions}
+\subsection{From {\cfors} to nested conditions}
 
-\todo[inline]{AR: At some technical cost, the transformation results in \emph{\proper} nested conditions. Do you think that is sufficiently stronger to warrant the cost?}
+%\todo[inline]{AR: At some technical cost, the transformation results in \emph{\proper} nested conditions. Do you think that is sufficiently stronger to warrant the cost?}
 
-This is shown inductively over the structure of FOL formulas in context. Indeed, we show that 
+This is shown inductively over the structure of {\cfors}. Indeed, we show that 
 \begin{itemize}
-\item for every axiom in \Cref{def:formula in context} of the shape $\ctx{X}{\phi}$ there exists a corresponding {\proper} nested condition $\cT_\phi$ with root interface $\tupof{X}$;
+\item for every axiom in \Cref{def:formula in context} of the shape $\ctx{X}{\phi}$ there exists a corresponding {\proper} nested condition $\cT_{\ctx{X}{\phi}}$ with root interface $\tupof{X}$;
 \item for every formation rule in \Cref{def:formula in context} there exists a construction over {\proper} nested conditions that mimics it.
 \end{itemize}
 %
-% The main result then shows that for each formula in context $\ctx{X}{\phi}$ and graph morphism $g: \tupof{X} \to G$, $g \sat \phi$ if and only if $g \sat \cT_\phi$.
+% The main result then shows that for each {\cfor} $\ctx{X}{\phi}$ and graph morphism $g: \tupof{X} \to G$, $g \sat \phi$ if and only if $g \sat \cT_\phi$.
 %
 Because of the De Morgan duality $\phi_1\vee \phi_2 \equiv \neg(\neg\phi_1\wedge \neg\phi_2)$, in fact we only have to provide constructions (of the second kind) for $\wedge$, $\neg$ and $\exists$, as well as for the weakening rule [ctx-weak] .
 
@@ -250,10 +260,14 @@ Because of the De Morgan duality $\phi_1\vee \phi_2 \equiv \neg(\neg\phi_1\wedge
 \label{def:atomic formulas}
 The following clauses define for each axiom of \Cref{def:formula in context} a corresponding proper nested condition, having the context as root interface. 
 \begin{itemize}
-\item $\cT_\True$ is given by $V=\setof v$ with $I_v=P_v=\tupof\emptyset$ (the empty graph), where $u_v=d_v=\id_{I_v}$.
-\item $\cT_\False$ is given by $V=\setof{v,w}$ with $v\parentof w$, $I_v=P_v=I_w=P_w=\tupof\emptyset$, where $u_v=d_v=u_w=d_w=\id_{I_v}$.
-\item $\cT_{\la(x_1,x_2)}$ is given by $V=\setof{v}$ with $I_v=\tupof{\setof{x_1,x_2}}$ and $P_v$ having as nodes $\{x'_1, x'_2\}$ and a single $\la$-labelled edge from $x'_1$ to $x'_2$. Furthermore $u_v=\id_{I_v}$ and $d_v\of I_v\to P_v$ is the morphism mapping $x_i$ to $x'_i$ for $i \in \setof{1,2}$. 
-\item $\cT_{x_1\Eq x_2}$ is given by $V=\setof v$ with $I_v=\tupof{\setof{x_1,x_2}}$ and $P_v=\tupof{\setof{y}}$, where $u_v=\id_{I_v}$ and $d_v\of I_v\to P_v$ is the only available morphism.
+\item $\cT_{\ctx{X}{\True}}$ is given by $V=\setof v$ with $I_v=P_v=\tupof X$, where $d_v=\id_{I_v}$. %$u_v=d_v=\id_{I_v}$.
+\item $\cT_{\ctx{X}{\False}}$ is given by $V=\setof{v,w}$ with $v\parentof w$, $I_v=P_v=I_w=P_w=\tupof X$, where $d_v=u_w=d_w=\id_{I_v}$. %$u_v=d_v=u_w=d_w=\id_{I_v}$.
+\item $\cT_{\ctx{X}{\la(x_1,x_2)}}$ is given by $V=\setof{v}$ with $I_v= \tupof{X}$ and $P_v$ having $X$ as nodes and with a single $\la$-labelled edge from $x_1$ to $x_2$. Furthermore %$u_v=\id_{I_v}$ and 
+$d_v\of I_v\to P_v$ is the obvious inclusion.
+\item $\cT_{\ctx{X}{x_1\Eq x_2}}$ is given by $V=\setof v$ with $I_v=\tupof{X}$ and $P_v=\tupof{(X \setminus \{x_1,x_2\}) \uplus \setof{y}}$,\footnote{By $X\uplus \setof{y}$ we denote the set $X \cup \setof{y}$ assuming that $y$ is a node identity not appearing in $X$.} 
+with 
+%$u_v=\id_{I_v}$ and $d_v\of I_v\to P_v$ 
+$d_v(x_1) = d_v(x_2) = y$ and $d_v(x) = x$ for $x \in X\setminus \{x_1,x_2\}$.
 \end{itemize}
 \end{definition}
 
@@ -261,28 +275,35 @@ The following clauses define for each axiom of \Cref{def:formula in context} a c
 	\label{pr:atomic satisfaction}
 Let $\cT$ be a {\proper} nested condition and $g\of I_\cT\to G$ a graph morphism.
 \begin{enumerate}
-\item If $\cT=\cT_\True$, then $g\sat \cT$ if and only if $g\sat\True$.
-\item If $\cT=\cT_\False$, then $g\sat \cT$ if and only if $g\sat\False$.
-\item If $\cT=\cT_{\la(x_1,x_2)}$, then $g\sat \cT$ if and only if $g\sat\la(x_1,x_2)$.
-\item If $\cT=\cT_{x_1\Eq x_2}$, then $g\sat \cT$ if and only if $g\sat x_1\Eq x_2$.
+\item If $\cT=\cT_{\ctx{X}{\True}}$, then $g\sat \cT$ if and only if $g\sat\True$.
+\item If $\cT=\cT_{\ctx{X}{\False}}$, then $g\sat \cT$ if and only if $g\sat\False$.
+\item If $\cT=\cT_{\ctx{X}{\la(x_1,x_2)}}$, then $g\sat \cT$ if and only if $g\sat\la(x_1,x_2)$.
+\item If $\cT=\cT_{\ctx{X}{x_1 \Eq x_2}}$, then $g\sat \cT$ if and only if $g\sat x_1\Eq x_2$.
 \end{enumerate}
 \end{proposition}
 
-To encode negation, according to rule [ctx-$\neg$] given a {\proper} nested condition $\cT$ for the formula in context $\ctx{X}{\phi}$, we must provide a {\proper} nested condition for $\ctx{X}{\neg \phi}$, thus having the same interface $\tupof{X}$. We introduce a construction $\neg\cT$ that essentially ``pushes'' $\cT$ one level down by introducing a new root, suitably renaming the nodes of the old root.
-More explicitly, $\cU=\neg\cT$ is given by $V_\cU=\tupof{V_\cT\uplus\setof{rt}}$\footnote{The notation means that we assume to choose a node identity $rt$ not appearing in $V_\cT$.} with ${\parentof[\cU]}= {\parentof[\cT]}\cup \setof{(rt,\rtof\cT)}$, $I_{rt} = I_\cT$, $u_{rt}=\id_{I_\cT}$,\todo{$u$ is fixed for the root and need not be defined.} $P_{rt} = \tupof{Z}$ with $Z$ a set of fresh node identities with $i: N_{I_\cT} \to Z$ a bijection, $d_{rt} = i$,  and $u_u$ for all $rt_\cT \parentof u$ adjusted by post-composing them with $i$, whereas for all remaining $v\in V_\cT$, $d_v$ and $u_v$ remain as they were in $\cT$.
+To encode negation, according to rule [ctx-$\neg$] given a {\proper} nested condition $\cT_{\ctx{X}{\phi}}$ for the {\cfor} $\ctx{X}{\phi}$, we must provide a {\proper} nested condition for $\cT_{\ctx{X}{\neg \phi}}$ having the same interface $\tupof{X}$. We introduce a construction $\neg\cT$ that essentially ``pushes'' $\cT$ one level down by introducing a new root.
+More explicitly, $\cU=\neg\cT$ is given by $V_\cU=\tupof{V_\cT\uplus\setof{rt}}$ with ${\parentof[\cU]}= {\parentof[\cT]}\cup \setof{(rt,\rtof\cT)}$, $I_{rt} = P_{rt} = I_\cT$, 
+%$u_{rt}=\id_{I_\cT}$, \todo{$u$ is fixed for the root and need not be defined.} 
+%$P_{rt} = \tupof{Z}$ with $Z$ a set of fresh node identities with $i: N_{I_\cT} \to Z$ a bijection, 
+$d_{rt} = id_{I_\cT}$,  and 
+%$u_u$ for all $rt_\cT \parentof u$ adjusted by post-composing them with $i$, whereas 
+for all remaining $v\in V_\cT$, $d_v$ and $u_v$ remain as they were in $\cT$.
 
 \begin{proposition}
 	\label{pr:negation satisfaction}
 Let $\cT$ be a {\proper} nested condition and $g\of I_\cT\to G$ a graph morphism; then $g\sat \neg\cT$ if and only if $g\nsat\cT$.
 \end{proposition}
 
-To encode conjunction, according to rule [ctx-$wedge$], given two {\proper} nested conditions $\cT_1$ and $\cT_2$ for the formulas in context $\ctx{X}{\phi_1}$ and $\ctx{X}{\phi_2}$, therefore with the same root interface $\tupof{X}$, we must provide a {\proper} nested condition having the same root interface for the conjunction $\phi_1 \wedge \phi_2$. This construction is based on the pushout of the root morphisms. 
+To encode conjunction, according to rule [ctx-$\wedge$], given two {\proper} nested conditions $\cT_{\ctx{X}{\phi_1}}$ and $\cT_{\ctx{X}{\phi_2}}$, therefore with the same root interface $\tupof{X}$, we must provide a {\proper} nested condition $\cT_{\ctx{X}{\phi_1 \wedge \phi_2}}$ having the same root interface.
+% for the conjunction $\phi_1 \wedge \phi_2$. 
+This construction is based on the pushout of the root morphisms. 
 
-Let $\cT_i$ for $i=1,2$ be {\proper} nested conditions with $V_1\cap V_2= \emptyset $ and $I_{\cT_1}=I_{\cT_2}=I$, and denote $P_i=P_{rt_{\cT_i}}$ and $d_i=d_{\rt_{\cT_i}}$ for $i=1,2$. The pushout of $d_1$ and $d_2$ consists of a pushout object $P=P_1\times_I P_2$ and morphisms $d'_i\of P_i\to P$ for $i=1,2$, and for every morphism $f\of A\to P_i$ there is an extended morphism $f;d'_i\of A\to P$; in particular, we denote $d=d_1;d'_1=d_2;d'_2\of I\to P$.  Now we define $\cU=\cT_1\times \cT_2$ with $V_\cU=((V_1\setminus \setof{rt_{\cT_1}})\cup (V_2\setminus \setof{rt_{\cT_2}})) \uplus \setof{rt}$,\footnotemark 5
+Let $\cT_i$ for $i=1,2$ be {\proper} nested conditions with $V_1\cap V_2= \emptyset $ and $I_{\cT_1}=I_{\cT_2}=I$, and denote $P_i=P_{rt_{\cT_i}}$ and $d_i=d_{\rt_{\cT_i}}$ for $i=1,2$. The pushout of $d_1$ and $d_2$ consists of a pushout object $P=P_1\times_I P_2$\todo{AC: Pushout is a colimit, thus a better symbol would be $+$ or some variation of $\cup$.} and morphisms $d'_i\of P_i\to P$ for $i=1,2$, and for every morphism $f\of A\to P_i$ there is an extended morphism $f;d'_i\of A\to P$; in particular, we denote $d=d_1;d'_1=d_2;d'_2\of I\to P$.  Now we define $\cU=\cT_1\times \cT_2$ with $V_\cU=((V_1\setminus \setof{rt_{\cT_1}})\cup (V_2\setminus \setof{rt_{\cT_2}})) \uplus \setof{rt}$,
 ${\parentof[\cU]}= ({\parentof[\cT_1]}\cup {\parentof[\cT_2]})\restr (V_\cU \times V_\cU) \cup \{(rt, v) \mid \rt_{\cT_1}\parentof[1] v \vee \rt_{\cT_2}\parentof[2] v\}$ and
 %
 \begin{itemize}
-\item $I^\cU_{\rt}=I$, $P^\cU_{\rt}=P$ and $d^\cU_{\rt}=d$;\todo{I don't think we have to define $I_\rt$ and $P_\rt$, as they are derived from $d_\rt$. Come to think of it, this holds for all constructions in this section.}
+\item $I^\cU_{\rt}=I$, $P^\cU_{\rt}=P$ and $d^\cU_{\rt}=d$;\todo{AR: I don't think we have to define $I_\rt$ and $P_\rt$, as they are derived from $d_\rt$. Come to think of it, this holds for all constructions in this section.\\ AC: here a bit of redundancy does not hurt, I think}
 \item $u^\cU_w=u^{\cT_i}_w;d'_i$ for all $\rt \parentof[\cU] w$.
 \end{itemize}
 
@@ -292,37 +313,38 @@ Let $\cT_1,\cT_2$ be {\proper} nested conditions with  $V_1\cap V_2=\emptyset$ a
 \end{proposition}
 %
 
-A formula in context can be obtained by weakening, using rule [ctx-weak]. If the premises of the rule hold, namely $\ctx{X}{\phi}$ is a formula in context, $X\subseteq Y$ and $\bv(\phi) \cap Y = \emptyset$ we know that the variables in $Y \setminus X$ do not appear either free nor bound in $\phi$. Therefore given a {\proper} nested condition for $\ctx{X}{\phi}$, we can obtain one for $\ctx{X}{\phi}$ with the following auxiliary construction.\todo{This seems to assume that the nodes in the derived \proper nested condition are always precisely the variables in the formula. That is not always true, see the construction for negation.} For any discrete graph $\tupof{Z}$ disjoint from $\cT$\todo{Do you mean disjoint from $I_\cT$, or also from all patterns occurring in $\cT$ so that the construction is \proper?}, $\cU=\cT\oplus \tupof{Z}$ is equal to $\cT$ except that $\tupof{Z}$ is ``added'' to the root; hence
+A {\cfor} can be obtained by weakening, using rule [ctx-weak]. If the premises of the rule hold, namely $\ctx{X}{\phi}$ is a {\cfor}, $X\subseteq Y$ and $\bv(\phi) \cap Y = \emptyset$ we know that the variables in $Y \setminus X$ do not appear (neither free nor bound) in $\phi$. Given a {\proper} nested condition for $\ctx{X}{\phi}$, we can obtain one for $\ctx{Y}{\phi}$ with the following auxiliary construction.\todo{This seems to assume that the nodes in the derived \proper nested condition are always precisely the variables in the formula. That is not always true, see the construction for negation.} For any discrete graph $\tupof{Z}$ disjoint from $I_\cT$ and $P_\cT$,
+%$\cT$\todo{Do you mean disjoint from $I_\cT$, or also from all patterns occurring in $\cT$ so that the construction is \proper?}, 
+$\cU=\cT\oplus \tupof{Z}$ is equal to $\cT$ except that $\tupof{Z}$ is ``added'' to the root; hence
 \begin{itemize}
 \item $I^\cU_{\rt}=I^\cT_{\rt}\cup \tupof{Z}$ 
-\item $P^\cU_{\rt}=P^\cT_{\rt}\cup \tupof{Z'}$, where $Z'$ are fresh node indentifiers\todo{Do we need fresh node identifiers, if $Z$ is already known to be disjoint from all patterns of $\cT$?} with a bijection $i : Z \to Z'$. Let  $\epsilon$ be the embedding $ \epsilon \of P^\cT_{\rt}\to P^\cU_{\rt}$. 
-\item $d^\cU_{\rt}=d^\cT_{\rt}\cup i$;
-\item $u^\cU_w=u^\cT_w;\epsilon$ for all $w\childof \rt$. 
+\item $P^\cU_{\rt}=P^\cT_{\rt}\cup \tupof{Z}$. Let  $i$ be the inclusion $i \of P^\cT_{\rt}\to P^\cU_{\rt}$. 
+\item $d^\cU_{\rt}=d^\cT_{\rt}\cup id_{\tupof{Z}}$;
+\item $u^\cU_w=u^\cT_w;i$ for all $w\childof \rt$. 
 \end{itemize}
 
 \begin{proposition}
 \label{pr:weakening satisfaction}
-Let $\cT$ be a {\proper} nested condition and $\tupof{Z}$ a discrete graph disjoint from $\cT$. Then $\cT \oplus \tupof{Z}$ is a {\proper} nested condition and for all $g\of I_{\rt}\cup \tupof{Z}\to G$, $g\sat \cT\oplus \tupof{Z}$ if and only if $g\setminus \tupof{Z} \sat\cT$.
+Let $\cT$ be a {\proper} nested condition and $\tupof{Z}$ a discrete graph disjoint from $I_\cT$ and $P_\cT$. Then for all $g\of I_{\rt}\cup \tupof{Z}\to G$, $g\sat \cT\oplus \tupof{Z}$ if and only if $g\setminus \tupof{Z} \sat\cT$.
 \end{proposition}
 
-Finally, the encoding of the existential quantification is pretty simple. By rule [ctx-$\exists$], given a nested condition for $\ctx{Z}{\phi}$, i.e.\ $\cT_\phi$ with root interface $\tupof{Z}$ we need to provide a nested condition for  $\ctx{(Z\setminus X)}{\exists X \st \phi}$. We obtain it using the following operation of \emph{restriction} on nested conditions: given $\cT$ and a set $X$, nested condition $\cT\restr X$ is identical to $\cT$ but for the root $rt'$:\todo{I think you mean to replace the original root $\rt$ by this $\rt'$, but that hasn't been completely defined. Alternatively, you can just change the $d$-morphism of the root (and hence the interface).} $I_{rt'} = \tupof{N_{I_\cT}\setminus X}$, $u_{rt'} = id_{I_{rt'}}$, and $d_{rt'} = i ; d_\cT$, where $i: \tupof{N_{I_\cT}\setminus X} \to I_\cT$ is the inclusion. 
+Finally, the encoding of the existential quantification is pretty simple. By rule [ctx-$\exists$], given a nested condition $\cT_{\ctx{Z}{\phi}}$ with root interface $\tupof{Z}$ we need to provide a nested condition for  $\ctx{(Z\setminus X)}{\exists X \st \phi}$. We obtain it using the following operation of \emph{restriction} on nested conditions: given $\cT$ and a set $X$, nested condition $\cU = \cT\restr X$ has the same nodes of $\cT$ ($V_{\cU} = V_{\cT}$), and all nodes are identical to those of $\cT$ but for the root $rt$: $I^\cU_{rt} = \tupof{N_{I^{\cT}_{rt}}\setminus X}$, and $d^\cU_{rt} = i ; d^{\cT}_{rt}$, where $i: \tupof{N_{I^\cT_{rt}}\setminus X} \to N_{I^\cT_{rt}}$ is the inclusion. 
 
-Summarizing, for a formula in context $\ctx{X}{\phi}$ we define the corresponding nested condition $\cT_\phi$ with root $\tupof{X}$ \todo{AC: Denote it everywhere as $\cT_\phi \of \tupof{X}$? AR: Do you mean for the next proposition, or really everywhere in the paper? I think I would rather use $\cT_{\ctx X\phi}$ as a notation.} inductively as follows:
+Summarizing, for a {\cfor} $\ctx{X}{\phi}$ we define the corresponding nested condition $\cT_{\ctx{X}{\phi}}$ with root $\tupof{X}$ inductively as follows:
 
 \begin{itemize}
-	\item $\cT_\True$, $\cT_\False$, $\cT_{\la(x_1,x_2)}$ and $\cT_{x_1\Eq x_2}$ are as in \Cref{def:atomic formulas}. \todo{AC: either this one or the next item.}
-	\item $\cT_\True \of \tupof{\emptyset}$, $\cT_\False\of \tupof{\emptyset}$, $\cT_{\la(x_1,x_2)}\of \tupof{x_1,x_2}$ and $\cT_{x_1\Eq x_2}\of \tupof{x_1,x_2}$ are as in \Cref{def:atomic formulas}.
-	\item  $\cT_{\neg \phi} \of\tupof{X} = \neg \cT_{\phi} \of \tupof{X}$
-	\item  $\cT_{\phi_1 \wedge \phi_2}\of\tupof{X} = \cT_{\phi_1}\of\tupof{X} \times \cT_{\phi_2} \of\tupof{X}$
-	\item If $X \subseteq Y$ and $\bv(\phi)\cap Y = \emptyset$, then $\cT_\phi \of \tupof{Y} =  \cT_\phi \of \tupof{X} \oplus \tupof{Y\setminus X}$
-	\item $\cT_{\exists X\st \phi}\of\tupof{Z \setminus X} = \cT_{\phi}\of\tupof{Z} \restr Z\setminus X$
-	\item $\cT_{\phi_1 \vee \phi_2}\of\tupof{X} = \cT_{\neg( \neg \phi_1 \wedge \neg \phi_2)}\of\tupof{X}$
+	\item $\cT_{\ctx{X}{\True}}$, $\cT_{\ctx{X}{\False}}$, $\cT_{\ctx{X}{\la(x_1,x_2)}}$ and $\cT_{\ctx{X}{x_1\Eq x_2}}$ are as in \Cref{def:atomic formulas}. 
+	\item  $\cT_{\ctx{X}{\neg \phi}} = \neg \cT_{\ctx{X}{\phi}}$
+	\item  $\cT_{\ctx{X}{\phi_1 \wedge \phi_2}} = \cT_{\ctx{X}{\phi_1}} \times \cT_{\ctx{X}{\phi_2}}$
+	\item If $X \subseteq Y$ and $\bv(\phi)\cap Y = \emptyset$, then $\cT_{\ctx{Y}\phi} =  \cT_{\ctx{X}\phi} \oplus \tupof{Y\setminus X}$
+	\item $\cT_{\ctx{Z \setminus X}{\exists X\st \phi}} = \cT_{\ctx{Z}{\phi}} \restr Z\setminus X$
+	\item $\cT_{\ctx{X}{\phi_1 \vee \phi_2}} = \cT_{\ctx{X}{\neg( \neg \phi_1 \wedge \neg \phi_2)}}$
 \end{itemize}
 
 The main result of this sections states that the proposed encoding is precise in terms of satisfaction. 
 \begin{proposition}
-	Let $\ctx{X}{\phi}$ be a formula in context, and let $\cT_\phi \of \tupof{X}$ be the corresponding nested condition. Then for any graph morphisms $g: \tupof{X} \to G$ we have
-	$$ g \sat \phi \qquad \iff \qquad g \sat \cT_\phi $$
+	Let $\ctx{X}{\phi}$ be a {\cfor}, and let $\cT_{\ctx{X}{\phi}}$ be the corresponding nested condition. Then for any graph morphisms $g: \tupof{X} \to G$ we have
+	$$ g \sat \phi \qquad \iff \qquad g \sat \cT_{\ctx{X}{\phi}} $$
 \end{proposition}
 \begin{proof}[Sketch]
 	\begin{itemize}
@@ -330,7 +352,7 @@ The main result of this sections states that the proposed encoding is precise in
 	\item For $\neg \phi$ this holds by \Cref{pr:negation satisfaction}.
 	
 	\item For $\phi_1 \wedge \phi_2$ this holds by \Cref{pr:and satisfaction}.
-	\item For a formula in context obtained by weakening, this holds by \Cref{pr:weakening satisfaction}.
+	\item For a {\cfor} obtained by weakening, this holds by \Cref{pr:weakening satisfaction}.
 	\item We prove it explicitly for existential quantification. Given $\ctx{Z}{\phi}$, assume by induction hypothesis that for each $f: \tupof{Z} \to G$ we have that  $f \sat \phi$ if and only if $f \sat \cT_\phi$. \\
 	(if: sketchy) Assume that  $g \sat \cT_{\exists X\st \phi}$, that is $g \sat \cT_{\phi}\of\tupof{Z} \restr Z\setminus X$. Therefore there is a witness $h: P \to G$ s.t... Consider $h' = h \restr \tupof {Z}$. Then $h' \sat \cT_\phi$, and by induction hypothesis $h' \sat \phi$.
 	Now show that $h \sat \exists X\st \phi$ using the definition of satisfaction.\\
