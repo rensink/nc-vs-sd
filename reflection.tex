@@ -6,13 +6,25 @@ With the above in mind, we first define reflection of models, this being the mor
 \begin{definition}[model reflection]
 Let $\cM\of \cT\to\cU$ be a morphism.
 \begin{itemize}[topsep=\itemsep]
+\item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if $a\I$ is a $\hat v$-model. We say that $\trip vaw$ \emph{reflects models} if it reflects all $\hat w$-models.
+
+\item $\cM$ \emph{reflects models} if $\rtof\cM$ reflects models.
+\end{itemize}
+\end{definition}
+
+
+\begin{comment}
+\begin{definition}[model reflection]
+Let $\cM\of \cT\to\cU$ be a morphism.
+\begin{itemize}[topsep=\itemsep]
 \item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if there is a sibling $v'\sibling v$ with a morphism $s:I_{v'}\to I_v$ such that $u_{v'}=s;u_v$ and $s;a\I;g\sat \hat v'$. We say that $\trip vaw$ \emph{reflects models} if it reflects all $\hat w$-models.
 
 \item $\cM$ \emph{reflects models} if $\rtof\cM$ reflects models.
 \end{itemize}
 \end{definition}
+\end{comment}
 %
-Note that, in case $\trip vaw=\rtof\cM$, we have $a\I=\id_I$, and $v'\sibling v$ implies $v'=v$; hence the condition of model reflection implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
+Note that, in case $\trip vaw=\rtof\cM$, we have $a\I=\id_I$; hence the condition of model reflection implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
 
 \begin{comment}
 \todo[inline]{In fact, we have two versions of model reflection; it currently is unclear which is the ``better''. The difference is that (ordinary) reflection does not impose any requirement on the witnesses, whereas strong reflection requires that the witness of the reflected model is itself a reflected witness of the original model.}
@@ -34,12 +46,14 @@ The first of these, ``ordinary'' reflection, is the property we are really after
 %
 A given triple $\trip vaw$ can be shown to reflect models if the morphism as a whole provides enough internal \emph{evidence} for reflection. In particular, for a candidate model-reflecting triple $\trip vaw\in \cM$, for every child $x$ of $v$ we require the existence of further triples in $\cM$ (the evidence). To obtain a rich enough framework, we introduce diverse forms of evidence.
 
+In order to do this, we first introduce two patterns within morphisms that are core elements of such evidence.\todo{A: New and preliminary} Given a morphism $\cM$ and a triple $\trip vaw\in\cM$, we say that a triple $\trip ybx\in\cM$ is an \emph{$\sX$-child} of $\trip vaw$, denoted $(\trip vaw)\xchild (\trip ybx)$, if they form the first pattern in \Cref{fig:reflection evidence}, and that a triple $\trip ybw\in \cM$ is a \emph{$\sV$-child under $k$} of $\trip vaw$, denoted $(v,a,w)\vchild (y,b,w)$, if they form the second pattern in \Cref{fig:reflection evidence}.
+
 \begin{definition}[reflection evidence]\label{def:reflection evidence}
 Let $\cM\of \cT\to\cU$ be an CT-morphism. For a given $\trip vaw\in\cM$ and child $x$ of $v$, we define the following kinds of \emph{reflection evidence}.
 \begin{itemize}[topsep=\smallskipamount]
 \item \emph{(Direct reflection evidence.)} $\trip ybx\in\cM$ provides \emph{direct reflection evidence}, denoted $\isredir b{x,a}$, if $w\parentof y$ and $u_y=b\I;u_x;a\P$.
 \item \emph{(Child-based reflection evidence.)} $\trip ybw\in\cM$ provides \emph{child-based reflection evidence}, denoted $\isrechd b{x,a}$, if $x\parentof y$ and there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=b\I;d_w$.
-\item \emph{(Sibling-based reflection evidence.)} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isresib b{x,a}$, if $y\sibling w$ and there is a mediating morphism $s\of I_y\to I_w$ such that $u_y=s;u_x$ and $s;d_w=b\I;u_x;a\P$.
+\item \emph{(Sibling-based reflection evidence.)}\todo{A: Obsolete.} $\trip ybx\in\cM$ provides \emph{sibling-based reflection evidence}, denoted $\isresib b{x,a}$, if $y\sibling w$ and there is a mediating morphism $s\of I_y\to I_w$ such that $u_y=s;u_x$ and $s;d_w=b\I;u_x;a\P$.
 \end{itemize}
 \end{definition}
 %
