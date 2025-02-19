@@ -163,10 +163,11 @@
 \newcommand{\pgen}{{\mathsf{p}}}
 
 \newcommand{\xchild}{\rightleftarrows}
-\newcommand{\vchild}{\mathrel{\tikz[baseline=-1.2ex]
+\newcommand{\vchild}[1][\:]{\mathrel{\tikz[baseline=-1.2ex]
 \path[line width=.3pt]
   (0,0) edge[-{To[length=1.5pt,width=2.5pt]}]  (0.3,0)
-  (0,-0.3) edge[-{To[length=1.5pt,width=2.5pt]}] (0.3,-0.06);}}
+  (0,-0.3) edge[-{To[length=1.5pt,width=2.5pt]}] (0.3,-0.06);}_{\!#1}
+}
 
 \newcommand{\ishift}{{\mathsf{ishift}}}
 
