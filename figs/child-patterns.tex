@@ -1,0 +1,113 @@
+\subcaptionbox*{
+  $\sX$-child relation: $(v,y)\xpattern ab (w,x)$
+}[.5\textwidth]{
+\begin{tikzpicture}[on grid,baseline=(Iv),inner sep=1]
+\node (Iv) {};
+\node (Pv) [below=of Iv] {};
+\node (Ix) [below=of Pv] {};
+\node (Px) [below=of Ix] {};
+
+\path
+  (Iv) edge[draw=weakColor,->]
+       node[opengraph] (v) {}
+       node[left,weakColor] {$d_v$} (Pv)
+%  (Ix) edge[->] node[opengraph] {} node[left] {$d_x$} (Px)
+  (Ix) edge[draw=weakColor,->]
+       node[opengraph] (x) {}
+       node[left,weakColor] {$d_x$} (Px)
+  (Ix) edge[->] node[left] {$u_x$} (Pv);
+  
+\node (Iw) [right=2.5 of Iv] {};
+\node (Pw) [below=of Iw] {};
+
+\path
+  (Iw) edge[weakColor,->] 
+       node[opengraph] (w) {} 
+       node[right,weakColor] {$d_w$} (Pw);
+
+\path[morphism]
+  (v) edge[openmorphism] (w)
+  (Iv) edge[morphism=morphismWeakColor,->] 
+       node[morphismWeakColor,above] {$a\I$} (Iw)
+  (Pv) edge[->] node[above] {$a\P$} (Pw);
+
+\node (Iy) [below=of Pw] {};
+\node (Py) [below=of Iy] {};
+
+\path
+%  (Iy) edge[->] node[opengraph] {} node[right] {$d_y$} (Py)
+  (Iy) edge[draw=weakColor,->] 
+       node[opengraph] (y) {} 
+       node[inner sep=1,right,weakColor] {$d_y$} (Py)
+  (Iy) edge[->] node[right] {$u_y$} (Pw);
+
+\path[morphism]
+  (y) edge[openmorphism] (x)
+  (Iy) edge[->] node[above] {$b\I$} (Ix)
+  (Py) edge[morphismWeakColor,->] 
+       node[morphismWeakColor,above] {$b\P$} (Px)
+  ;
+
+% Defs to make sure bottom is aligned
+\node (I) [below=1 of Px] {};
+\node (P) [below=1 of I] {};
+\path[draw=none]
+  (I) to node[opengraph,fill=none] {} (P);
+\end{tikzpicture}}%
+%
+\subcaptionbox*{
+  $\sV$-child relation: $(v,y)\vpattern[k] ab w$
+}[.5\textwidth]{
+\begin{tikzpicture}[on grid,baseline=(Iv),inner sep=1]
+\node (Iv) {};
+\node (Pv) [below=of Iv] {};
+\node (Ix) [below=of Pv] {};
+\node (Px) [below=of Ix] {};
+\node (Iy) [below=of Px] {};
+\node (Py) [below=of Iy] {};
+
+\path
+  (Iv) edge[weakColor,->] 
+       node[opengraph] (v) {} 
+       node[weakColor,left] {$d_v$} (Pv)
+  (Ix) edge[->] 
+       node[opengraph] (x) {} 
+       node[left] {$d_x$} (Px)
+  (Ix) edge[->] node[left] {$u_x$} (Pv)
+  (Iy) edge[->] 
+       node[opengraph] (y) {} 
+       node[left] {$d_y$} (Py)
+  (Iy) edge[->]
+       node[left] {$u_y$} (Px);
+% The up-arrow
+\path
+    (Iy) edge[bend right,->] 
+         node[above right,near end] {$k$} (Ix);
+  
+\node (Iw) [right=2.5 of Iv] {};
+\node (Pw) [below=of Iw] {};
+
+\path
+  (Iw) edge[weakColor,->] 
+       node[opengraph] (w) {} 
+       node[weakColor,right] {$d_w$} (Pw);
+
+% morphism b, drawn before a to get overlap right
+\path[morphism]
+  (y.53) edge[openmorphism,shorten <=-5pt] (w.239)
+  (Iy.east) edge[->,morphismWeakColor] 
+            node[left,morphismWeakColor] {$b\I$} (Iw)
+  (Py.east) edge[->] 
+            node[right] {$b\P$} (Pw)
+  ;
+
+% morphism a
+\path[morphism]
+  (v) edge[openmorphism] (w)
+  (Iv) edge[->,morphismWeakColor] 
+       node[above,morphismWeakColor] {$a\I$} (Iw)
+  (Pv) edge[->]
+       node[above] {$a\P$} (Pw)
+  ;
+\end{tikzpicture}
+}%

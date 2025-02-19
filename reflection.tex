@@ -79,11 +79,21 @@ These evidence arrows satisfy the following (rather technical) properties.
 \begin{lemma}\label{lem:evidence}
 Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
 \begin{enumerate}[topsep=\itemsep]
+\item\label{re-dir} If $\trip vaw \xchild \trip ybx$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\item\label{re-chd} If $\trip vaw \vchild \trip ybw$ for some $y\childof x$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\end{enumerate}
+\end{lemma}
+%
+\begin{comment}
+\begin{lemma}\label{lem:evidence}
+Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
+\begin{enumerate}[topsep=\itemsep]
 \item\label{re-dir} If $\trip ybx\in \redir{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
 \item\label{re-chd} If $\trip ybw\in \rechd{a,x}$ and $b$ reflects models, then $u_x;a\P;h\nsat \hat x$.
 \item\label{re-sib} If $\trip ybx\in \resib{a,x}$ and $b$ reflects models, then either there is a sibling $w'\sibling w$ with a morphism $s'\of I_{w'}\to I_w$ such that $u_{w'}=s';u_w$ and $s';g\sat \hat w'$, or $u_x;a\P;h\nsat \hat x$.
 \end{enumerate}
 \end{lemma}
+\end{comment}
 %
 \begin{proof}
 In each case, assume $u_x;a\P;h\sat \hat x$.

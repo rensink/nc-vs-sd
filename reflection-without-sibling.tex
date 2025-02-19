@@ -1,0 +1,81 @@
+\section{Model reflection}
+\label{sec:reflection}
+
+With the above in mind, we first define reflection of models, this being the more straightforward of the two directions.
+
+\begin{definition}[model reflection]
+Let $\cM\of \cT\to\cU$ be a morphism.
+\begin{itemize}[topsep=\itemsep]
+\item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if $a\I$ is a $\hat v$-model. We say that $\trip vaw$ \emph{reflects models} if it reflects all $\hat w$-models.
+
+\item $\cM$ \emph{reflects models} if $\rtof\cM$ reflects models.
+\end{itemize}
+\end{definition}
+%
+Note that, in case $\trip vaw=\rtof\cM$, we have $a\I=\id_I$; hence the condition of model reflection for morphisms implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
+%
+A given triple $\trip vaw$ can be shown to reflect models if the morphism as a whole provides enough internal \emph{evidence} for reflection. In particular, for a candidate model-reflecting triple $\trip vaw\in \cM$, for every child $x$ of $v$ we require the existence of further triples in $\cM$ (the evidence). To obtain a rich enough framework, we introduce diverse forms of evidence.
+
+Given a morphism $\cM$ and a triple $\trip vaw\in\cM$, we say that a triple $\trip ybx\in\cM$ is an \emph{$\sX$-child} of $\trip vaw$, denoted %$(\trip vaw)\xchild (\trip ybx)$ or 
+$(v,y) \xpattern ab (w,x)$, if they establish the first pattern in \Cref{fig:child patterns}, and that a triple $\trip ybw\in \cM$ is a \emph{$\sV$-child under $k$} of $\trip vaw$, denoted %$(v,a,w)\vchild[k] (y,b,w)$ or 
+$(v,y) \vpattern[k] ab w$, if they establish the second pattern in \Cref{fig:child patterns}. In the latter, case, we often omit the $k$ and just write $(v,y) \vpattern ab w$ to mean that there is a $k$ such that $(v,y) \vpattern[k] ab w$.
+%
+\begin{figure}
+  \centering
+  \input{figs/child-patterns}
+  \caption{$\sX$- and $\sV$-child patterns; the bold black/blue subdiagrams commute}
+  \label{fig:child patterns}
+\end{figure}
+%
+These patterns satisfy the following (rather technical) properties.
+%
+\begin{lemma}\label{lem:evidence}
+Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
+\begin{enumerate}[topsep=\itemsep]
+\item\label{re-dir} If $(v,x) \xpattern ab (w,y)$ and $\trip ybx$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\item\label{re-chd} If $(v,y) \vpattern ab w$ for some $y\childof x$ and $\trip ybw$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\end{enumerate}
+\end{lemma}
+%
+\begin{proof}
+By contradiction. In each case, assume $u_x;a\P;h\sat \hat x$.
+\begin{enumerate}
+\item $(v,x) \xpattern ab (w,y)$ means that $w\parentof y$ and $b\I;u_x;a\P=u_y$. Since $b$ reflects models, $u_x;a\P;h\sat \hat x$ implies $b\I;u_x;a\P;h\sat \hat y$, implying (due to $u_y;h=b\I;u_x;a\P;h$) that $u_y;h\sat \hat y$, which contradicts $g\sat \hat w$.
+
+\item $(v,y) \vpattern ab w$ with $y\childof x$ means there is a mediating morphism $k\of I_y\to I_x$ such that $k;d_x=u_y$ and $k;u_x;a\P=d_y;b\P$. Since $u_x;a\P;h\sat \hat x$, there must be some witness $f\of P_x\to G$ such that $u_x;a\P;h=d_x;f$ and $u_y;f\nsat \hat y$. Since $b$ reflects models, $b\I;g\sat \hat y$; since $b\I;g= b\I;d_w;h=d_y;b\P;h= k;u_x;a\P;h=k;d_x;f=u_y;f$, this gives rise to a contradiction.
+\end{enumerate}
+\end{proof}
+%
+Based on these notions of evidence, we define corresponding notions of \emph{syntactic reflection}:
+
+\begin{definition}[syntactic reflection]\label{def:syntactic reflection}
+Let $\cM\of \cT\to\cU$ be a condition tree morphism. $\rgen_\cM\subseteq \cM$ is the smallest set containing all $\trip vaw\in \cM$ such that for every child $x$ of $v$ one of the following holds:
+\begin{enumerate}
+\item either there is some $\trip ybx\in \rgen_\cM$ such that $(v,x)\xpattern ab (w,y)$;
+\item or there are $y\childof x$ and $\trip ybw\in \rgen_\cM$ such that $(v,y)\vpattern ab w$.
+\end{enumerate}
+\end{definition}
+%
+We typically write $\rgen$ rather than $\rgen_\cM$ if $\cM$ is clear from the context. Note that, if $v$ does not have children, then $\trip vaw\in \rgen$ for all $\trip vaw\in\cM$. The latter observation will form the base case of our induction proofs. In fact, if we define $\rgen^0$ as the set of all $\trip vaw\in\cM$ such that $v$ does not have children, and $\rgen^i$ for $i>0$ as the set of all $\trip vaw\in\cM$ such that for all $x\childof v$ one of the clauses in \Cref{def:syntactic reflection} holds for some $b\in \rgen^{i-1}$, then clearly $\rgen=\bigcup_{i\geq 0} \rgen^i$.
+
+\begin{lemma}[syntactic reflection implies model reflection]\label{lem:reflection}
+If $\cM\of \cT\to \cU$ is a condition tree morphism, then all $a\in\rgen_\cM$ reflect models.
+\end{lemma}
+%
+\begin{proof}
+By induction on $i$ in $\rgen^i$.
+%
+Consider $\trip vaw\in \rgen$ and let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. Let $h\of P_w\to G$ be the witness for $g\sat \hat w$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$.
+
+Assume that $a\in \rgen^i$ and the property has been proved for all $a\in \rgen^j$ with $j<i$. If $i=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise, let $x\childof v$ be arbitrary; we have to prove that $u_x;a\P;h\nsat \hat x$. By definition of $\rgen^i$, one of the following clauses applies.
+\begin{enumerate}
+\item there is some $\trip ybx\in \rgen^{i-1}$ such that $(v,x)\xpattern ab (w,y)$
+
+\item there are $y\childof x$ and $\trip ybw\in \rgen^{i-1}$ such that $(v,y)\vpattern ab w$.
+\end{enumerate}
+In either case, by the induction hypothesis, $b$ reflects models, and hence \Cref{lem:evidence} implies that $u^x;a\P;h\nsat \hat x$.
+\end{proof}
+
+\begin{corollary}
+If $\cM$ is a condition tree morphism, then $\rtof\cM\in \rgen_\cM$ implies that $\cM$ reflects models.
+\end{corollary}
