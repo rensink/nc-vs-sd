@@ -121,6 +121,8 @@
 \newcommand{\cT}{{\mathcal{T}}}
 \newcommand{\cU}{{\mathcal{U}}}
 \newcommand{\cV}{{\mathcal{V}}}
+\newcommand{\cX}{{\mathcal{X}}}
+\newcommand{\cZ}{{\mathcal{Z}}}
 
 \newcommand{\sX}{\mathsf{X}}
 \newcommand{\sV}{\mathsf{V}}
@@ -169,21 +171,34 @@
   (0,-0.3) edge[-{To[length=1.5pt,width=2.5pt]}] (0.3,-0.06);}_{\!#1}
 }
 
-\newcommand{\xpattern}[2]{\mathrel{\smash{\tikz[baseline=-.7ex]
-\path[line width=.3pt]
-  (0,.04) edge[-{To[length=1.5pt,width=2.5pt]}]
-          node[above=-.07] {$\scriptstyle#1$} (0.3,.04)
-  (.3,-.04) edge[-{To[length=1.5pt,width=2.5pt]}]
-          node[below=-.07] {$\scriptstyle#2$} (0,-.04);
-}\vphantom{{#1}\atop{#2}}}}
-\newcommand{\vpattern}[3][]{\mathrel{\smash{\mskip-6mu\tikz[baseline=-.7ex]
-\path[line width=.3pt]
-  (0,.04) edge[-{To[length=1.5pt,width=2.5pt]}]
-     node[above=-.07] {$\scriptstyle#2$} (0.3,.04)
-  (0,-.04) edge[-{To[length=1.5pt,width=2.5pt]}]
-     node[pos=-.3,below=-.2] {$\scriptstyle#1$} 
-     node[below=-.07] {$\scriptstyle#3$}(0.3,-.04);
-}\vphantom{{#2}\atop{#3}}}}
+% xpattern, in High variant and smashed variant
+\newcommand{\xpatternH}[2]{
+  \mathrel{\tikz[baseline=-.7ex]
+    \path[line width=.3pt]
+    (0,.04) edge[-{To[length=1.5pt,width=2.5pt]}]
+            node[above=-.07] {$\scriptstyle#1$} (0.3,.04)
+    (.3,-.04) edge[-{To[length=1.5pt,width=2.5pt]}]
+            node[below=-.07] {$\scriptstyle#2$} (0,-.04);
+  }
+}
+\newcommand{\xpattern}[2]{
+  \mathrel{\smash{\xpatternH{#1}{#2}}\vphantom{{#1}\atop{#2}}}
+}
+
+% vpattern, in High variant and smashed variant
+\newcommand{\vpatternH}[3][]{
+  \mathrel{\mskip-6mu\tikz[baseline=-.7ex]
+    \path[line width=.3pt]
+      (0,.04) edge[-{To[length=1.5pt,width=2.5pt]}]
+         node[above=-.07] {$\scriptstyle#2$} (0.3,.04)
+      (0,-.04) edge[-{To[length=1.5pt,width=2.5pt]}]
+         node[pos=-.3,below=-.2] {$\scriptstyle#1$} 
+         node[below=-.07] {$\scriptstyle#3$}(0.3,-.04);
+  }
+}
+\newcommand{\vpattern}[3][]{
+  \mathrel{\smash{\vpatternH[#1]{#2}{#3}}\vphantom{{#2}\atop{#3}}}
+}
 
 \newcommand{\ishift}{{\mathsf{ishift}}}
 

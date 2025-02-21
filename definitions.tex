@@ -43,7 +43,7 @@ If $g$ satisfies $\cT$, we also call $g$ a $\cT$-model.
 \begin{definition}[morphism]\label{def:morphism}
 Given two condition trees $\cT,\cU$ with $I_\cT=I_\cU=I$, a morphism $\cM=\tupof{\tp,\rt}$ from $\cT$ to $\cU$ is a tuple consisting of
 \begin{itemize}
-\item a set $\tp$ of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU) \cup (V_\cU\times V_\cT)$\todo{AC: changed back\\ {AR: note that triples can occur within a single tree; this is required for the sibling rule}} and $a\of d_v\to d_w$ is an open graph morphism;
+\item a set $\tp$ of triples $(v,a,w)$ where $(v,w)\in (V_\cT\times V_\cU) \cup (V_\cU\times V_\cT)$ and $a\of d_v\to d_w$ is an open graph morphism;
 \item a distinguished element $\rt\in\tp$, called the \emph{root}, such that $\rt=(\rtof\cT,a_{\rt},\rtof\cU)$ with $a_{\rt}\I=\id_I$.
 \end{itemize}
 \end{definition}
@@ -56,13 +56,13 @@ We typically denote a triple $(v,a,w)$ of the kind above as $\trip vaw$; moreove
 \caption{Visualisation of a triple $\trip vaw$ as in \cref{def:morphism}. The light blue ellipses represent open graphs corresponding to nodes of $\cT$ and $\cU$, and the (fat) light blue arrow represents the triple as a whole. For the root triple, $I_v=I_w=I$ and $a\I=\id_I$}
 \label{fig:triple}
 \end{figure}
-
+\begin{comment}
 \todo[inline]{We could extend the child relation to triples, as follows.}
 \noindent Given a morphism $\cM$, we define a parent relation ${\parentof}\subseteq \cM\times \cM$ as follows:
 \[ (v,a,w)\parentof (y,b,x) \;\Leftrightarrow\; v\parentof x\wedge w\parentof y \wedge u_y=b\I;u_x;a\P \enspace. \]
 \todo[inline]{This might provide a more acceresible and uniform way to define the notions of direct (preservation and reflection) evidence.}
-
-\medskip\noindent
+\end{comment}
+%
 Given a condition tree $\cT$ with root $\rt$, the identity morphism $\cI_\cT\of \cT\to\cT$ is defined as
 \[ \cI_\cT = \tupof{\gensetof{(v,\id_{d_v},v)}{v\in V_\cT},(\rt,\id_{d_{\rt}},\rt)} \enspace. \]
 Given two condition tree morphisms $\cM\of \cT\to \cU,\cN\of \cU\to \cV$, their composition $\cM;\cN\of \cT\to \cV$ is defined as

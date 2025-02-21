@@ -6,14 +6,14 @@ With the above in mind, we first define reflection of models, this being the mor
 \begin{definition}[model reflection]
 Let $\cM\of \cT\to\cU$ be a morphism.
 \begin{itemize}[topsep=\itemsep]
-\item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if $a\I$ is a $\hat v$-model. We say that $\trip vaw$ \emph{reflects models} if it reflects all $\hat w$-models.
+\item $\trip vaw\in\cM$ \emph{reflects a $\hat w$-model $g$} if $a\I;g$ is a $\hat v$-model. We say that $\trip vaw$ \emph{reflects models} if it reflects all $\hat w$-models.
 
 \item $\cM$ \emph{reflects models} if $\rtof\cM$ reflects models.
 \end{itemize}
 \end{definition}
 %
-Note that, in case $\trip vaw=\rtof\cM$, we have $a\I=\id_I$; hence the condition of model reflection for morphisms implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
-%
+Note that, in case $\trip vaw=\rtof\cM$, we have $a\I=\id_I$; hence the property of model reflection for morphisms implies that, if $g$ is a model of $\cU=\hat w$, then $g=a\I;g$ is a model of $\hat v=\cT$; in other words, the models of $\cU$ form a subset of those of $\cT$.
+
 A given triple $\trip vaw$ can be shown to reflect models if the morphism as a whole provides enough internal \emph{evidence} for reflection. In particular, for a candidate model-reflecting triple $\trip vaw\in \cM$, for every child $x$ of $v$ we require the existence of further triples in $\cM$ (the evidence). To obtain a rich enough framework, we introduce diverse forms of evidence.
 
 Given a morphism $\cM$ and a triple $\trip vaw\in\cM$, we say that a triple $\trip ybx\in\cM$ is an \emph{$\sX$-child} of $\trip vaw$, denoted %$(\trip vaw)\xchild (\trip ybx)$ or 
@@ -33,7 +33,7 @@ These patterns satisfy the following (rather technical) properties.
 Let  $\cM\of \cT\to\cU$ be a condition tree morphism, let $\trip vaw\in\cM$ and $x\childof v$. Let $g\sat \hat w$ with witness $h$.
 \begin{enumerate}[topsep=\itemsep]
 \item\label{re-dir} If $(v,x) \xpattern ab (w,y)$ and $\trip ybx$ reflects models, then $u_x;a\P;h\nsat \hat x$.
-\item\label{re-chd} If $(v,y) \vpattern ab w$ for some $y\childof x$ and $\trip ybw$ reflects models, then $u_x;a\P;h\nsat \hat x$.
+\item\label{re-chd} If $(v,y) \vpatternH ab w$ for some $y\childof x$ and $\trip ybw$ reflects models, then $u_x;a\P;h\nsat \hat x$.
 \end{enumerate}
 \end{lemma}
 %
@@ -51,27 +51,42 @@ Based on these notions of evidence, we define corresponding notions of \emph{syn
 \begin{definition}[syntactic reflection]\label{def:syntactic reflection}
 Let $\cM\of \cT\to\cU$ be a condition tree morphism. $\rgen_\cM\subseteq \cM$ is the smallest set containing all $\trip vaw\in \cM$ such that for every child $x$ of $v$ one of the following holds:
 \begin{enumerate}
-\item either there is some $\trip ybx\in \rgen_\cM$ such that $(v,x)\xpattern ab (w,y)$;
-\item or there are $y\childof x$ and $\trip ybw\in \rgen_\cM$ such that $(v,y)\vpattern ab w$.
+\item\label{xpattern} either there is some $\trip ybx\in \rgen_\cM$ such that $(v,x)\xpattern ab (w,y)$;
+\item\label{vpattern} or there are $y\childof x$ and $\trip ybw\in \rgen_\cM$ such that $(v,y)\vpattern ab w$.
 \end{enumerate}
 \end{definition}
 %
-We typically write $\rgen$ rather than $\rgen_\cM$ if $\cM$ is clear from the context. Note that, if $v$ does not have children, then $\trip vaw\in \rgen$ for all $\trip vaw\in\cM$. The latter observation will form the base case of our induction proofs. In fact, if we define $\rgen^0$ as the set of all $\trip vaw\in\cM$ such that $v$ does not have children, and $\rgen^i$ for $i>0$ as the set of all $\trip vaw\in\cM$ such that for all $x\childof v$ one of the clauses in \Cref{def:syntactic reflection} holds for some $b\in \rgen^{i-1}$, then clearly $\rgen=\bigcup_{i\geq 0} \rgen^i$.
-
-\begin{lemma}[syntactic reflection implies model reflection]\label{lem:reflection}
-If $\cM\of \cT\to \cU$ is a condition tree morphism, then all $a\in\rgen_\cM$ reflect models.
+We typically write $\rgen$ rather than $\rgen_\cM$ if $\cM$ is clear from the context. The following property gives some insight in the existence of (alternative) syntactical reflections, in case the interface of the source node of a triple can be mapped in more than one way to the interface of the target node.\todo{A: Could alternatively (slightly more complicatedly) be formulated by defining an equivalence over triples and stating that $\rgen$ is well-defined modulo that equivalence.}
+%
+\begin{lemma}\label{lem:interface flexibility}
+Let $\cM\of\cT\to \cU$ be a condition tree morphism and $\trip vaw\in \rgen_\cM$. If $\trip v{\bar a}w\in \cM$ such that $\bar a\P=a\P$ and $\bar a\I;d_w=a\I;d_w$, then $\trip v{\bar a}w\in \rgen_\cM$.
 \end{lemma}
 %
 \begin{proof}
-By induction on $i$ in $\rgen^i$.
+Immediate from the fact that neither of the clauses in \Cref{def:syntactic reflection} puts further constraints on $a\I$, beyond the fact that $a$ is an open graph morphism and hence $a\I;d_w=d_v;a\P$; and the latter equation is also satisfied by $\bar a$.
+\end{proof}
+%
+As a basis for induction, we take the \emph{cumulative depth} of triples, defined as the sum of the depths of their source and target nodes (in the respective condition trees):
+%
+\[  \depth(\trip vaw) := \depth(\hat v)+\depth(\hat w) \enspace. \]
+%
+Note that $(v,x)\xpattern ab (w,y)$ implies $\depth(\trip ybx)< \depth(\trip vaw)$ and $(v,y)\xpattern ab w$ implies $\depth(\trip ybw)<\depth(\trip vaw)$.
+%Note that, if $v$ does not have children, then $\trip vaw\in \rgen$ for all $\trip vaw\in\cM$. The latter observation will form the base case of our induction proofs. In fact, we define $\rgen^0$ as the set of all $\trip vaw\in\cM$ such that $v$ does not have children, and $\rgen^i$ for $i>0$ as the set of all $\trip vaw\in\cM$ such that for all $x\childof v$ one of the clauses in \Cref{def:syntactic reflection} holds for some $b\in \rgen^{i-1}$; then clearly $\rgen^i\subseteq \rgen^j$ for all $i\leq j$, and $\rgen=\bigcup_{i\geq 0} \rgen^i$.
+
+\begin{proposition}[syntactic reflection implies model reflection]\label{lem:reflection}
+If $\cM\of \cT\to \cU$ is a condition tree morphism, then all $\trip vaw\in\rgen_\cM$ reflect models.
+\end{proposition}
+%
+\begin{proof}
+By induction on $\depth(\trip vaw)$.
 %
 Consider $\trip vaw\in \rgen$ and let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. Let $h\of P_w\to G$ be the witness for $g\sat \hat w$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$.
 
-Assume that $a\in \rgen^i$ and the property has been proved for all $a\in \rgen^j$ with $j<i$. If $i=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise, let $x\childof v$ be arbitrary; we have to prove that $u_x;a\P;h\nsat \hat x$. By definition of $\rgen^i$, one of the following clauses applies.
+If $\depth(\trip vaw)=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise assume that $\depth(\trip vaw)=1>0$ and the proposition has been proved for triples of depth smaller than $i$. Let $x\childof v$ be arbitrary; we have to prove that $u_x;a\P;h\nsat \hat x$. By definition of $\rgen^i$, one of the following clauses applies.
 \begin{enumerate}
-\item there is some $\trip ybx\in \rgen^{i-1}$ such that $(v,x)\xpattern ab (w,y)$
+\item there is some $\trip ybx\in \rgen^{i-1}$ such that $(v,x)\xpattern ab (w,y)$. It follows that $\depth(\trip ybx)<i$.
 
-\item there are $y\childof x$ and $\trip ybw\in \rgen^{i-1}$ such that $(v,y)\vpattern ab w$.
+\item there are $y\childof x$ and $\trip ybw\in \rgen^{i-1}$ such that $(v,y)\vpattern ab w$. It follows that $\depth(\trip ybw)<i$.
 \end{enumerate}
 In either case, by the induction hypothesis, $b$ reflects models, and hence \Cref{lem:evidence} implies that $u^x;a\P;h\nsat \hat x$.
 \end{proof}
@@ -79,3 +94,390 @@ In either case, by the induction hypothesis, $b$ reflects models, and hence \Cre
 \begin{corollary}
 If $\cM$ is a condition tree morphism, then $\rtof\cM\in \rgen_\cM$ implies that $\cM$ reflects models.
 \end{corollary}
+%
+An important further property is that syntactic model reflection composes, in the following sense.
+%
+\begin{proposition}\label{prop:syntactic reflection composes}
+If $\cM:\cT\to\cU,\cN:\cU\to \cV$ be condition tree morphisms, then
+\begin{itemize}
+\item $\trip vaw\in \rgen_\cM$ and $\trip wbx\in \rgen_\cN$ implies $\trip v{a;b}x\in \rgen_{\cM;\cN}$;
+\item $\trip vaw\in \rgen_\cN$ and $\trip wbx\in \rgen_\cM$ implies $\trip v{a;b}x\in \rgen_{\cM;\cN}$.
+\end{itemize}
+\end{proposition}
+%
+Part of the proof is based on the following, very technical, auxiliary lemma.
+%
+\begin{lemma}\label{lem:composition induction}
+Let $\cM:\cT\to\cU$ and $\cN:\cU\to \cV$ be condition tree morphisms, let $\cX=\cM$ and $\cZ=\cN$ or vice versa, and let $\trip{y_1}{b_1}{z_1}\in \rgen_\cZ$ and $\trip{y_2}{a_2}{x_2}\in \rgen_\cX$ where $y_2\childof_\cU y_1$. One of the following cases holds:
+\begin{enumerate}
+\item There is a child $z_2\childof z_1$ with $\trip {z_2}dy\in\rgen_\cZ$ and $\trip va{x_2}\in \rgen_\cX$ for some $v\desceq_\cU y_2$, and an arrow $s:I_v\to I_{y_2}$ satisfying $s;a\I_2=c\I$ and $d\I;s;u_{y_2};b\P_1=u_{z_2}$.
+
+\item There is a child $x_3\childof x_2$ with $\trip{x_2}cv\in \rgen_\cX$ and $\trip vd{z_1}\in \rgen_\cZ$ for some $v\desceq_\cU y_2$, and an arrow $s:I_v\to I_{y_2}$ satisfying $c\I;s;a\I_2;d_{x_2}=u_{x_3}$ and $s;u_{y_2};b\P_1=d_v;d\P$.
+\end{enumerate}
+\end{lemma}
+%
+\begin{proof}
+Let us start with a visualisation of the statement of the lemma. Given a diagram of the following shape, where $b_1\in \rgen_\cZ$ and $a_2\in \rgen_\cX$:
+%
+\def\mypattern{
+\node (Iy1) {};
+\node (Py1) [below=of Iy1] {};
+\node (Iy2) [below=of Py1] {};
+\node (Py2) [below=of Iy2] {};
+\path
+  (Iy1) edge[maybeWeak,->] 
+        node[opengraph] (y1) {} 
+        node[maybeWeak,left] {$d_{y_1}$} (Py1)
+  (Iy2) edge[draw=none] 
+        node[opengraph] (y2) {} 
+        (Py2)
+  (Iy2) edge[->] node[left] {$u_{y_2}$} (Py1)
+  ;
+%
+\node (Iz1) [right=2 of Iy1] {};
+\node (Pz1) [below=of Iz1] {};
+\path
+  (Iz1) edge[maybeWeak,->]
+        node[maybeWeak,opengraph] (z1) {} 
+        node[right] {$d_{z_1}$} (Pz1)
+  ;
+%
+\node (Ix2) [left=2 of Iy2] {};
+\node (Px2) [below=of Ix2] {};
+\path
+  (Ix2) edge[maybeWeak2,->] 
+        node[opengraph] (x2) {} 
+        node[left] {$d_{x_2}$} (Px2)
+  ;
+%
+\path[morphism]
+  (y1) edge[openmorphism] (z1)
+  (Iy1) edge[maybeWeakMorphism,->] 
+        node[pos=.4,above] {$b\I_1$} (Iz1)
+  (Py1) edge[->] node[pos=.4,above] {$b\P_1$} (Pz1)
+  (y2) edge[openmorphism] (x2)
+  (Iy2) edge[->] 
+        node[pos=.4,above] {$a\I_2$} (Ix2)
+  (Py2) edge[maybeWeakMorphism,->]
+        node[pos=.4,above] {$a\P_2$} (Px2)
+  ;
+
+% interior of the y-nodes repainted no so as to come on top
+\path
+  (Iy2) edge[maybeWeak,->]
+        node[left] {$d_{y_2}$} (Py2)
+  ;
+}
+\colorlet{maybeWeak}{black}
+\colorlet{maybeWeak2}{black}
+\colorlet{maybeWeakMorphism}{morphismColor}
+\begin{equation}\label{eq:composition induction premisse}
+\begin{tikzpicture}[on grid,inner sep=1,baseline=(Py1)]
+\mypattern
+\end{tikzpicture}
+\end{equation}
+we need to prove that one of the following two completions exist, in which the subdiagrams formed by the bold black/blue arrows must commute:
+
+\colorlet{maybeWeak}{weakColor}
+\colorlet{maybeWeak2}{weakColor}
+\colorlet{maybeWeakMorphism}{morphismWeakColor}
+\begin{equation}\label{eq:composition induction result} 
+\begin{tikzpicture}[on grid,inner sep=1,baseline=(Iy2)]
+\mypattern
+\node (Iz2) [below=of Pz1] {};
+\node (Pz2) [below=of Iz2] {};
+\node (Iv) [below=of Py2] {};
+\node (Pv) [below=of Iv] {};
+\path
+  (Iz2) edge[weakColor,->]
+        node[opengraph] (z2) {} 
+        node[right] {$d_{z_2}$} (Pz2)
+  (Iv) edge[draw=none]
+       node[opengraph] (v) {}
+       (Pv)
+  (Iz2) edge[->] node[right] {$u_{z_2}$} (Pz1)
+  ;
+%
+\path[morphism]
+  (z2) edge[openmorphism] (v)
+  (Iz2) edge[->]
+        node[pos=.4,above] {$d\I$} (Iv)
+  (Pz2) edge[morphismWeakColor,->] 
+        node[pos=.3,above] {$d\P$} (Pv)
+  (v) edge[openmorphism] (x2)
+  (Iv) edge[->] 
+       node[pos=.2,above right] {$c\I$} (Ix2)
+  (Pv) edge[morphismWeakColor,->] 
+       node[pos=.5,above right] {$c\P$} (Px2)
+  ;
+
+\path (Iv.north) edge[->,bend right=25] node[right] {$s$} (Iy2.south east);
+
+% repaint an arrow
+\path[morphism]
+  (Py2) edge[morphismWeakColor,->] (Px2);
+\path 
+  (Iv) edge[weakColor,->]
+       node[pos=.3,left] {$d_v$} 
+       (Pv)
+       ;
+\end{tikzpicture}
+\quad
+\colorlet{maybeWeak2}{black}
+\begin{tikzpicture}[on grid,inner sep=1,baseline=(Iy2)]
+\mypattern
+\node (Ix3) [below=of Px2] {};
+\node (Px3) [below=of Ix3] {};
+\node (Iv) [below=of Py2] {};
+\node (Pv) [below=of Iv] {};
+\path
+  (Ix3) edge[weakColor,->]
+        node[opengraph] (x3) {}
+        node[left] {$d_{x_3}$} (Px3)
+  (Iv) edge[draw=none] 
+       node[opengraph] (v) {} 
+       (Pv)
+  (Ix3) edge[->] node[left] {$u_{x_3}$} (Px2)
+  ;
+%
+\path[morphism]
+  (v.60) edge[openmorphism] (z1)
+  (Iv.east) edge[morphismWeakColor,->]
+            node[pos=.4,above=.15] {$d\I$} (Iz1)
+  (Pv.east) edge[->]
+            node[above=.15] {$d\P$} (Pz1)
+  (x3) edge[openmorphism] (v)
+  (Ix3) edge[->]
+        node[pos=.4,above] {$c\I$} (Iv)
+  (Px3) edge[morphismWeakColor,->]
+        node[pos=.4,above] {$c\P$} (Pv)
+  ;
+
+\path (Iv.north) 
+      edge[->,bend right=25] 
+      node[pos=.7,right] {$s$} (Iy2.south east);
+
+% repaint an arrow
+\path[morphism]
+  (Py1) edge[->] (Pz1);
+\path
+  (Iv) edge[->]
+       node[left] {$d_v$}
+       (Pv);
+\end{tikzpicture}
+\end{equation}
+%
+The proof proceeds by induction on the depth of $\hat y_2$. \Cref{def:syntactic reflection} for $\trip{y_1}{b_1}{z_1}\in \rgen_\cZ$ and $y_2\childof y_1$ gives rise to the following cases, the second of which can only occur if $\depth(\hat y_2)>0$:
+\begin{enumerate}
+\item There is some $\trip{z_2}{b_2}{y_2}\in \rgen_\cZ$ such that $(y_1,y_2)\xpattern{b_1}{b_2} (z_1,z_2)$. By setting $v=y_2$, $c=a_2$, $d=b_2$ and $s=\id_{I_v}$ we have Clause~1 of this lemma, hence we are done.
+
+\item There are $y_3\childof y_2$ and $\trip{y_3}{b_3}{z_1}\in \rgen_\cZ$ such that $(y_1,y_3)\vpattern[k]{b_1}{b_3} z_1$. This gives rise to the diagram
+%
+\def\mypattern{
+\node (Iy1) {};
+\node (Py1) [below=of Iy1] {};
+\node (Iy2) [below=of Py1] {};
+\node (Py2) [below=of Iy2] {};
+\node (Iy3) [below=of Py2] {};
+\node (Py3) [below=of Iy3] {};
+\path
+  (Iy1) edge[->] 
+        node[opengraph] (y1) {} 
+        node[left] {$d_{y_1}$} (Py1)
+  (Iy2) edge[->] 
+        node[opengraph] (y2) {} 
+        (Py2)
+  (Iy2) edge[->] node[left] {$u_{y_2}$} (Py1)
+  (Iy3) edge[->] 
+        node[opengraph] (y3) {} 
+        node[left] {$d_{y_3}$} (Py3)
+  (Iy3) edge[->] node[left] {$u_{y_3}$} (Py2)
+  ;
+%
+\node (Iz1) [right=2.2 of Iy3] {};
+\node (Pz1) [below=of Iz1] {};
+\path
+  (Iz1) edge[->] node[opengraph] (z1) {} node[right] {$d_{z_1}$} (Pz1)
+  ;
+%
+\node (Ix2) [left=2.2 of Iy2] {};
+\node (Px2) [below=of Ix2] {};
+\path
+  (Ix2) edge[->] node[opengraph] (x2) {} node[left] {$d_{x_2}$} (Px2)
+  ;
+%
+\path[morphism]
+  (y1.300) edge[openmorphism] (z1)
+  (Iy1.east) edge[->] node[pos=.5,above=.2] {$b\I_1$} (Iz1.north west)
+  (Py1.east) edge[->] node[pos=.4,above=.2] {$b\P_1$} (Pz1.north west)
+  (y2) edge[openmorphism] (x2)
+  (Iy2) edge[->] node[pos=.4,above] {$a\I_2$} (Ix2)
+  (Py2) edge[->] node[pos=.4,above] {$a\P_2$} (Px2)
+  (y3) edge[openmorphism] (z1)
+  (Iy3) edge[->] node[pos=.35,above] {$b\I_3$} (Iz1)
+  (Py3) edge[->] node[pos=.35,above] {$b\P_3$} (Pz1)
+  ;
+
+\path (Iy3.north east) edge[->,bend right=25] node[pos=.7,right] {$k$} (Iy2.south east);
+
+% interior of the y-nodes repainted no so as to come on top
+\path
+  (Iy2) edge[->] node[left] {$d_{y_2}$} (Py2)
+  ;
+}
+\colorlet{maybeWeak}{black}
+\begin{center}
+\begin{tikzpicture}[on grid,inner sep=1]
+\mypattern
+\end{tikzpicture}
+\end{center}
+%
+Clearly, $\trip{y_2}{a_2}{x_2}$ and $\trip{y_3}{b_3}{z_1}$ form a mirror image of the diagram in \ref{eq:composition induction premisse}, and because $\depth(\hat y_3)<\depth(\hat y_2)$ the induction hypothesis applies. This means that we can complete the diagram in either of the two following ways, where in both cases $v\desceq_\cU y_3$:
+%
+\colorlet{maybeWeak}{weakColor}
+\begin{equation}\label{eq:composition induction proof}\mkern-6mu
+\begin{tikzpicture}[on grid,inner sep=1,baseline=(Py2)]
+\mypattern
+\node (Ix3) [below=of Px2] {};
+\node (Px3) [below=of Ix3] {};
+\node (Iv) [below=of Py3] {};
+\node (Pv) [below=of Iv] {};
+\path
+  (Ix3) edge[->] 
+        node[opengraph] (x3) {} 
+        node[left] {$d_{x_3}$} (Px3)
+  (Iv) edge[->]
+       node[opengraph] (v) {}
+%       node[left] {$d_y$} 
+       (Pv)
+  (Ix3) edge[->] node[left] {$u_{x_3}$} (Px2)
+  ;
+%
+\path[morphism]
+  (v) edge[openmorphism] (z1)
+  (Iv) edge[->] node[pos=.3,below] {$\bar c\I$} (Iz1)
+  (Pv) edge[->] node[pos=.5,below] {$\bar c\P$} (Pz1)
+  (x3) edge[openmorphism] (v)
+  (Ix3) edge[->] node[pos=.5,above right] {$\bar d\I$} (Iv)
+  (Px3) edge[->] node[pos=.3,above right] {$\bar d\P$} (Pv)
+  ;
+
+\path (Iv.north) edge[->,bend right=25] node[pos=.7,right] {$\bar s$} (Iy3.south east);
+
+% repaint an arrow
+\path[morphism]
+  (Py3) edge[->] (Pz1);
+\path 
+  (Iv) edge[->]
+%       node[opengraph] (v) {}
+       node[pos=.3,left] {$d_v$} 
+       (Pv);
+
+\end{tikzpicture}
+\!
+\begin{tikzpicture}[on grid,inner sep=1,baseline=(Py2)]
+\mypattern
+\node (Iz2) [below=of Pz1] {};
+\node (Pz2) [below=of Iz2] {};
+\node (Iv) [below=of Py3] {};
+\node (Pv) [below=of Iv] {};
+\path
+  (Iz2) edge[->] node[opengraph] (z2) {} node[right] {$d_{z_2}$} (Pz2)
+  (Iv) edge[->]
+       node[opengraph] (v) {}
+%       node[left] {$d_y$} 
+       (Pv)
+  (Iz2) edge[->] node[right] {$u_{z_2}$} (Pz1)
+  ;
+%
+\path[morphism]
+  (z2) edge[openmorphism] (v)
+  (Iz2) edge[->] node[pos=.4,above] {$\bar c\I$} (Iv)
+  (Pz2) edge[->] node[pos=.4,above] {$\bar c\P$} (Pv)
+  (v.122) edge[openmorphism] (x2)
+  (Iv.west) edge[->] node[pos=.4,above=.25] {$\bar d\I$} (Ix2.south east)
+  (Pv.west) edge[->] node[pos=.5,above=.3] {$\bar d\P$} (Px2.south east)
+  ;
+
+\path (Iv.north) edge[->,bend right=25] node[pos=.3,right] {$\bar s$} (Iy3.south east);
+
+% repaint an arrow
+\path[morphism]
+  (Py2) edge[->] (Px2);
+\path 
+  (Iv) edge[->]
+%       node[opengraph] (v) {}
+       node[pos=.5,right] {$d_v$} 
+       (Pv);
+\end{tikzpicture}\mkern-6mu
+\end{equation}
+%
+In the right hand side diagram, note that the following equality holds.
+\[ \bar s;k;a\I_2;d_{x_2}=\bar s;k;d_{y_2};a\P_2=\bar s;u_{y_3};a\P_2=\bar d\I;d_{x_2} \enspace. \]
+\Cref{lem:interface flexibility} therefore implies that the open graph morphism $e$ with $e\I=\bar s;k;a\I_2$ and  $e\P=\bar d\P$ satisfies $\trip {v}{e}{x_2}\in \rgen_\cM$. We may therefore take, without loss of generality, choose $\bar d$ to equal this $e$; i.e., we may assume $\bar d\I=\bar s;k;a\I_2$.
+
+\medskip
+The left hand side of \ref{eq:composition induction proof} implies Clause~2 of the lemma, whereas (with the proviso in the previous paragraph) the right hand side implies Clause~1, in both cases setting $c=\bar d$, $d=\bar c$ and $s=\bar s;k$. In particular, in both cases $v\desceq_\cU y_3 \childof_\cU y_2$ and hence $v\desceq_\cU y_2$; and we need to prove the required commutation properties.
+\begin{itemize}
+\item For the left hand side of \eqref{eq:composition induction proof}:
+\[\begin{array}{c}
+c\I;s;a\I_2;d_{c_2}
+ = \bar d\I;\bar s;k;d_{y_2};a\P_2
+ = \bar d\I;\bar s;u_{y_3};a\P_2
+ = u_{x_3} \\[\smallskipamount]
+s;u_{y_2};b\I_1
+ = \bar s;k;u_{y_2};b\I_1
+ = \bar s;d_{y_3};b\P_3
+ = d_v;d\P
+ = d_v;\bar c\P
+\end{array}\]
+
+\item For the right hand side of \eqref{eq:composition induction proof}, using the above assumption $\bar d\I=\bar s;k;a\I_2$:
+\[\begin{array}{c}
+s;a\I_2
+ = \bar s;k;a\I_2
+ = \bar d\I
+ = c\P \\[\smallskipamount]
+d\I;s;u_{y_2};b\P_1
+ = \bar c\I;\bar s;k;u_{y_2};b\P_1
+ = \bar c\I;\bar s;b\P_3
+ = u_{z_2}
+\end{array}\]
+\end{itemize}
+\end{enumerate}
+\end{proof}
+%
+\begin{proof}[of \Cref{prop:syntactic reflection composes}]
+Given $\trip{x_1}{a_1}{y_1}\in \rgen_\cM$ and $\trip{y_1}{b_1}{z_1}\in \rgen_\cN$, we prove by induction on $\depth(a_1)+ \depth(b_1)$ that $\trip {x_1}{a;b}{x_1}\in \rgen_{\cM;\cN}$. The case of $\trip{x_1}{a_1}{y_1}\in \rgen_\cN$ and  $\trip{y_1}{b_1}{z_1}\in \rgen_\cM$ is symmetric and omitted here.
+
+The base case is trivial, since then $\depth(a_1)=0$, implying $x_1$ has no children and hence (immediately) $\trip {x_1}{a_1;b_1}{z_1}\in \rgen_{\cM;\cN}$. Henceforth assume $\depth(a_1)+ \depth(b_1)>0$ and let $x_2\childof x_1$; we proceed by case distinction on the clauses of \Cref{def:syntactic reflection} as applied to $\trip{x_1}{a_1}{y_1}$.
+
+\medskip\noindent\emph{Clause~\ref{xpattern}.} There is then a $\trip{y_2}{a_2}{x_2}\in \rgen_\cM$ such that $(x_1,x_2)\xpattern{a_1}{a_2} (y_1,y_2)$; hence $a_2$ and $b_1$ form the diagram of \ref{eq:composition induction premisse}. \Cref{lem:composition induction} implies that this can be extended to one of the diagrams of \ref{eq:composition induction result}.
+
+\begin{itemize}
+\item Left hand side: here $\trip{z_2}{d}{v}\in \rgen_\cN$ and $\trip{v}{c}{x_2}\in \rgen_\cM$ such that $\depth(d)< \depth(b_1)$ and $\depth(c)< \depth(a_1)$; hence (by the induction hypothesis) $\trip{z_2}{d;c}{x_2}\in \rgen_{\cM;\cN}$. We now prove that $(x_1,x_2)\xpattern{a_1;b_1}{d;c} (z_1,z_2)$, hence we are done.
+%
+\[ u_{z_2}
+  = d\I;s;u_{y_2};b\P_1
+  = d\I;s;a\I_2;u_{x_2};a\P_1;b\P_1
+  = (d;c)\I;u_{x_2};(a_1;b_1)\P\enspace.
+\]
+
+\item Right hand side: here $\trip{x_2}{c}{v}\in \rgen_\cM$ and $\trip{v}{d}{z_1}\in \rgen_\cN$ such that $\depth(c)< \depth(a_1)$ and $\depth(d)< \depth(b_1)$; hence (by the induction hypothesis) $\trip{x_3}{c;d}{z_1}\in \rgen_{\cM;\cN}$. We now prove that $x_1\childof x_2$ and $(x_1,x_3) \vpattern[k]{a_1;b_1}{c;d} z_1$ with $k=c\I;s;a\I_2$, hence we are done.
+%
+\[\begin{array}{c}
+k;d_{x_2}
+ = c\I;s;a\I_2;d_{x_2}
+ = u_{x_3} \\[\smallskipamount]
+k;u_{x_2};(a_1;b_1)\P
+ = c\I;s;a\I_2;u_{x_2};a\P_1;b\P_1
+ = c\I;s;u_{y_2};b\P_1
+ = c\I;d_v;d\P
+ = d_{x_3};(c;d)\P
+\end{array}\]
+\end{itemize}
+%
+\emph{Clause~\ref{vpattern}.} There is then a $\trip{x_3}{a_3}{y_1}\in \rgen_\cM$ for some $x_3\childof x_2$ such that $(x_1,x_3)\vpattern[k]{a_1}{a_3} y_1$. We show that then also $(x_1,x_3) \vpattern[k]{a_1;b_1}{a_3;b_1} z_1$, hence we are done.
+
+
+\end{proof}
