@@ -6,7 +6,7 @@
 
 \item An \emph{open graph} is an arrow $g\of I\to G$ where $I$ is an interface; we say that $g$ has \emph{interface} $I_g=I$ and \emph{pattern} $P_g=G$. Open graphs are used for different purposes: within a condition to associate (both upper and lower) interfaces with the patterns, and also as assignments --- that is, the objects on which satisfaction is defined.
 
-\item An \emph{interface morphism} $f$ from $I$ to $J$ is a graph morphism $k:I\to J$.
+\item An \emph{interface morphism} $f$ from $I$ to $J$ is a graph morphism $f:I\to J$.
 
 \item An \emph{open graph morphism} $a\of g\to h$ a pair of graph morphisms $a\I:I_g\to I_h, a\P:P_g\to P_h$ such that $a\I;h=g;a\P$.
 \end{itemize}
@@ -25,7 +25,9 @@ A \emph{condition tree} $\cT$ is a quadruple of the form $\tupof{V, {\parentof},
 \end{itemize}
 \end{definition}
 %
-We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rtof\cT$; we denote $I_\cT=I_{\rtof\cT}$, $P_\cT=P_{\rtof\cT}$ and $d_\cT=d_{\rtof\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (possibly identical) children of the same parent, or if $v=w=\rt$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).} Finally, for an arbitrary vertex $v\in \cT$ we use $U_v$ to denote the codomain of $u_v$; hence $U_w=P_v$ if $w\childof v$ and $U_w=I_\cT$ if $w=\rtof\cT$.\todo{This is new notation; please comment}
+We use $\ancestof$ and $\ancesteq$ to denote the transitive, respectively transitive and reflexive, closure of $\parentof$. The root of a condition tree $\cT$ is denoted $\rtof\cT$; we denote $I_\cT=I_{\rtof\cT}$, $P_\cT=P_{\rtof\cT}$ and $d_\cT=d_{\rtof\cT}$. For an arbitrary vertex $v\in V_\cT$, $\hat v$ will denote the subtree rooted at $v$. We also use a \emph{sibling} relation, ${\sibling}\subseteq V\times V$, as the smallest equivalence over $V$ such that $v\childof\parentof w$ implies $v\sibling w$; i.e., $v\sibling w$ if either $v$ and $w$ are (possibly identical) children of the same parent, or if $v=w=\rt$.\footnote{In fact, this use of the word \emph{sibling} deviates from its meaning in the natural world since there it is not a reflexive relation; however, we use it for lack of a good alternative (\emph{co-child} would be cumbersome).} For an arbitrary vertex $v\in V_\cT$ we use $U_v$ to denote the codomain of $u_v$; hence $U_w=P_v$ if $w\childof v$ and $U_w=I_\cT$ if $w=\rtof\cT$.
+Finally, for an arbitrary vertex $v\in V_\cT$ we denote by $\depth(\hat v)$ the \emph{depth} of the corresponding subtree, defined as $\depth(\hat v) = 0$ if $v$ has no children in $\cT$, and $\depth(\hat v) = max \{\depth(\hat u) \mid v \parentof u\} + 1$.
+\todo{This is new notation; please comment}
 
 \begin{definition}[satisfaction]\label{def:satisfaction}
 Let $\cT$ be a condition tree and $g\of I_\cT\to G$ a graph morphism. $g$ \emph{satisfies $\cT$} denoted $g\sat \cT$, if there is a graph morphism $h\of P_\cT\to G$ such that
