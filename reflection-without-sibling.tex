@@ -17,7 +17,7 @@ Note that, in case $\trip vaw=\rtof\cM$, we have $a\I=\id_I$; hence the property
 A given triple $\trip vaw$ can be shown to reflect models if the morphism as a whole provides enough internal \emph{evidence} for reflection. In particular, for a candidate model-reflecting triple $\trip vaw\in \cM$, for every child $x$ of $v$ we require the existence of further triples in $\cM$ (the evidence). To obtain a rich enough framework, we introduce diverse forms of evidence.
 
 Given a morphism $\cM$ and a triple $\trip vaw\in\cM$, we say that a triple $\trip ybx\in\cM$ is an \emph{$\sX$-child} of $\trip vaw$, denoted %$(\trip vaw)\xchild (\trip ybx)$ or 
-$(v,y) \xpattern ab (w,x)$, if they establish the first pattern in \Cref{fig:child patterns}, and that a triple $\trip ybw\in \cM$ is a \emph{$\sV$-child under $k$} of $\trip vaw$, denoted %$(v,a,w)\vchild[k] (y,b,w)$ or 
+$(v,x) \xpattern ab (w,y)$, if they establish the first pattern in \Cref{fig:child patterns}, and that a triple $\trip ybw\in \cM$ is a \emph{$\sV$-child under $k$} of $\trip vaw$, denoted %$(v,a,w)\vchild[k] (y,b,w)$ or 
 $(v,y) \vpattern[k] ab w$, if they establish the second pattern in \Cref{fig:child patterns}. In the latter, case, we often omit the $k$ and just write $(v,y) \vpattern ab w$ to mean that there is a $k$ such that $(v,y) \vpattern[k] ab w$.
 %
 \begin{figure}
@@ -80,14 +80,23 @@ If $\cM\of \cT\to \cU$ is a condition tree morphism, then all $\trip vaw\in\rgen
 \begin{proof}
 By induction on $\depth(\trip vaw)$.
 %
-Consider $\trip vaw\in \rgen$ and let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. Let $h\of P_w\to G$ be the witness for $g\sat \hat w$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$.
+Consider $\trip vaw\in \rgen_\cM$ and let $g\sat \hat w$; we set out to prove that $a\I;g\sat \hat v$. Let $h\of P_w\to G$ be the witness for $g\sat \hat w$. It follows that $a\I;g=a\I;d_w;h=d_v;a\P;h$, hence $a\P;h$ is a prospective witness for $a\I;g\sat \hat v$.
 
-If $\depth(\trip vaw)=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise assume that $\depth(\trip vaw)=1>0$ and the proposition has been proved for triples of depth smaller than $i$. Let $x\childof v$ be arbitrary; we have to prove that $u_x;a\P;h\nsat \hat x$. By definition of $\rgen^i$, one of the following clauses applies.
+If $\depth(\trip vaw)=0$, then $v$ has no children, meaning that there is nothing left to prove. Otherwise assume that $\depth(\trip vaw)=i>0$ and the proposition has been proved for triples of depth smaller than $i$. Let $x\childof v$ be arbitrary; we have to prove that $u_x;a\P;h\nsat \hat x$. 
+By definition of $\rgen_\cM$, one of the following clauses applies.
 \begin{enumerate}
-\item there is some $\trip ybx\in \rgen^{i-1}$ such that $(v,x)\xpattern ab (w,y)$. It follows that $\depth(\trip ybx)<i$.
+\item there is some $\trip ybx\in \rgen_\cM$ such that $(v,x)\xpattern ab (w,y)$, where $\depth(\trip ybx)<i$.
 
-\item there are $y\childof x$ and $\trip ybw\in \rgen^{i-1}$ such that $(v,y)\vpattern ab w$. It follows that $\depth(\trip ybw)<i$.
+\item there are $y\childof x$ and $\trip ybw\in \rgen_\cM$ such that $(v,y)\vpattern ab w$, where $\depth(\trip ybw)<i$.
 \end{enumerate}
+
+
+% By definition of $\rgen^i$, one of the following clauses applies.
+% \begin{enumerate}
+% \item there is some $\trip ybx\in \rgen^{i-1}$ such that $(v,x)\xpattern ab (w,y)$. It follows that $\depth(\trip ybx)<i$.
+
+% \item there are $y\childof x$ and $\trip ybw\in \rgen^{i-1}$ such that $(v,y)\vpattern ab w$. It follows that $\depth(\trip ybw)<i$.
+% \end{enumerate}
 In either case, by the induction hypothesis, $b$ reflects models, and hence \Cref{lem:evidence} implies that $u^x;a\P;h\nsat \hat x$.
 \end{proof}
 
@@ -108,12 +117,15 @@ If $\cM:\cT\to\cU,\cN:\cU\to \cV$ be condition tree morphisms, then
 Part of the proof is based on the following, very technical, auxiliary lemma.
 %
 \begin{lemma}\label{lem:composition induction}
-Let $\cM:\cT\to\cU$ and $\cN:\cU\to \cV$ be condition tree morphisms, let $\cX=\cM$ and $\cZ=\cN$ or vice versa, and let $\trip{y_1}{b_1}{z_1}\in \rgen_\cZ$ and $\trip{y_2}{a_2}{x_2}\in \rgen_\cX$ where $y_2\childof_\cU y_1$. One of the following cases holds:
+Let $\cM:\cT\to\cU$ and $\cN:\cU\to \cV$ be condition tree morphisms, let $\cX=\cM$ and $\cZ=\cN$ or vice versa, and let $\trip{y_1}{b_1}{z_1}\in \rgen_\cZ$ and $\trip{y_2}{a_2}{x_2}\in \rgen_\cX$ where $y_2\childof_\cU y_1$ (see \eqref{eq:composition induction premisse}). One of the following cases holds:
 \begin{enumerate}
-\item There is a child $z_2\childof z_1$ with $\trip {z_2}dy\in\rgen_\cZ$ and $\trip va{x_2}\in \rgen_\cX$ for some $v\desceq_\cU y_2$, and an arrow $s:I_v\to I_{y_2}$ satisfying $s;a\I_2=c\I$ and $d\I;s;u_{y_2};b\P_1=u_{z_2}$.
+\item {[Left diagram of \eqref{eq:composition induction result}]} There is a child $z_2\childof z_1$ and a node $v\desceq_\cU y_2$ with $\trip {z_2}dy\in\rgen_\cZ$ and $\trip va{x_2}\in \rgen_\cX$, and an arrow $s:I_v\to I_{y_2}$ satisfying $\inlab{A1} s;a\I_2=c\I$ and $\inlab{A2} d\I;s;u_{y_2};b\P_1=u_{z_2}$.
+% \item There is a child $z_2\childof z_1$ with $\trip {z_2}dy\in\rgen_\cZ$ and $\trip va{x_2}\in \rgen_\cX$ for some $v\desceq_\cU y_2$, and an arrow $s:I_v\to I_{y_2}$ satisfying $s;a\I_2=c\I$ and $d\I;s;u_{y_2};b\P_1=u_{z_2}$.
 
-\item There is a child $x_3\childof x_2$ with $\trip{x_2}cv\in \rgen_\cX$ and $\trip vd{z_1}\in \rgen_\cZ$ for some $v\desceq_\cU y_2$, and an arrow $s:I_v\to I_{y_2}$ satisfying $c\I;s;a\I_2;d_{x_2}=u_{x_3}$ and $s;u_{y_2};b\P_1=d_v;d\P$.
+\item {[Right diagram of \eqref{eq:composition induction result}]}  There is a child $x_3\childof x_2$, a node $v\desceq_\cU y_2$ with an arrow $s:I_v\to I_{y_2}$, and triples $\trip{x_3}cv\in \rgen_\cX$ and $\trip vd{z_1}\in \rgen_\cZ$ satisfying $\inlab{B1} c\I;s;a\I_2;d_{x_2}=u_{x_3}$ and $\inlab{B2} s;u_{y_2};b\P_1=d_v;d\P$.
 \end{enumerate}
+% \item There is a child $x_3\childof x_2$ with $\trip{x_2}cv\in \rgen_\cX$ and $\trip vd{z_1}\in \rgen_\cZ$ for some $v\desceq_\cU y_2$, and an arrow $s:I_v\to I_{y_2}$ satisfying $c\I;s;a\I_2;d_{x_2}=u_{x_3}$ and $s;u_{y_2};b\P_1=d_v;d\P$.
+% \end{enumerate}
 \end{lemma}
 %
 \begin{proof}
@@ -269,9 +281,9 @@ we need to prove that one of the following two completions exist, in which the s
 %
 The proof proceeds by induction on the depth of $\hat y_2$. \Cref{def:syntactic reflection} for $\trip{y_1}{b_1}{z_1}\in \rgen_\cZ$ and $y_2\childof y_1$ gives rise to the following cases, the second of which can only occur if $\depth(\hat y_2)>0$:
 \begin{enumerate}
-\item There is some $\trip{z_2}{b_2}{y_2}\in \rgen_\cZ$ such that $(y_1,y_2)\xpattern{b_1}{b_2} (z_1,z_2)$. By setting $v=y_2$, $c=a_2$, $d=b_2$ and $s=\id_{I_v}$ we have Clause~1 of this lemma, hence we are done.
+\item There is some $\trip{z_2}{b_2}{y_2}\in \rgen_\cZ$ such that $(y_1,y_2)\xpattern{b_1}{b_2} (z_1,z_2)$. By setting $v=y_2$, $c=a_2$, $d=b_2$ and $s=\id_{I_{y_2}}$ we have Clause~1 of this lemma, hence we are done.
 
-\item There are $y_3\childof y_2$ and $\trip{y_3}{b_3}{z_1}\in \rgen_\cZ$ such that $(y_1,y_3)\vpattern[k]{b_1}{b_3} z_1$. This gives rise to the diagram
+\item There are $y_3\childof y_2$ and $\trip{y_3}{b_3}{z_1}\in \rgen_\cZ$ such that $(y_1,y_3)\vpattern[k]{b_1}{b_3} z_1$. This gives rise to the following diagram, where $\inlab{X1} k;d_{y_2} = u_{y_3}$ and $\inlab{X2} k;u_{y_2};b\P_1=d_{y_3};b\P_3$ hold: 
 %
 \def\mypattern{
 \node (Iy1) {};
@@ -332,7 +344,7 @@ The proof proceeds by induction on the depth of $\hat y_2$. \Cref{def:syntactic 
 \end{tikzpicture}
 \end{center}
 %
-Clearly, $\trip{y_2}{a_2}{x_2}$ and $\trip{y_3}{b_3}{z_1}$ form a mirror image of the diagram in \ref{eq:composition induction premisse}, and because $\depth(\hat y_3)<\depth(\hat y_2)$ the induction hypothesis applies. This means that we can complete the diagram in either of the two following ways, where in both cases $v\desceq_\cU y_3$:
+Clearly, $\trip{y_2}{a_2}{x_2}$ and $\trip{y_3}{b_3}{z_1}$ form a mirror image of the diagram  \eqref{eq:composition induction premisse}, and because $\depth(\hat y_3)<\depth(\hat y_2)$ the induction hypothesis applies. This means that we can complete the diagram in either of the two following ways, where in both cases $v\desceq_\cU y_3$:
 %
 \colorlet{maybeWeak}{weakColor}
 \begin{equation}\label{eq:composition induction proof}\mkern-6mu
@@ -374,7 +386,7 @@ Clearly, $\trip{y_2}{a_2}{x_2}$ and $\trip{y_3}{b_3}{z_1}$ form a mirror image o
        (Pv);
 
 \end{tikzpicture}
-\!
+\!\!\!\!
 \begin{tikzpicture}[on grid,inner sep=1,baseline=(Py2)]
 \mypattern
 \node (Iz2) [below=of Pz1] {};
@@ -412,72 +424,88 @@ Clearly, $\trip{y_2}{a_2}{x_2}$ and $\trip{y_3}{b_3}{z_1}$ form a mirror image o
 \end{tikzpicture}\mkern-6mu
 \end{equation}
 %
-In the right hand side diagram, note that the following equality holds.
-\[ \bar s;k;a\I_2;d_{x_2}=\bar s;k;d_{y_2};a\P_2=\bar s;u_{y_3};a\P_2=\bar d\I;d_{x_2} \enspace. \]
-\Cref{lem:interface flexibility} therefore implies that the open graph morphism $e$ with $e\I=\bar s;k;a\I_2$ and  $e\P=\bar d\P$ satisfies $\trip {v}{e}{x_2}\in \rgen_\cM$. We may therefore take, without loss of generality, choose $\bar d$ to equal this $e$; i.e., we may assume $\bar d\I=\bar s;k;a\I_2$.
+In the left diagram, besides \eqref{X1} and \eqref{X2}, the following hold: $\inlab{Y1} \bar s; b'_3 = \bar c\I$ (from \eqref{A1}) and $\inlab{Y2} \bar d\I;\bar s; u_{y_3}; a\P_2 = u_{x_3}$ (from \eqref{A2}). In the right diagram, besides  \eqref{X1} and \eqref{X2}, the following hold: $\inlab{Z1} \bar c\I;\bar s ; b\I_3; d_{z_1} = u_{z_2}$ (from \eqref{B1}) and $\inlab{Z2} \bar s; u_{y_3}; a\P_2 = d_v; \bar d\P$ (from \eqref{B2}).
+
+
+In the right hand side diagram, note that also the following equality holds.
+\[ \bar s;k;a\I_2;d_{x_2}=\bar s;k;d_{y_2};a\P_2\stackrel{\eqref{X1}}{=}\bar s;u_{y_3};a\P_2\stackrel{\eqref{Z2}}{=}d_v;\bar d\P = \bar d\I;d_{x_2} \enspace. \]
+% \[ \bar s;k;a\I_2;d_{x_2}=\bar s;k;d_{y_2};a\P_2 = \bar s;u_{y_3};a\P_2=\bar d\I;d_{x_2} \enspace. \]
+\Cref{lem:interface flexibility} therefore implies that the open graph morphism $e$ with $e\I=\bar s;k;a\I_2$ and  $e\P=\bar d\P$ satisfies $\trip {v}{e}{x_2}\in \rgen_\cX$. We may therefore, without loss of generality, choose $\bar d$ to equal this $e$; i.e., we may assume $\inlab{K}\bar d\I=\bar s;k;a\I_2$.
 
 \medskip
-The left hand side of \ref{eq:composition induction proof} implies Clause~2 of the lemma, whereas (with the proviso in the previous paragraph) the right hand side implies Clause~1, in both cases setting $c=\bar d$, $d=\bar c$ and $s=\bar s;k$. In particular, in both cases $v\desceq_\cU y_3 \childof_\cU y_2$ and hence $v\desceq_\cU y_2$; and we need to prove the required commutation properties.
+The left hand side of \eqref{eq:composition induction proof} implies Clause~2 of the lemma, whereas (with the proviso in the previous paragraph) the right hand side implies Clause~1, in both cases setting $c=\bar d$, $d=\bar c$ and $s=\bar s;k$. In particular, in both cases $v\desceq_\cU y_3 \childof_\cU y_2$ and hence $v\desceq_\cU y_2$; and we need to prove the required commutation properties.
 \begin{itemize}
-\item For the left hand side of \eqref{eq:composition induction proof}:
+\item For the left hand side of \eqref{eq:composition induction proof} we need to prove $\eqref{B1}~ c\I;s;a\I_2;d_{x_2} = u_{x_3}\P$ and $\eqref{B2}~  s;u_{y_2};b\P_1=d_v;d\P$ with $c=\bar d$, $d=\bar c$ and $s=\bar s;k$, that is $\bar d\I;\bar s;k;a\I_2;d_{x_2} = d_v;\bar c\P$ and $\bar s;k;u_{y_2};b\P_1=d_v;\bar c\P$. Indeed, 
+
+
 \[\begin{array}{c}
-c\I;s;a\I_2;d_{c_2}
+  \bar d\I;\bar s;k;a\I_2;d_{x_2}
  = \bar d\I;\bar s;k;d_{y_2};a\P_2
- = \bar d\I;\bar s;u_{y_3};a\P_2
- = u_{x_3} \\[\smallskipamount]
-s;u_{y_2};b\I_1
- = \bar s;k;u_{y_2};b\I_1
- = \bar s;d_{y_3};b\P_3
- = d_v;d\P
+ \stackrel{\eqref{X1}}{=} \bar d\I;\bar s;u_{y_3};a\P_2
+ \stackrel{\eqref{Y2}}{=} u_{x_3} \\[\smallskipamount]
+\bar s;k;u_{y_2};b\P_1
+\stackrel{\eqref{X2}}{=} \bar s;d_{y_3};b\P_3
+= \bar s;b\I_3; d_{z_1}
+\stackrel{\eqref{Y1}}{=} \bar c\I; d_{z_1}
  = d_v;\bar c\P
 \end{array}\]
 
-\item For the right hand side of \eqref{eq:composition induction proof}, using the above assumption $\bar d\I=\bar s;k;a\I_2$:
+% \[\begin{array}{c}
+% c\I;s;a\I_2;d_{c_2}
+%  = \bar d\I;\bar s;k;d_{y_2};a\P_2
+%  = \bar d\I;\bar s;u_{y_3};a\P_2
+%  = u_{x_3} \\[\smallskipamount]
+% s;u_{y_2};b\I_1
+%  = \bar s;k;u_{y_2};b\I_1
+%  = \bar s;d_{y_3};b\P_3
+%  = d_v;d\P
+%  = d_v;\bar c\P
+% \end{array}\]
+
+\item For the right hand side of \eqref{eq:composition induction proof}, we need to prove $\eqref{A1}~s;a\I_2=c\I$ and $\eqref{A2}~d\I;s;u_{y_2};b\P_1=u_{z_2}$ with the same substitution, that is $\bar s;k;a\I_2=\bar d\I$ and $\bar c\I;\bar s;k;u_{y_2};b\P_1=u_{z_2}$. Indeed, 
 \[\begin{array}{c}
-s;a\I_2
- = \bar s;k;a\I_2
- = \bar d\I
- = c\P \\[\smallskipamount]
-d\I;s;u_{y_2};b\P_1
- = \bar c\I;\bar s;k;u_{y_2};b\P_1
- = \bar c\I;\bar s;b\P_3
- = u_{z_2}
+\bar s;k;a\I_2
+{=} \bar d\I \qquad \mbox{ by the above assumption \eqref{K}}\\[\smallskipamount]
+\bar c\I;\bar s;k;u_{y_2};b\P_1
+\stackrel{\eqref{X2}}{=} \bar c\I;\bar s;d_{y_3};b\P_3 
+= \bar c\I;\bar s; b\I_3; d_{z_1} 
+\stackrel{\eqref{Z1}}{=} u_{z_2}
 \end{array}\]
 \end{itemize}
 \end{enumerate}
 \end{proof}
 %
 \begin{proof}[of \Cref{prop:syntactic reflection composes}]
-Given $\trip{x_1}{a_1}{y_1}\in \rgen_\cM$ and $\trip{y_1}{b_1}{z_1}\in \rgen_\cN$, we prove by induction on $\depth(a_1)+ \depth(b_1)$ that $\trip {x_1}{a;b}{x_1}\in \rgen_{\cM;\cN}$. The case of $\trip{x_1}{a_1}{y_1}\in \rgen_\cN$ and  $\trip{y_1}{b_1}{z_1}\in \rgen_\cM$ is symmetric and omitted here.
+Given $\trip{x_1}{a_1}{y_1}\in \rgen_\cM$ and $\trip{y_1}{b_1}{z_1}\in \rgen_\cN$, we prove by induction on $\depth(a_1)+ \depth(b_1)$ that $\trip {x_1}{a_1;b_1}{z_1}\in \rgen_{\cM;\cN}$. The case of $\trip{x_1}{a_1}{y_1}\in \rgen_\cN$ and  $\trip{y_1}{b_1}{z_1}\in \rgen_\cM$ is symmetric and omitted here.
 
 The base case is trivial, since then $\depth(a_1)=0$, implying $x_1$ has no children and hence (immediately) $\trip {x_1}{a_1;b_1}{z_1}\in \rgen_{\cM;\cN}$. Henceforth assume $\depth(a_1)+ \depth(b_1)>0$ and let $x_2\childof x_1$; we proceed by case distinction on the clauses of \Cref{def:syntactic reflection} as applied to $\trip{x_1}{a_1}{y_1}$.
 
-\medskip\noindent\emph{Clause~\ref{xpattern}.} There is then a $\trip{y_2}{a_2}{x_2}\in \rgen_\cM$ such that $(x_1,x_2)\xpattern{a_1}{a_2} (y_1,y_2)$; hence $a_2$ and $b_1$ form the diagram of \ref{eq:composition induction premisse}. \Cref{lem:composition induction} implies that this can be extended to one of the diagrams of \ref{eq:composition induction result}.
+\medskip\noindent\emph{Clause~\ref{xpattern}.} There is then a $\trip{y_2}{a_2}{x_2}\in \rgen_\cM$ such that $\inlab{X} (x_1,x_2)\xpattern{a_1}{a_2} (y_1,y_2)$; hence $a_2$ and $b_1$ form the diagram  \eqref{eq:composition induction premisse}. \Cref{lem:composition induction} implies that this can be extended to one of the diagrams  \eqref{eq:composition induction result}.
 
 \begin{itemize}
 \item Left hand side: here $\trip{z_2}{d}{v}\in \rgen_\cN$ and $\trip{v}{c}{x_2}\in \rgen_\cM$ such that $\depth(d)< \depth(b_1)$ and $\depth(c)< \depth(a_1)$; hence (by the induction hypothesis) $\trip{z_2}{d;c}{x_2}\in \rgen_{\cM;\cN}$. We now prove that $(x_1,x_2)\xpattern{a_1;b_1}{d;c} (z_1,z_2)$, hence we are done.
 %
 \[ u_{z_2}
-  = d\I;s;u_{y_2};b\P_1
-  = d\I;s;a\I_2;u_{x_2};a\P_1;b\P_1
-  = (d;c)\I;u_{x_2};(a_1;b_1)\P\enspace.
+  \stackrel{\eqref{A2}}{=} d\I;s;u_{y_2};b\P_1
+  \stackrel{\eqref{X}}{=} d\I;s;a\I_2;u_{x_2};a\P_1;b\P_1
+  \stackrel{\eqref{A1}}{=} (d;c)\I;u_{x_2};(a_1;b_1)\P\enspace.
 \]
 
-\item Right hand side: here $\trip{x_2}{c}{v}\in \rgen_\cM$ and $\trip{v}{d}{z_1}\in \rgen_\cN$ such that $\depth(c)< \depth(a_1)$ and $\depth(d)< \depth(b_1)$; hence (by the induction hypothesis) $\trip{x_3}{c;d}{z_1}\in \rgen_{\cM;\cN}$. We now prove that $x_1\childof x_2$ and $(x_1,x_3) \vpattern[k]{a_1;b_1}{c;d} z_1$ with $k=c\I;s;a\I_2$, hence we are done.
+\item Right hand side: here $\trip{x_3}{c}{v}\in \rgen_\cM$ and $\trip{v}{d}{z_1}\in \rgen_\cN$ such that $\depth(c)< \depth(a_1)$ and $\depth(d)< \depth(b_1)$; hence (by the induction hypothesis) $\trip{x_3}{c;d}{z_1}\in \rgen_{\cM;\cN}$. We now prove that $x_1\childof x_2$ and $(x_1,x_3) \vpattern[k]{a_1;b_1}{c;d} z_1$ with $\inlab{Z} k=c\I;s;a\I_2$, hence we are done.
 %
 \[\begin{array}{c}
 k;d_{x_2}
- = c\I;s;a\I_2;d_{x_2}
- = u_{x_3} \\[\smallskipamount]
+\stackrel{\eqref{Z}}{=} c\I;s;a\I_2;d_{x_2}
+ \stackrel{\eqref{B1}}{=} u_{x_3} \\[\smallskipamount]
 k;u_{x_2};(a_1;b_1)\P
- = c\I;s;a\I_2;u_{x_2};a\P_1;b\P_1
- = c\I;s;u_{y_2};b\P_1
- = c\I;d_v;d\P
+\stackrel{\eqref{Z}}{=} c\I;s;a\I_2;u_{x_2};a\P_1;b\P_1
+\stackrel{\eqref{X}}{=} c\I;s;u_{y_2};b\P_1
+\stackrel{\eqref{B2}}{=} c\I;d_v;d\P
  = d_{x_3};(c;d)\P
 \end{array}\]
 \end{itemize}
 %
-\emph{Clause~\ref{vpattern}.} There is then a $\trip{x_3}{a_3}{y_1}\in \rgen_\cM$ for some $x_3\childof x_2$ such that $(x_1,x_3)\vpattern[k]{a_1}{a_3} y_1$. We show that then also $(x_1,x_3) \vpattern[k]{a_1;b_1}{a_3;b_1} z_1$, hence we are done.
+\emph{Clause~\ref{vpattern}.} There is then a $\trip{x_3}{a_3}{y_1}\in \rgen_\cM$ for some $x_3\childof x_2$ such that $(x_1,x_3)\vpattern[k]{a_1}{a_3} y_1$. Then it is immediate to show that also $(x_1,x_3) \vpattern[k]{a_1;b_1}{a_3;b_1} z_1$, hence we are done.
 
 
 \end{proof}
