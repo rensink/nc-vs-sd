@@ -358,8 +358,8 @@ The main result of this section states that the proposed encoding is precise in 
 		\item[(if)] 
 	Let $g\of \tupof{Z\setminus X} \to G$ be a morphism such that $g \sat \cU$, with $\cU = \cT_{\ctx{(Z \setminus X)}{\exists X\st \phi}} = \cT_{\ctx{Z}{\phi}} \restr (Z\setminus X)$. Therefore there is a witness $h: P^{\cU}_{rt} \to G$ s.t.~$g = d^{\cU}_{rt}; h$. Since $\cU = \cT \restr (Z\setminus X)$ with $\cT = \cT_{\ctx{Z}{\phi}}$, we have $d^{\cU}_{rt} = i; d^{\cT}_{rt}$, where $i\of \tupof{Z\setminus X} \to \tupof{Z}$ is the inclusion. Let $g' = d^{\cT}_{rt}; h$. Then $g': \tupof{Z} \to G$, and obviously $g' \sat \cT_{\ctx{Z}{\phi}}$ with witness $h$. By induction hypothesis, $g' \sat \phi$. Furthermore, $g'\restr \tupof{Z\setminus X} = i;g' = i;d^{\cT}_{rt}; h = d^{\cU}_{rt}; h = g$. Therefore by $(\sat \exists)$ we conclude that $g \sat \exists X\st\phi$.   
 	
-	\item[(only if)] Let $g\of \tupof{Z\setminus X} \to G$ be a morphism such that $g \sat \exists X\st\phi$. By $(\sat \exists)$  there is a morphism $h\of B \to G$ such that $h \sat \phi, \tupof{Z\setminus X} \subseteq B$, and $h\restr \tupof{Z\setminus X} = g$. By \Cref{prop:free vars only},  $h\restr \tupof{N_B} \sat \phi$, and by induction hypothesis   $h\restr \tupof{N_B} \sat \cT_{\ctx{N_B}{\phi}}$. Since  $Z \setminus X \subseteq N_B$ we have $h\restr \tupof{Z \setminus X} = g \sat  \cT_{\ctx{N_B}{\phi}}\restr (Z \setminus X)$.\todo{AC: to be checked carefully}
-\end{description}
+	\item[(only if)] Let $g\of \tupof{Z\setminus X} \to G$ be a morphism such that $g \sat \exists X\st\phi$. By $(\sat \exists)$  there is a morphism $h\of B \to G$ such that $h \sat \phi, \tupof{Z\setminus X} \subseteq B$, and $h\restr \tupof{Z\setminus X} = g$. Since by \Cref{prop:free vars only},  $h\restr \tupof{N_B} \sat \phi$, and by induction hypothesis   $h\restr \tupof{N_B} \sat \cT_{\ctx{N_B}{\phi}}$. Since  $Z \setminus X \subseteq N_B$ we have $h\restr \tupof{Z \setminus X} = g \sat  \cT_{\ctx{N_B}{\phi}}\restr (Z \setminus X)$.\todo{AC: to be checked carefully}
+\end{description} 
 \end{itemize}
 
 
